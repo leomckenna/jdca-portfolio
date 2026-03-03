@@ -265,20 +265,31 @@ function buildYTD(holdings, id) {
   const sorted = [...holdings].sort((a,b)=>b.ytd-a.ytd);
   const maxAbs = Math.max(...sorted.map(d=>Math.abs(d.ytd)));
   sorted.forEach(d=>{
-    const pct=Math.abs(d.ytd)/maxAbs*100, isPos=d.ytd>=0, color=isPos?'var(--gain)':'var(--loss)';
-    const row=document.createElement('div'); row.className='ytd-row';
-    row.innerHTML=`<div class="ytd-lbl">${d.ticker}${isP(d)?'<span class="penny-badge" style="font-size:7px;padding:1px 3px;">\u00a2</span>':''}</div>
-      <div class="ytd-wrap"><div class="ytd-bar" style="width:${pct}%;background:${color};opacity:.75;${isPos?'':'margin-left:auto;'}"></div></div>
-      <div class="ytd-val ${isPos?'gain':'loss'}">${isPos?'+':''}${d.ytd.toFixed(1)}%</div>`;
+    const pct = Math.abs(d.ytd)/maxAbs*50;
+    const isPos = d.ytd >= 0, color = isPos ? "var(--gain)" : "var(--loss)";
+    const row = document.createElement("div"); row.className = "ytd-row";
+    const leftBar  = isPos ? "" : "<div style="width:"+pct+"%;background:"+color+";opacity:.75;height:9px;border-radius:1px 0 0 1px;margin-left:auto;"></div>";
+    const rightBar = isPos ? "<div style="width:"+pct+"%;background:"+color+";opacity:.75;height:9px;border-radius:0 1px 1px 0;"></div>" : "";
+    const badge = isP(d) ? "<span class="penny-badge" style="font-size:7px;padding:1px 3px;">¢</span>" : "";
+    row.innerHTML = "<div class="ytd-lbl">" + d.ticker + badge + "</div>"
+      + "<div style="flex:1;display:flex;align-items:center;">"
+      + "<div style="width:50%;display:flex;align-items:center;border-right:1px solid #c0c8d8;">" + leftBar + "</div>"
+      + "<div style="width:50%;display:flex;align-items:center;">" + rightBar + "</div>"
+      + "</div>"
+      + "<div class="ytd-val " + (isPos?"gain":"loss") + "">" + (isPos?"+":"") + d.ytd.toFixed(1) + "%</div>";
     el.appendChild(row);
   });
 }
 
-// ── SCATTER PLOT ──────────────────────────────────────────────────────────────
 function buildScatter(holdings, id) {
   const canvas=document.getElementById(id); if(!canvas) return;
   const ctx=canvas.getContext('2d');
-  const W=canvas.parentElement.offsetWidth||400; canvas.width=W; canvas.height=380;
+  const parent=canvas.parentElement;
+  const W=parent.getBoundingClientRect().width||400;
+  const DPR=window.devicePixelRatio||1;
+  canvas.width=W*DPR; canvas.height=380*DPR;
+  canvas.style.width=W+'px'; canvas.style.height='380px';
+  ctx.scale(DPR,DPR);
   const H=380, pad={top:30,right:20,bottom:36,left:44};
   const pW=W-pad.left-pad.right, pH=H-pad.top-pad.bottom;
   const xMin=-22,xMax=36,yMin=0,yMax=150;
