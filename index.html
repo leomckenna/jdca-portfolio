@@ -266,17 +266,21 @@ function buildYTD(holdings, id) {
   const maxAbs = Math.max(...sorted.map(d=>Math.abs(d.ytd)));
   sorted.forEach(d=>{
     const pct = Math.abs(d.ytd)/maxAbs*50;
-    const isPos = d.ytd >= 0, color = isPos ? "var(--gain)" : "var(--loss)";
-    const row = document.createElement("div"); row.className = "ytd-row";
-    const leftBar  = isPos ? "" : "<div style="width:"+pct+"%;background:"+color+";opacity:.75;height:9px;border-radius:1px 0 0 1px;margin-left:auto;"></div>";
-    const rightBar = isPos ? "<div style="width:"+pct+"%;background:"+color+";opacity:.75;height:9px;border-radius:0 1px 1px 0;"></div>" : "";
-    const badge = isP(d) ? "<span class="penny-badge" style="font-size:7px;padding:1px 3px;">¢</span>" : "";
-    row.innerHTML = "<div class="ytd-lbl">" + d.ticker + badge + "</div>"
-      + "<div style="flex:1;display:flex;align-items:center;">"
-      + "<div style="width:50%;display:flex;align-items:center;border-right:1px solid #c0c8d8;">" + leftBar + "</div>"
-      + "<div style="width:50%;display:flex;align-items:center;">" + rightBar + "</div>"
-      + "</div>"
-      + "<div class="ytd-val " + (isPos?"gain":"loss") + "">" + (isPos?"+":"") + d.ytd.toFixed(1) + "%</div>";
+    const isPos = d.ytd >= 0;
+    const color = isPos ? 'var(--gain)' : 'var(--loss)';
+    const badge = isP(d) ? '<span class="penny-badge" style="font-size:7px;padding:1px 3px;">\u00a2</span>' : '';
+    const barStyle = 'width:'+pct+'%;background:'+color+';opacity:.75;height:9px;border-radius:2px;';
+    const leftCell  = '<div style="width:50%;display:flex;align-items:center;border-right:1px solid #c0c8d8;">'
+                    + (isPos ? '' : '<div style="'+barStyle+'margin-left:auto;"></div>')
+                    + '</div>';
+    const rightCell = '<div style="width:50%;display:flex;align-items:center;">'
+                    + (isPos ? '<div style="'+barStyle+'"></div>' : '')
+                    + '</div>';
+    const row = document.createElement('div');
+    row.className = 'ytd-row';
+    row.innerHTML  = '<div class="ytd-lbl">'+d.ticker+badge+'</div>'
+                   + '<div style="flex:1;display:flex;align-items:center;">'+leftCell+rightCell+'</div>'
+                   + '<div class="ytd-val '+(isPos?'gain':'loss')+'">'+(isPos?'+':'')+d.ytd.toFixed(1)+'%</div>';
     el.appendChild(row);
   });
 }
