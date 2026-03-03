@@ -42,27 +42,11 @@ const WEEKS = [
       },
       {
         side: "gainer",
-        company: "NewcelX", ticker: "NCEL", penny: true, sentiment: "Neutral",
-        topic: "No Major Updates",
-        summary: "No material company-specific developments this week. The +10% move follows continued thin-volume momentum. Relative volume is extremely low at 4% — making the price move largely noise in a micro-cap with minimal daily trading activity.",
-        takeaway: "No fundamental catalyst. Micro-cap penny stock with minimal daily volume — price moves at this level are not informative. Monitor for clinical or partnership news before assigning valuation significance.",
-        valImpact: false
-      },
-      {
-        side: "gainer",
         company: "SAB Biotherapeutics", ticker: "SABS", penny: true, sentiment: "Neutral",
         topic: "Oppenheimer Conference",
         summary: "CEO presented SAB-142 at the Oppenheimer Healthcare Conference as a redosable human ATG for T1D. Confirmed SAFEGUARD study on track to enroll last patient by end-2026, with topline data expected H2 2027. FDA agreement that SAFEGUARD is a pivotal study effectively de-risks the regulatory path.",
         takeaway: "FDA alignment on pivotal study status removes a key regulatory uncertainty. The 2027 data readout remains distant, but the framework is increasingly clear. As a penny stock, the +8% gain reflects thin-float momentum as much as fundamental re-rating; the SAB-142 thesis is intact.",
         valImpact: true
-      },
-      {
-        side: "gainer",
-        company: "Eledon Pharma", ticker: "ELDN", penny: true, sentiment: "Neutral",
-        topic: "Pipeline Milestones Ahead",
-        summary: "No material news this week. ELDN continues toward 2026 milestones: reporting data from nine islet cell transplantation patients and receiving FDA regulatory guidance on the path to market for islet and xenotransplantation. The Phase 2 BESTOW trial data for tegoprubart in kidney transplant — showing strong efficacy while avoiding long-term immunosuppression toxicities — remains the foundational catalyst.",
-        takeaway: "The move appears momentum-driven rather than news-driven. The BESTOW data is real and the 2026 FDA guidance catalyst is worth watching. Penny stock volatility amplifies moves in both directions; the thesis remains intact pending upcoming FDA regulatory guidance.",
-        valImpact: false
       },
       {
         side: "gainer",
@@ -74,35 +58,11 @@ const WEEKS = [
       },
       {
         side: "loser",
-        company: "Genprex", ticker: "GNPX", penny: true, sentiment: "Neutral",
-        topic: "No Catalysts / Dilution Pressure",
-        summary: "No material corporate news this week. GNPX trades near its 52-week low at $1.96, against a 52-week high of $55 — reflecting serial equity financings throughout 2025. The most recent news was a February IP Australia patent acceptance for REQORSA. The −11.7% move on elevated relative volume (181%) suggests active selling pressure rather than thin-volume noise.",
-        takeaway: "Elevated volume on a down week is a warning sign. Genprex's EPS of −$1,261 reflects severe dilution from repeated small financings. Until a major clinical catalyst materializes, persistent headwinds remain. Penny stock status makes sharp recoveries possible but unpredictable.",
-        valImpact: false
-      },
-      {
-        side: "loser",
-        company: "NextCell Pharma", ticker: "NXTCL.ST", penny: true, sentiment: "Neutral",
-        topic: "Reversal After Prior Week Gain",
-        summary: "No material news this week. After gaining +9.2% last week on Japan program news and ProTrans data, shares gave back −11.4% with no new negative catalyst. Classic penny stock mean reversion on thin volume in a sub-$1 micro-cap.",
-        takeaway: "Last week's gain appears largely retraced. The Japan Entry Acceleration Program participation remains a valid long-term positive, but the micro-cap profile means weekly returns are not directionally meaningful without a new clinical catalyst.",
-        valImpact: false
-      },
-      {
-        side: "loser",
         company: "Novo Nordisk A/S", ticker: "NVO", penny: false, sentiment: "Negative",
         topic: "Continued Selling / Price Cut Plan",
         summary: "NVO continued declining this week (−3.6%), adding to last week's −17.7% crash after CagriSema missed vs. tirzepatide. Now down ~29% YTD. Novo announced plans to cut GLP-1 drug prices by up to 50% starting 2027 to defend market share — signaling the company views the competitive threat as structural, not temporary.",
         takeaway: "The 50% pricing concession confirms the competitive moat has narrowed materially. This will compress margins significantly starting 2027. Recovery requires CagriSema FDA approval and amycretin Phase 3 data, both 1–2 years away. The negative sentiment designation remains appropriate.",
         valImpact: true
-      },
-      {
-        side: "loser",
-        company: "Fluicell AB", ticker: "FLUI.ST", penny: true, sentiment: "Neutral",
-        topic: "Reversal After Prior Week Surge",
-        summary: "No new news this week. After surging +30.3% last week on strong Q4 results (SEK 3.8M vs. 0.5M prior year), FLUI gave back −8.5%. The reversal is consistent with a thin-volume penny stock digesting an outsized prior-week move.",
-        takeaway: "The retracement does not change the Q4 narrative. Revenue momentum is real; the question is whether it sustains. Monitor Q1 2026 revenue for confirmation. Penny stock dynamics mean large gains and losses are common in the absence of new information.",
-        valImpact: false
       },
       {
         side: "loser",
