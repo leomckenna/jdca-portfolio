@@ -6,7 +6,7 @@ const WEEKS = [
       best:       { val: "+20.0%", sub: "SEOVF · Sernova Biotherapeutics" },
       worst:      { val: "−25.2%", sub: "SANA · Sana Biotechnology" },
       highestYtd: { val: "+157%",  sub: "IPSC · Century Therapeutics" },
-      positiveSentiment: { val: "3", sub: "vs. 1 Neg · 17 Neutral" }
+      positiveSentiment: { val: "3", sub: "vs. 2 Neg · 16 Neutral" }
     },
     holdings: [
       { ticker:"LLY",      name:"Eli Lilly",           cap:"Large-cap",  mktCap:"$886.4B",  price:990.33,  low52:620.47,  high52:1132.06, weekly:-5.860,  excessXlv:-1.180,  ytd:-7.700,   pe:43.10, cr:1.579,  relVol:83,  sentiment:"Positive" },
@@ -17,7 +17,7 @@ const WEEKS = [
       { ticker:"CRSP",     name:"CRISPR Therapeutics",  cap:"Mid-cap",    mktCap:"$5.4B",    price:56.50,   low52:30.04,   high52:78.48,   weekly:-6.050,  excessXlv:-1.371,  ytd:7.740,    pe:null,  cr:13.316, relVol:68,  sentiment:"Positive" },
       { ticker:"IMCR",     name:"Immunocore",           cap:"Small-cap",  mktCap:"$1.7B",    price:32.94,   low52:23.15,   high52:40.72,   weekly:1.980,   excessXlv:6.663,   ytd:-5.100,   pe:null,  cr:4.040,  relVol:127, sentiment:"Neutral"  },
       { ticker:"EVO",      name:"Evotec SE",            cap:"Small-cap",  mktCap:"$1.1B",    price:3.07,    low52:2.840,   high52:4.800,   weekly:-9.710,  excessXlv:-5.024,  ytd:-0.320,   pe:null,  cr:2.118,  relVol:87,  sentiment:"Neutral"  },
-      { ticker:"SANA",     name:"Sana Biotech",         cap:"Small-cap",  mktCap:"$839.1M",  price:3.15,    low52:1.260,   high52:6.550,   weekly:-25.180, excessXlv:-20.496, ytd:-22.600,  pe:null,  cr:1.889,  relVol:72,  sentiment:"Neutral"  },
+      { ticker:"SANA",     name:"Sana Biotech",         cap:"Small-cap",  mktCap:"$839.1M",  price:3.15,    low52:1.260,   high52:6.550,   weekly:-25.180, excessXlv:-20.496, ytd:-22.600,  pe:null,  cr:1.889,  relVol:72,  sentiment:"Negative" },
       { ticker:"LCTX",     name:"Lineage Cell",         cap:"Small-cap",  mktCap:"$426.1M",  price:1.85,    low52:0.370,   high52:2.090,   weekly:-3.650,  excessXlv:1.036,   ytd:10.780,   pe:null,  cr:5.204,  relVol:86,  sentiment:"Neutral"  },
       { ticker:"HUMA",     name:"Humacyte",             cap:"Micro-cap",  mktCap:"$214.2M",  price:1.11,    low52:0.880,   high52:3.360,   weekly:-0.450,  excessXlv:4.233,   ytd:15.500,   pe:null,  cr:1.616,  relVol:71,  sentiment:"Neutral"  },
       { ticker:"IPSC",     name:"Century Therapeutics", cap:"Micro-cap",  mktCap:"$223.8M",  price:2.56,    low52:0.342,   high52:2.710,   weekly:10.340,  excessXlv:15.026,  ytd:157.290,  pe:null,  cr:6.252,  relVol:74,  sentiment:"Neutral"  },
