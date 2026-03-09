@@ -39,8 +39,8 @@ const WEEKS = [
         penny: false,
         sentiment: "Negative",
         topic: "Earnings / Cash Runway",
-        summary: "SANA reported Q4 2025 results with a net loss of $58.8M, ending the year with $138.4M in cash — enough for runway only into late 2026. The report triggered an analyst downgrade amid heightened FDA scrutiny of gene therapies.",
-        takeaway: "Cash cliff approaching: under 12 months of runway with no commercial revenue, and the FDA regulatory backdrop for gene/cell therapy is tightening. The core science (SC451, SG293) remains intact but the financing risk is now front-and-center.",
+        summary: "SANA reported Q4 results with $138M cash left — enough to last only into late 2026. An analyst downgrade followed, with added pressure from increased FDA scrutiny on gene therapies.",
+        takeaway: "Less than 12 months of cash with no revenue coming in. The underlying science is still solid but the funding risk is now the main story.",
         valImpact: true
       },
       {
@@ -50,8 +50,8 @@ const WEEKS = [
         penny: false,
         sentiment: "Negative",
         topic: "Pipeline / 52-Week Low",
-        summary: "SNY hit a new 52-week low ($44.01) this week, continuing its decline tied to the September 2025 amlitelimab Phase III disappointment and broader concerns about pipeline depth ahead of Dupixent's 2030 patent expiry.",
-        takeaway: "Without a credible Dupixent successor, SNY is increasingly being priced as a patent-cliff stock. The sell-side is cooling: multiple downgrades since late 2025, and the stock is now down ~30% over 12 months.",
+        summary: "SNY hit a new 52-week low this week, still unwinding from the failed amlitelimab trial in September and growing concern about what replaces Dupixent when its patent expires in 2030.",
+        takeaway: "The stock is down ~30% over the past year and the sell-side has been cooling on it. Without a clear successor to Dupixent, the market is starting to price in a tough few years ahead.",
         valImpact: true
       },
       {
@@ -61,8 +61,8 @@ const WEEKS = [
         penny: false,
         sentiment: "Positive",
         topic: "GLP-1 Pricing Pressure",
-        summary: "LLY fell ~6% on continued GLP-1 pricing headwinds — CFO guided for a 'low-to-mid teens' drag on 2026 growth from price concessions. Lilly launched a new Employer Connect program to broaden Zepbound/Mounjaro access, but market focus remains on the margin compression risk.",
-        takeaway: "Tirzepatide (Mounjaro + Zepbound) now represents 56% of revenue — concentration risk is real. Long-term thesis intact given pipeline depth and orforglipron launch expected H1 2026, but 2026 will be a year of multiple compression.",
+        summary: "LLY fell ~6% as pricing pressure on Mounjaro and Zepbound continued — management flagged a meaningful drag on 2026 growth from price cuts. A new employer access program was announced but didn't move the needle.",
+        takeaway: "Mounjaro and Zepbound are now 56% of revenue, so pricing headwinds hit hard. Long-term outlook still strong with a new oral weight loss pill expected mid-2026, but this year will likely be bumpy.",
         valImpact: true
       },
       {
@@ -71,9 +71,9 @@ const WEEKS = [
         ticker: "SEOVF",
         penny: true,
         sentiment: "Neutral",
-        topic: "Balance Sheet / Financing",
-        summary: "SEOVF surged 20% after announcing $7.1M in new financing (equity + convertible debenture), with proceeds earmarked to retire a $4M secured term loan maturing April 16, 2026. Insider participation in the round was a key positive signal.",
-        takeaway: "Removes the immediate liquidity cliff. With the April debt maturity resolved pending shareholder approval, SEOVF now has a path to continue its Cell Pouch T1D program. Extremely illiquid OTC name — move reflects relief more than fundamental re-rating.",
+        topic: "Financing",
+        summary: "SEOVF jumped 20% after raising $7.1M through a mix of equity and convertible debt, with insiders participating. Proceeds are set to pay off a loan coming due in April.",
+        takeaway: "Buys short-term cash runway and takes the April debt maturity off the table — pending shareholder approval. Very thinly traded, so the move is more relief than a real re-rating.",
         valImpact: true
       },
       {
@@ -83,8 +83,8 @@ const WEEKS = [
         penny: true,
         sentiment: "Neutral",
         topic: "Continued Momentum",
-        summary: "IPSC extended its remarkable YTD run (+157%) with another 10% gain this week on no new company-specific catalyst. The stock continues to trade on momentum following its $135M capital raise in January 2026.",
-        takeaway: "No fundamental catalyst this week — the move is momentum-driven in a thinly traded micro-cap. The January raise de-risked the near-term balance sheet, but IPSC remains pre-revenue with no Phase 1 data yet. Worth watching for any pipeline updates.",
+        summary: "IPSC gained another 10% this week with no new news, continuing its remarkable YTD run (+157%) on momentum from the $135M raise in January.",
+        takeaway: "No new catalyst — just momentum in a thinly traded stock. Balance sheet is fine after the January raise, but still pre-revenue with no clinical data yet.",
         valImpact: false
       }
     ]
@@ -126,40 +126,40 @@ const WEEKS = [
         side: "gainer",
         company: "Century Therapeutics", ticker: "IPSC", penny: true, sentiment: "Neutral",
         topic: "Investor Conferences",
-        summary: "Announced participation in TD Cowen (March 4) and Leerink Partners (March 10) healthcare conferences. The January $135M oversubscribed private placement — led by TCGX with RA Capital and Venrock — continues to underpin investor interest in CNTY-813, the iPSC-derived beta islet program for T1D. Piper Sandler raised its price target to $4 from $2 in January.",
-        takeaway: "Conference participation signals active investor engagement following the major January financing. The $135M raise funds the planned IND submission for CNTY-813 — a direct JDCA-relevant program. As a penny stock, the +10.6% move on no new fundamental news reflects elevated volatility; the pipeline remains the thesis driver.",
+        summary: "Presenting at two healthcare conferences in early March. The $135M January raise — backed by RA Capital and Venrock — continues to drive investor interest in CNTY-813, its T1D cell therapy program.",
+        takeaway: "Conference appearances keep the stock visible after a big January raise. No new data yet — the thesis is still the pipeline, and penny stock volatility is amplifying the move.",
         valImpact: false
       },
       {
         side: "gainer",
         company: "SAB Biotherapeutics", ticker: "SABS", penny: true, sentiment: "Neutral",
         topic: "Oppenheimer Conference",
-        summary: "CEO presented SAB-142 at the Oppenheimer Healthcare Conference as a redosable human ATG for T1D. Confirmed SAFEGUARD study on track to enroll last patient by end-2026, with topline data expected H2 2027. FDA agreement that SAFEGUARD is a pivotal study effectively de-risks the regulatory path.",
-        takeaway: "FDA alignment on pivotal study status removes a key regulatory uncertainty. The 2027 data readout remains distant, but the framework is increasingly clear. As a penny stock, the +8% gain reflects thin-float momentum as much as fundamental re-rating; the SAB-142 thesis is intact.",
+        summary: "CEO presented SAB-142 at an investor conference. The SAFEGUARD trial is on track to enroll its last patient by end-2026, with topline data expected H2 2027. FDA has agreed the trial counts as a pivotal study.",
+        takeaway: "FDA sign-off on pivotal status is a meaningful de-risking step. The 2027 data readout is still a ways off, but the path is clearer. Penny stock, so the +8% move is partly thin-float momentum.",
         valImpact: true
       },
       {
         side: "gainer",
         company: "CRISPR Therapeutics", ticker: "CRSP", penny: false, sentiment: "Positive",
         topic: "Q4 Earnings / 2026 Milestones",
-        summary: "Reported Q4 2025 results with CASGEVY revenue exceeding $100M for the full year — a nearly three-fold increase in patient initiations vs. 2024. Enters 2026 with ~$2B in cash. Key 2026 milestones: global CASGEVY pediatric submissions H1, CTX310 cardiovascular and CTX611 autoimmune topline data H2, and new trial starts for CTX460 and CTX340. Analyst consensus is \"Hold\" with a $64 average price target vs. ~$60 current.",
-        takeaway: "The CASGEVY commercial ramp is progressing ahead of expectations and the $2B cash runway is substantial. The +5% weekly move on strong earnings momentum is well-supported by fundamentals — a relatively rare case in this portfolio where price action and news are clearly aligned.",
+        summary: "Q4 2025 results: CASGEVY hit $100M+ in its first full year, with patient starts nearly tripling vs. 2024. Company enters 2026 with ~$2B cash and several key data readouts expected in H2.",
+        takeaway: "Commercial launch is tracking ahead of expectations and the cash position is strong. One of the cleaner cases in the portfolio where the price move and the news actually line up.",
         valImpact: true
       },
       {
         side: "loser",
         company: "Novo Nordisk A/S", ticker: "NVO", penny: false, sentiment: "Negative",
         topic: "Continued Selling / Price Cut Plan",
-        summary: "NVO continued declining this week (−3.6%), adding to last week's −17.7% crash after CagriSema missed vs. tirzepatide. Now down ~29% YTD. Novo announced plans to cut GLP-1 drug prices by up to 50% starting 2027 to defend market share — signaling the company views the competitive threat as structural, not temporary.",
-        takeaway: "The 50% pricing concession confirms the competitive moat has narrowed materially. This will compress margins significantly starting 2027. Recovery requires CagriSema FDA approval and amycretin Phase 3 data, both 1–2 years away. The negative sentiment designation remains appropriate.",
+        summary: "NVO fell another 3.6% this week, extending last week's 18% drop after CagriSema underperformed Lilly's tirzepatide in a head-to-head trial. Now down ~29% YTD. Novo also announced plans to cut GLP-1 prices by up to 50% starting 2027.",
+        takeaway: "The price cut announcement confirms the competitive pressure is real and lasting. Margins will take a hit starting 2027, and a recovery depends on pipeline data that's still 1-2 years out.",
         valImpact: true
       },
       {
         side: "loser",
         company: "Eli Lilly and Company", ticker: "LLY", penny: false, sentiment: "Positive",
         topic: "Minor Pullback / KwikPen Launch",
-        summary: "LLY gave back −0.8% this week after last week's +4% surge on the NVO trial miss. The FDA approved a new four-dose KwikPen for Zepbound delivering a full month's treatment at $299/month for cash-pay patients. BofA maintained Buy, downplaying Novo's price cut impact. 2026 guidance calls for ~25% revenue growth.",
-        takeaway: "The minor weekly pullback is noise after a strong prior week. KwikPen broadens access and competitive positioning in cash-pay and government channels. Lilly's structural advantage in the GLP-1 market continues to widen; the positive sentiment designation is well-supported.",
+        summary: "LLY gave back 0.8% after last week's pop on the NVO trial miss. FDA approved a new monthly Zepbound pen at $299 cash-pay. BofA maintained Buy and downplayed Novo's price cut threat. Full-year guidance calls for ~25% revenue growth.",
+        takeaway: "Small pullback after a strong prior week — not much to read into it. The new Zepbound format helps on price-sensitive patients. Lilly's position in GLP-1 continues to look solid.",
         valImpact: false
       },
     ]
@@ -203,48 +203,48 @@ const WEEKS = [
         side: "gainer",
         company: "Fluicell AB", ticker: "FLUI.ST", penny: true, sentiment: "Neutral",
         topic: "Q4 Earnings Beat",
-        summary: "Q4 2025 revenue surged to SEK 3.8M from just SEK 0.5M a year prior, with operating losses narrowing sharply. Early signs of a genuine commercial inflection — notable for a micro-cap penny stock where moves of this magnitude are common on thin volume.",
-        takeaway: "Revenue step-change is encouraging; sustainability of growth trajectory is the key question. As a penny stock, treat the +30% weekly move with appropriate skepticism pending confirmation of the trend in Q1 2026.",
+        summary: "Q4 2025 revenue hit SEK 3.8M vs. SEK 0.5M a year ago, with operating losses narrowing. First real sign of commercial traction for this micro-cap.",
+        takeaway: "Revenue jump is encouraging — the question is whether it holds. As a penny stock, +30% on thin volume needs confirmation in Q1 2026 before reading too much into it.",
         valImpact: true
       },
       {
         side: "gainer",
         company: "NextCell Pharma", ticker: "NXTCL.ST", penny: true, sentiment: "Neutral",
         topic: "Japan Expansion / Data",
-        summary: "Joined Japan's Entry Acceleration Program and presented long-term ProTrans follow-up data showing sustained insulin preservation. As a sub-$1 micro-cap penny stock, the +9% move is within normal weekly volatility bounds.",
-        takeaway: "Japan market access opens a new geographic path; long-term data strengthens the clinical narrative. Penny stock status means execution risk and volatility are elevated. Monitor for IND or partnership developments.",
+        summary: "Joined Japan's Entry Acceleration Program and presented long-term data showing sustained insulin preservation from its ProTrans therapy. Weekly move of +9% is within normal range for a sub-$1 stock.",
+        takeaway: "Japan program opens a new market; the long-term data adds to the clinical story. Still a penny stock with elevated execution risk — watch for IND filing or partnership news.",
         valImpact: false
       },
       {
         side: "gainer",
         company: "Sana Biotechnology", ticker: "SANA", penny: true, sentiment: "Neutral",
         topic: "CFO Appointment",
-        summary: "Brian Piper appointed EVP and CFO, bringing dedicated financial leadership at a stage when capital efficiency and runway management are the company's most critical variables. A penny stock hiring senior finance talent signals awareness of its cash constraints.",
-        takeaway: "CFO hire signals tightening focus on capital discipline. Execution and funding runway remain the key watch items for this penny stock. No near-term pipeline catalyst.",
+        summary: "New CFO appointed, bringing dedicated finance leadership at a stage where managing cash carefully is critical. A penny stock hiring senior finance talent suggests the team is aware of its runway constraints.",
+        takeaway: "CFO hire signals tighter focus on cash discipline. Still no near-term pipeline catalyst — funding runway remains the main thing to watch.",
         valImpact: false
       },
       {
         side: "loser",
         company: "Novo Nordisk A/S", ticker: "NVO", penny: false, sentiment: "Negative",
         topic: "Phase 3 Miss / Guidance Cut",
-        summary: "CagriSema's Phase 3 REDEFINE 4 trial disappointed: 20.2% weight loss vs. tirzepatide's 23.6%, failing to meet non-inferiority. Novo compounded the miss with a 2026 guidance cut of 5–13%. Shares fell ~18% on the day.",
-        takeaway: "Competitive position vs. Lilly structurally weakened; the guidance cut raises franchise durability questions that won't resolve quickly. NVO now trades near multi-year lows with recovery dependent on CagriSema approval and next-gen pipeline.",
+        summary: "CagriSema's Phase 3 trial showed 20.2% weight loss vs. tirzepatide's 23.6% — a meaningful miss in a head-to-head comparison. Novo also cut its 2026 guidance by 5–13%. Shares fell ~18% on the day.",
+        takeaway: "Lilly's competitive advantage in GLP-1 just got bigger. The guidance cut adds to the pressure, and a real recovery depends on pipeline data that's still 1-2 years away.",
         valImpact: true
       },
       {
         side: "loser",
         company: "SAB Biotherapeutics", ticker: "SABS", penny: true, sentiment: "Neutral",
         topic: "Institutional Backing",
-        summary: "RTW Investments disclosed a significant new stake — a notable institutional endorsement — yet shares fell 7.2%, suggesting broader selling pressure outweighed the positive signal. As a penny stock, this volatility is not unusual.",
-        takeaway: "RTW backing is constructive, but price action indicates the market needs more than investor confidence to re-rate. Penny stock dynamics amplify the noise; a fundamental catalyst is required.",
+        summary: "RTW Investments disclosed a new stake — a notable vote of confidence — but shares still fell 7.2%, suggesting broader selling pressure outweighed the news.",
+        takeaway: "Institutional backing is a positive signal, but the market wants more than that to move higher. Penny stock dynamics mean you need a real catalyst for a sustained move.",
         valImpact: false
       },
       {
         side: "loser",
         company: "Adocia", ticker: "ADOC.PA", penny: false, sentiment: "Neutral",
         topic: "Q4 Earnings / Business Update",
-        summary: "FY 2025 revenue €1.5M vs. €9.3M in 2024 — but the comparison is misleading: 2024 included a one-time $10M Tonghua Dongbao milestone. Cash of €17.2M (vs. €7.5M) funds operations into early 2027 following a €10M December equity raise. BioChaperone Lispro Phase 3 positive in both T1D and T2D in China; new AdoXLong™ monthly platform filed; two undisclosed large pharma feasibility collaborations ongoing. Chairman Gérard Soula stepped down after 20 years; Stéphane Boissel appointed successor.",
-        takeaway: "Revenue headline is misleading — strip the 2024 one-time milestone and the business is making progress. Cash runway into 2027 removes near-term dilution risk. China approval for BioChaperone Lispro (triggering a $20M milestone) is the key value catalyst to watch.",
+        summary: "FY 2025 revenue of €1.5M vs. €9.3M in 2024 — but 2024 included a one-time €10M milestone payment, so the comparison is misleading. Cash improved to €17.2M after a December equity raise, giving runway into early 2027. BioChaperone Lispro showed positive Phase 3 results in China; a new monthly insulin platform was filed; two undisclosed pharma collaborations are ongoing. Long-time chairman stepped down after 20 years.",
+        takeaway: "Strip out the one-time 2024 milestone and the business is quietly making progress. Cash runway into 2027 reduces near-term dilution risk. China approval for BioChaperone Lispro — which would trigger a $20M milestone — is the main thing to watch.",
         valImpact: true
       },
     ]
