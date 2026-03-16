@@ -244,7 +244,7 @@ function buildPortTable(w) {
       <td class="num ${cCls(h.ytd)}">${fmtP(h.ytd)}</td>
       <td class="num ${cCls(h.excessXlv)}" style="font-size:10.5px">${fmtX(h.excessXlv)}</td>
       <td class="num" style="color:var(--text-dim)">${h.pe?h.pe.toFixed(1):'&mdash;'}</td>
-      <td class="num" style="color:var(--text-dim)">${h.cr.toFixed(2)}</td>
+      <td class="num" style="color:var(--text-dim)">${h.cr!=null?h.cr.toFixed(2):'&mdash;'}</td>
       <td>${sTag(h.sentiment)}</td>
     </tr>`;
   });
