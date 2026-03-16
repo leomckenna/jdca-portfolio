@@ -1,5 +1,117 @@
 const WEEKS = [
   {
+    label: "Week of 03/16/2026",
+    asOf: "03/16/2026",
+    stats: {
+      best:       { val: "+10.4%", sub: "OTSKY · Otsuka Holdings" },
+      worst:      { val: "−20.0%", sub: "EVO · Evotec SE" },
+      highestYtd: { val: "+144%",  sub: "IPSC · Century Therapeutics" },
+      positiveSentiment: { val: "2", sub: "vs. 2 Neg · 17 Neutral" }
+    },
+    holdings: [
+      { ticker:"LLY",      name:"Eli Lilly",           cap:"Large-cap",  mktCap:"$881.5B",  price:985.21,  low52:620.46,  high52:1132.06, weekly:-2.299,  excessXlv:-1.047,  ytd:-8.172,   pe:42.91, cr:1.579,  relVol:51,  sentiment:"Positive" },
+      { ticker:"NVO",      name:"Novo Nordisk",         cap:"Large-cap",  mktCap:"$171.5B",  price:38.445,  low52:35.850,  high52:80.533,  weekly:-3.356,  excessXlv:-2.104,  ytd:-24.440,  pe:10.80, cr:0.800,  relVol:65,  sentiment:"Negative" },
+      { ticker:"SNY",      name:"Sanofi",               cap:"Large-cap",  mktCap:"$106.4B",  price:44.060,  low52:43.340,  high52:56.659,  weekly:-0.654,  excessXlv:0.598,   ytd:-9.080,   pe:18.99, cr:1.092,  relVol:106, sentiment:"Negative" },
+      { ticker:"VRTX",     name:"Vertex Pharma",        cap:"Large-cap",  mktCap:"$117.6B",  price:462.970, low52:362.500, high52:519.680, weekly:0.456,   excessXlv:1.707,   ytd:2.120,    pe:30.26, cr:2.901,  relVol:124, sentiment:"Positive" },
+      { ticker:"OTSKY",    name:"Otsuka Holdings",      cap:"Large-cap",  mktCap:"$38.1B",   price:34.950,  low52:21.435,  high52:36.060,  weekly:10.392,  excessXlv:11.643,  ytd:23.367,   pe:16.26, cr:2.165,  relVol:102, sentiment:"Neutral"  },
+      { ticker:"CRSP",     name:"CRISPR Therapeutics",  cap:"Mid-cap",    mktCap:"$4.7B",    price:48.622,  low52:30.040,  high52:78.480,  weekly:-17.281, excessXlv:-16.029, ytd:-7.281,   pe:null,  cr:13.316, relVol:220, sentiment:"Positive" },
+      { ticker:"SANA",     name:"Sana Biotech",         cap:"Small-cap",  mktCap:"$875.3M",  price:3.280,   low52:1.260,   high52:6.550,   weekly:-1.502,  excessXlv:-0.250,  ytd:-19.410,  pe:null,  cr:1.889,  relVol:82,  sentiment:"Negative" },
+      { ticker:"EVO",      name:"Evotec SE",            cap:"Small-cap",  mktCap:"$868.7M",  price:2.425,   low52:2.310,   high52:4.800,   weekly:-19.967, excessXlv:-18.715, ytd:-21.266,  pe:null,  cr:2.118,  relVol:144, sentiment:"Neutral"  },
+      { ticker:"LCTX",     name:"Lineage Cell",         cap:"Small-cap",  mktCap:"$372.0M",  price:1.615,   low52:0.370,   high52:2.090,   weekly:-8.757,  excessXlv:-7.505,  ytd:-3.293,   pe:null,  cr:5.204,  relVol:97,  sentiment:"Neutral"  },
+      { ticker:"IMCR",     name:"Immunocore",           cap:"Small-cap",  mktCap:"$1.6B",    price:30.630,  low52:23.150,  high52:40.715,  weekly:-8.321,  excessXlv:-7.069,  ytd:-11.755,  pe:null,  cr:4.040,  relVol:71,  sentiment:"Neutral"  },
+      { ticker:"HUMA",     name:"Humacyte",             cap:"Micro-cap",  mktCap:"$217.8M",  price:1.129,   low52:0.880,   high52:3.360,   weekly:-5.942,  excessXlv:-4.690,  ytd:17.451,   pe:null,  cr:1.616,  relVol:75,  sentiment:"Neutral"  },
+      { ticker:"IPSC",     name:"Century Therapeutics", cap:"Micro-cap",  mktCap:"$436.7M",  price:2.430,   low52:0.342,   high52:3.040,   weekly:-17.347, excessXlv:-16.095, ytd:144.221,  pe:null,  cr:5.971,  relVol:81,  sentiment:"Neutral"  },
+      { ticker:"ELDN",     name:"Eledon Pharma",        cap:"Micro-cap",  mktCap:"$217.4M",  price:2.730,   low52:1.350,   high52:4.600,   weekly:-5.862,  excessXlv:-4.610,  ytd:80.795,   pe:null,  cr:6.736,  relVol:70,  sentiment:"Neutral"  },
+      { ticker:"SABS",     name:"SAB Biotherapeutics",  cap:"Micro-cap",  mktCap:"$191.4M",  price:4.025,   low52:1.000,   high52:6.600,   weekly:4.818,   excessXlv:6.069,   ytd:7.620,    pe:null,  cr:9.461,  relVol:419, sentiment:"Neutral"  },
+      { ticker:"ADOC.PA",  name:"Adocia",               cap:"Micro-cap",  mktCap:"$131.4M",  price:6.707,   low52:3.296,   high52:14.291,  weekly:-6.731,  excessXlv:-5.479,  ytd:-13.134,  pe:null,  cr:1.136,  relVol:75,  sentiment:"Neutral"  },
+      { ticker:"SEOVF",    name:"Sernova",              cap:"Micro-cap",  mktCap:"$40.6M",   price:0.120,   low52:0.090,   high52:0.170,   weekly:0.000,   excessXlv:1.252,   ytd:33.333,   pe:null,  cr:null,   relVol:232, sentiment:"Neutral"  },
+      { ticker:"NXTCL.ST", name:"NextCell Pharma",      cap:"Micro-cap",  mktCap:"$14.6M",   price:0.131,   low52:0.068,   high52:0.375,   weekly:-3.633,  excessXlv:-2.382,  ytd:66.895,   pe:null,  cr:5.157,  relVol:41,  sentiment:"Neutral"  },
+      { ticker:"NCEL",     name:"NewcelX",              cap:"Micro-cap",  mktCap:"$12.1M",   price:2.650,   low52:1.890,   high52:30.800,  weekly:-3.281,  excessXlv:-2.029,  ytd:39.479,   pe:null,  cr:0.023,  relVol:18,  sentiment:"Neutral"  },
+      { ticker:"CELZ",     name:"Creative Medical",     cap:"Micro-cap",  mktCap:"$6.7M",    price:1.925,   low52:1.504,   high52:6.250,   weekly:0.785,   excessXlv:2.037,   ytd:-1.786,   pe:null,  cr:20.706, relVol:13,  sentiment:"Neutral"  },
+      { ticker:"GNPX",     name:"Genprex",              cap:"Micro-cap",  mktCap:"$3.4M",    price:2.100,   low52:1.710,   high52:55.000,  weekly:6.061,   excessXlv:7.312,   ytd:20.000,   pe:null,  cr:0.672,  relVol:49,  sentiment:"Neutral"  },
+      { ticker:"FLUI.ST",  name:"Fluicell",             cap:"Micro-cap",  mktCap:"$1.6M",    price:1.158,   low52:0.799,   high52:3.218,   weekly:4.854,   excessXlv:6.106,   ytd:8.000,    pe:null,  cr:1.003,  relVol:24,  sentiment:"Neutral"  }
+    ],
+    news: [
+      {
+        side: "gainer",
+        company: "Otsuka Holdings",
+        ticker: "OTSKY",
+        penny: false,
+        sentiment: "Neutral",
+        topic: "FY2025 Earnings / Share Buyback",
+        summary: "OTSKY gained 10% after reporting FY2025 results: revenue up 6% to ¥2.47 trillion, with profit also rising. Otsuka also announced a ¥50B share buyback. Voyxact, its first-in-class kidney drug approved by the FDA in November 2025, is ramping up with confirmatory trial data expected soon.",
+        takeaway: "Solid earnings beat plus a buyback is a clean combination. The Voyxact launch adds a new growth driver. Analyst ratings are mixed — Goldman and Zacks recently downgraded — so the long-term re-rating will depend on that confirmatory data.",
+        valImpact: true
+      },
+      {
+        side: "gainer",
+        company: "SAB Biotherapeutics",
+        ticker: "SABS",
+        penny: true,
+        sentiment: "Neutral",
+        topic: "Phase 1 Data / Analyst Upgrades",
+        summary: "SABS rose ~5% after presenting new Phase 1 data on March 10 showing SAB-142 preserved C-peptide levels in adults with established T1D — a meaningful signal for a disease-modifying effect. Chardan raised its price target to $14 and Craig-Hallum maintained Buy.",
+        takeaway: "The data support moving forward in the SAFEGUARD Phase 2b trial and reinforce the T1D thesis. Cash runway through 2028 removes near-term financing risk. Still a small, thinly traded stock with a long road to any approval.",
+        valImpact: true
+      },
+      {
+        side: "loser",
+        company: "Evotec SE",
+        ticker: "EVO",
+        penny: true,
+        sentiment: "Neutral",
+        topic: "Restructuring / Profit Warning",
+        summary: "EVO fell 20% — hitting a new 52-week low — after announcing its Horizon restructuring plan on March 10. Management called 2026 a transition year and guided for near-zero EBITDA (€0–40M) on revenue of €700–780M. A securities law firm launched an investigation the following day.",
+        takeaway: "This is the third restructuring plan in recent years and the market clearly doesn't believe it yet. Near-zero EBITDA guidance with profitability now pushed to 2028 is a major reset. The securities investigation adds more uncertainty on top.",
+        valImpact: true
+      },
+      {
+        side: "loser",
+        company: "CRISPR Therapeutics",
+        ticker: "CRSP",
+        penny: false,
+        sentiment: "Positive",
+        topic: "Convertible Note Offering",
+        summary: "CRSP dropped ~17% after announcing a $350M convertible notes offering on March 10, later upsized to $550M. The market reacted to dilution concerns — the notes convert into equity if not repaid by 2031. ARK bought the dip, picking up 281K shares.",
+        takeaway: "Dilutive financing is never popular, but analysts still see the stock as materially undervalued — consensus price target is around $81 vs. current ~$49. CASGEVY is commercially on track and the pipeline is active. The selloff looks like an overreaction given the balance sheet context.",
+        valImpact: true
+      },
+      {
+        side: "loser",
+        company: "Century Therapeutics",
+        ticker: "IPSC",
+        penny: true,
+        sentiment: "Neutral",
+        topic: "FY2025 Earnings / Profit-Taking",
+        summary: "IPSC fell 17% this week despite reporting FY2025 results on March 12 that actually beat estimates — net loss narrowed to $9.6M from $126.6M in 2024. No negative catalyst; the drop looks like profit-taking after a 144% YTD run into the week.",
+        takeaway: "The earnings were fine and the balance sheet is solid after January's $135M raise. The price action is purely about momentum unwinding in a thinly traded micro-cap. The CNTY-813 T1D program remains the thesis — watch for IND submission news.",
+        valImpact: false
+      },
+      {
+        side: "loser",
+        company: "Lineage Cell Therapeutics",
+        ticker: "LCTX",
+        penny: true,
+        sentiment: "Neutral",
+        topic: "FY2025 Earnings / Sector Weakness",
+        summary: "LCTX fell ~9% despite a strong Q4 earnings beat on March 5 — EPS of $0.00 vs. an expected -$0.07, and revenue of $6.6M vs. estimates of $2.0M. D. Boral raised its price target to $3 and CEO Brian Culley bought 15,000 shares on March 12.",
+        takeaway: "The earnings and analyst reaction were positive — the drop is sector-level selling rather than company-specific news. CEO buying at these prices is a constructive signal. The OpRegen retinal program remains the key catalyst to watch in 2026.",
+        valImpact: false
+      },
+      {
+        side: "neutral",
+        company: "Sana Biotechnology",
+        ticker: "SANA",
+        penny: true,
+        sentiment: "Negative",
+        topic: "14-Month T1D Clinical Update",
+        summary: "On March 13, Sana presented 14-month follow-up data at the ATTD conference showing its HIP-modified islet cells (UP421) continued to survive and produce insulin in a T1D patient without any immunosuppression. C-peptide levels at month 14 were comparable to the first six months. Morgan Stanley reiterated Overweight, calling it a meaningful platform de-risking event.",
+        takeaway: "This is genuinely important science — 14 months of sustained insulin production without immunosuppression is the longest such data point yet. Sana is now targeting an IND for SC451 (the scalable version) this year. Cash runway is still the main risk, but the scientific story keeps getting stronger.",
+        valImpact: true
+      }
+    ]
+  },
+  {
     label: "Week of 03/09/2026",
     asOf: "03/09/2026",
     stats: {
