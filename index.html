@@ -93,38 +93,73 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;fon
 .footer{margin-top:28px;padding-top:12px;border-top:2px solid var(--navy);font-family:'DM Mono',monospace;font-size:9.5px;color:var(--text-dim);display:flex;justify-content:space-between;align-items:center;gap:16px;}
 .footer-note{background:var(--navy-light);border:1px solid var(--border);border-radius:2px;padding:4px 10px;font-size:9px;color:var(--navy-mid);}
 @media print{.tab-bar{display:none;}.tab-panel{display:block!important;page-break-before:always;}.tab-panel:first-child{page-break-before:auto;}.stats-bar,.card,.grid-top,.grid-2,.grid-viz{page-break-inside:avoid;break-inside:avoid;}}
+
+/* ── NEWS IMPROVEMENTS ── */
+.news-table td.news-company-cell{border-left:3px solid transparent;padding-left:11px;}
+.news-table tr.side-gainer td.news-company-cell{border-left-color:var(--gain);}
+.news-table tr.side-loser  td.news-company-cell{border-left-color:var(--loss);}
+.news-table tr.side-neutral td.news-company-cell{border-left-color:var(--border);}
+.news-ticker{font-family:'DM Mono',monospace;font-size:12px;font-weight:700;color:var(--navy);display:block;margin-bottom:2px;}
+.news-section-hdr{padding:5px 14px;font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-bottom:1px solid var(--border);}
+.news-section-hdr.gain{background:#e8f5ee;color:var(--gain);}
+.news-section-hdr.loss{background:#fdf0f2;color:var(--loss);}
+.news-section-hdr.neut{background:var(--surface2);color:var(--neutral);}
+
+/* ── COLUMN HEADER TOOLTIP ── */
+th[data-ht]{position:relative;cursor:help;}
+th[data-ht]:hover::after{content:attr(data-ht);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#1a2c4e;color:#fff;font-size:10px;font-weight:400;letter-spacing:0;text-transform:none;white-space:nowrap;padding:5px 10px;border-radius:4px;z-index:200;pointer-events:none;line-height:1.4;}
+th[data-ht]:hover::before{content:'';position:absolute;bottom:calc(100% + 1px);left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:#1a2c4e;z-index:200;pointer-events:none;}
+
+/* ── PENNY ROW HIGHLIGHT ── */
+.port-table tr.penny-row td:not([colspan]){background:rgba(255,248,232,.55);}
+.port-table tr.penny-row:hover td:not([colspan]){background:var(--navy-light);}
+
 /* ── TOOLTIP ── */
-#tt{position:fixed;background:#1a2c4e;color:#fff;padding:10px 14px;border-radius:6px;font-size:12px;pointer-events:none;z-index:9999;display:none;max-width:260px;box-shadow:0 4px 20px rgba(0,0,0,.28);line-height:1.65;white-space:nowrap;}
-#tt .tt-ticker{font-family:'DM Mono',monospace;font-size:13px;font-weight:700;letter-spacing:.04em;}
-#tt .tt-name{font-size:10.5px;color:#a8b8d0;margin-bottom:6px;}
-#tt .tt-row{display:flex;justify-content:space-between;gap:18px;font-size:11px;color:#c8d8ea;}
+#tt{position:fixed;background:#1a2c4e;color:#fff;padding:11px 15px;border-radius:7px;font-size:12px;pointer-events:none;z-index:9999;display:none;max-width:270px;box-shadow:0 4px 22px rgba(0,0,0,.3);line-height:1.65;}
+#tt .tt-ticker{font-family:'DM Mono',monospace;font-size:13px;font-weight:700;letter-spacing:.04em;margin-bottom:1px;}
+#tt .tt-name{font-size:10.5px;color:#a8b8d0;margin-bottom:8px;}
+#tt .tt-row{display:flex;justify-content:space-between;gap:20px;font-size:11px;color:#c8d8ea;line-height:1.7;}
 #tt .tt-row strong{font-family:'DM Mono',monospace;font-weight:600;}
-#tt .gain{color:#5dd88a;}
-#tt .loss{color:#f08090;}
-#tt .neut{color:#a8b8d0;}
+#tt .gain{color:#5dd88a;}#tt .loss{color:#f08090;}#tt .neut{color:#a8b8d0;}
+#tt .tt-hint{font-size:9.5px;color:#6a8ab0;margin-top:8px;border-top:1px solid rgba(255,255,255,.1);padding-top:7px;}
+
 /* ── MODAL ── */
-#modal-overlay{position:fixed;inset:0;background:rgba(10,20,40,.55);z-index:10000;display:none;align-items:flex-start;justify-content:center;padding-top:60px;overflow-y:auto;}
+#modal-overlay{position:fixed;inset:0;background:rgba(8,18,36,.55);z-index:10000;display:none;align-items:flex-start;justify-content:center;padding-top:52px;overflow-y:auto;}
 #modal-overlay.open{display:flex;}
-#modal-box{background:#fff;border-radius:10px;width:min(680px,92vw);max-height:82vh;overflow-y:auto;padding:30px 34px 26px;position:relative;box-shadow:0 12px 52px rgba(0,0,0,.22);}
-#modal-close{position:absolute;top:16px;right:18px;width:28px;height:28px;border:none;background:var(--surface2);border-radius:50%;font-size:15px;cursor:pointer;color:var(--text-dim);display:flex;align-items:center;justify-content:center;line-height:1;}
+#modal-box{background:#fff;border-radius:10px;width:min(700px,94vw);max-height:84vh;overflow-y:auto;padding:30px 34px 28px;position:relative;box-shadow:0 16px 60px rgba(0,0,0,.24);margin-bottom:40px;}
+#modal-close{position:absolute;top:16px;right:18px;width:30px;height:30px;border:none;background:var(--surface2);border-radius:50%;font-size:16px;cursor:pointer;color:var(--text-dim);display:flex;align-items:center;justify-content:center;line-height:1;transition:background .12s;}
 #modal-close:hover{background:var(--navy-light);color:var(--navy);}
-.modal-ticker{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--text-dim);text-transform:uppercase;margin-bottom:2px;}
-.modal-name{font-size:20px;font-weight:700;color:var(--navy);margin-bottom:16px;line-height:1.2;}
-.modal-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
-.modal-metric{background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:10px 12px;}
-.modal-metric .mm-label{font-size:9.5px;font-weight:700;letter-spacing:.1em;color:var(--text-dim);text-transform:uppercase;margin-bottom:4px;}
-.modal-metric .mm-val{font-family:'DM Mono',monospace;font-size:14px;font-weight:600;color:var(--navy);}
-.modal-news{background:var(--navy-light);border:1px solid var(--border);border-radius:8px;padding:18px 20px;margin-top:4px;}
-.modal-news .mn-topic{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-mid);margin-bottom:6px;}
-.modal-news h4{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:10px;}
-.modal-news p{font-size:12.5px;color:var(--text-mid);line-height:1.65;margin-bottom:10px;}
-.modal-news .mn-takeaway{background:#fff;border-left:3px solid var(--navy);padding:10px 14px;border-radius:0 6px 6px 0;font-size:12px;color:var(--text);line-height:1.6;}
-.modal-news .mn-takeaway strong{color:var(--navy);font-size:10px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:4px;}
-.modal-no-news{font-size:12px;color:var(--text-dim);font-style:italic;padding:12px 0;}
-.port-table tr[data-modal]{cursor:pointer;}
-.port-table tr[data-modal]:hover td{background:var(--navy-light)!important;}
-.perf-table tr[data-modal]{cursor:pointer;}
-.perf-table tr[data-modal]:hover td{background:var(--navy-light)!important;}
+.modal-ticker-line{font-family:'DM Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.14em;color:var(--text-dim);text-transform:uppercase;margin-bottom:3px;display:flex;align-items:center;gap:8px;}
+.modal-name{font-size:22px;font-weight:700;color:var(--navy);margin-bottom:18px;line-height:1.2;}
+.modal-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:22px;}
+.modal-metric{background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:11px 13px;}
+.modal-metric .mm-label{font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--text-dim);text-transform:uppercase;margin-bottom:5px;}
+.modal-metric .mm-val{font-family:'DM Mono',monospace;font-size:15px;font-weight:600;color:var(--navy);}
+.modal-news-wrap{background:var(--navy-light);border:1px solid var(--border);border-radius:9px;padding:20px 22px;}
+.modal-news-wrap .mn-topic{font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--navy-mid);margin-bottom:6px;}
+.modal-news-wrap h4{font-size:14.5px;font-weight:700;color:var(--navy);margin-bottom:11px;line-height:1.3;}
+.modal-news-wrap p{font-size:12.5px;color:var(--text-mid);line-height:1.7;margin-bottom:12px;}
+.modal-takeaway{background:#fff;border-left:3px solid var(--navy);padding:11px 15px;border-radius:0 7px 7px 0;font-size:12px;color:var(--text);line-height:1.65;}
+.modal-takeaway strong{color:var(--navy);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:5px;}
+.modal-no-news{font-size:12px;color:var(--text-dim);font-style:italic;padding:14px 0;}
+.modal-range-bar{height:8px;background:var(--navy-light);border-radius:4px;position:relative;margin:8px 0 4px;}
+.modal-range-fill{height:100%;border-radius:4px;opacity:.25;position:absolute;top:0;left:0;}
+.modal-range-dot{position:absolute;top:-5px;width:14px;height:14px;border-radius:50%;border:2.5px solid white;box-shadow:0 1px 4px rgba(0,0,0,.18);}
+.modal-range-labels{display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);}
+
+/* ── SCATTER LEGEND ── */
+.scatter-legend{display:flex;gap:16px;padding:8px 14px 0;font-size:10px;color:var(--text-dim);}
+.scatter-legend span{display:flex;align-items:center;gap:6px;}
+.sl-circle{display:inline-block;width:10px;height:10px;border-radius:50%;border:1.5px solid var(--gain);background:rgba(26,110,60,.2);}
+.sl-circle.loss{border-color:var(--loss);background:rgba(155,28,46,.2);}
+.sl-circle.penny{border:1.5px dashed var(--gain);background:rgba(26,110,60,.1);}
+
+/* ── INTERACTIVE HINTS ── */
+.interact-hint{font-size:9px;font-weight:400;color:var(--text-dim);margin-left:8px;letter-spacing:0;text-transform:none;}
+
+/* ── YTD ROW HOVER ── */
+.ytd-row{cursor:pointer;border-radius:3px;padding:0 4px;transition:background .1s;}
+.ytd-row:hover{background:var(--navy-light);}
 </style>
 </head>
 <body>
@@ -166,65 +201,75 @@ function switchTab(i) {
 // ── TOOLTIP HELPERS ───────────────────────────────────────────────────────────
 const _tt = () => document.getElementById('tt');
 function showTip(html, x, y) {
-  const t = _tt(); t.innerHTML = html; t.style.display = 'block';
-  moveTip(x, y);
+  const t = _tt(); t.innerHTML = html; t.style.display = 'block'; moveTip(x, y);
 }
 function moveTip(x, y) {
-  const t = _tt();
-  const tw = t.offsetWidth, th = t.offsetHeight;
-  const vw = window.innerWidth, vh = window.innerHeight;
-  let lx = x + 14, ly = y - 10;
-  if (lx + tw > vw - 8) lx = x - tw - 14;
-  if (ly + th > vh - 8) ly = vh - th - 8;
-  if (ly < 8) ly = 8;
-  t.style.left = lx + 'px'; t.style.top = ly + 'px';
+  const t = _tt(); if (t.style.display==='none') return;
+  const tw=t.offsetWidth, th=t.offsetHeight, vw=window.innerWidth, vh=window.innerHeight;
+  let lx=x+16, ly=y-12;
+  if (lx+tw>vw-8) lx=x-tw-16;
+  if (ly+th>vh-8) ly=vh-th-8;
+  if (ly<8) ly=8;
+  t.style.left=lx+'px'; t.style.top=ly+'px';
 }
-function hideTip() { _tt().style.display = 'none'; }
+function hideTip() { _tt().style.display='none'; }
 
 // ── MODAL HELPERS ─────────────────────────────────────────────────────────────
 function openModal(ticker, wIdx) {
-  const w = WEEKS[wIdx];
-  const h = w.holdings.find(x => x.ticker === ticker);
+  const w  = WEEKS[wIdx];
+  const h  = w.holdings.find(x => x.ticker === ticker);
   if (!h) return;
-  const news = w.news ? w.news.find(n => n.ticker === ticker) : null;
-  const fmt = v => v == null ? '—' : (v < 1 ? '$' + v.toFixed(3) : v >= 1000 ? '$' + Math.round(v).toLocaleString() : '$' + v.toFixed(2));
-  const pct = v => v == null ? '—' : (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
-  const gc = v => v == null ? '' : v >= 0 ? 'color:#1a6e3c' : 'color:#9b1c2e';
-  const sc = h.sentiment === 'Positive' ? '#1a6e3c' : h.sentiment === 'Negative' ? '#9b1c2e' : '#5a6a80';
-  const pfl = ((h.price - h.low52) / h.low52 * 100).toFixed(1);
-  const pos52 = ((h.price - h.low52) / (h.high52 - h.low52) * 100).toFixed(0);
-  const newsHtml = news ? `
-    <div class="modal-news">
-      <div class="mn-topic">${news.topic}</div>
-      <h4>${news.summary.length > 0 ? news.company : h.name} &mdash; What Happened</h4>
-      <p>${news.summary}</p>
-      <div class="mn-takeaway"><strong>JDCA Takeaway</strong>${news.takeaway}</div>
-    </div>` : `<div class="modal-no-news">No specific news coverage this week for ${h.ticker}.</div>`;
+  const news = (w.news || []).find(n => n.ticker === ticker) || null;
+  const fmtP2 = v => v == null ? '—' : (v >= 0 ? '+' : '') + v.toFixed(2) + '%';
+  const fmt$  = v => v == null ? '—' : v < 1 ? '$'+v.toFixed(3) : v >= 1000 ? '$'+Math.round(v).toLocaleString() : '$'+v.toFixed(2);
+  const gc    = v => v == null ? '' : v >= 0 ? 'color:var(--gain)' : 'color:var(--loss)';
+  const sc    = h.sentiment==='Positive'?'var(--gain)':h.sentiment==='Negative'?'var(--loss)':'var(--neutral)';
+  const pct52 = ((h.price-h.low52)/(h.high52-h.low52)*100).toFixed(0);
+  const pfl   = ((h.price-h.low52)/h.low52*100).toFixed(1);
+  const rangeBar = `<div class="modal-range-bar">
+    <div class="modal-range-fill" style="width:${pct52}%;background:${gc(h.weekly).replace('color:','') || '#1a2c4e'}"></div>
+    <div class="modal-range-dot" style="left:calc(${pct52}% - 7px);background:${gc(h.weekly).replace('color:','') || '#1a2c4e'}"></div>
+  </div>
+  <div class="modal-range-labels"><span>${fmt$(h.low52)} low</span><span>${pct52}% of range</span><span>${fmt$(h.high52)} high</span></div>`;
+  const newsHtml = news
+    ? `<div class="modal-news-wrap">
+        <div class="mn-topic">${news.topic}</div>
+        <h4>${news.company} &mdash; What Happened</h4>
+        <p>${news.summary}</p>
+        <div class="modal-takeaway"><strong>JDCA Takeaway</strong>${news.takeaway}</div>
+       </div>`
+    : `<div class="modal-no-news">No specific news coverage this week for ${h.ticker}.</div>`;
   document.getElementById('modal-content').innerHTML = `
-    <div class="modal-ticker">${h.ticker} &nbsp;·&nbsp; ${h.cap}</div>
+    <div class="modal-ticker-line">
+      <span style="font-family:'DM Mono',monospace">${h.ticker}</span>
+      <span style="background:var(--navy-light);color:var(--navy-mid);font-size:9px;padding:2px 8px;border-radius:3px;font-weight:600;letter-spacing:.08em;">${h.cap}</span>
+      ${isP(h)?'<span class="penny-badge">Penny</span>':''}
+    </div>
     <div class="modal-name">${h.name}</div>
     <div class="modal-metrics">
-      <div class="modal-metric"><div class="mm-label">Price</div><div class="mm-val">${fmt(h.price)}</div></div>
-      <div class="modal-metric"><div class="mm-label">1-Wk Return</div><div class="mm-val" style="${gc(h.weekly)}">${pct(h.weekly)}</div></div>
-      <div class="modal-metric"><div class="mm-label">YTD Return</div><div class="mm-val" style="${gc(h.ytd)}">${pct(h.ytd)}</div></div>
-      <div class="modal-metric"><div class="mm-label">vs. XLV</div><div class="mm-val" style="${gc(h.excessXlv)}">${h.excessXlv >= 0 ? '+' : ''}${h.excessXlv.toFixed(1)} ppt</div></div>
-      <div class="modal-metric"><div class="mm-label">Mkt Cap</div><div class="mm-val">${h.mktCap}</div></div>
+      <div class="modal-metric"><div class="mm-label">Price</div><div class="mm-val">${fmt$(h.price)}</div></div>
+      <div class="modal-metric"><div class="mm-label">1-Wk Return</div><div class="mm-val" style="${gc(h.weekly)}">${fmtP2(h.weekly)}</div></div>
+      <div class="modal-metric"><div class="mm-label">YTD Return</div><div class="mm-val" style="${gc(h.ytd)}">${fmtP2(h.ytd)}</div></div>
+      <div class="modal-metric"><div class="mm-label">vs. XLV</div><div class="mm-val" style="${gc(h.excessXlv)}">${h.excessXlv>=0?'+':''}${h.excessXlv.toFixed(1)} ppt</div></div>
+      <div class="modal-metric"><div class="mm-label">Mkt Cap</div><div class="mm-val" style="font-size:13px">${h.mktCap}</div></div>
       <div class="modal-metric"><div class="mm-label">Rel. Volume</div><div class="mm-val">${h.relVol}%</div></div>
-      <div class="modal-metric"><div class="mm-label">P/E Ratio</div><div class="mm-val">${h.pe ? h.pe.toFixed(1) : '—'}</div></div>
-      <div class="modal-metric"><div class="mm-label">Current Ratio</div><div class="mm-val">${h.cr != null ? h.cr.toFixed(2) : '—'}</div></div>
-      <div class="modal-metric"><div class="mm-label">52-Wk Low</div><div class="mm-val">${fmt(h.low52)}</div></div>
-      <div class="modal-metric"><div class="mm-label">52-Wk High</div><div class="mm-val">${fmt(h.high52)}</div></div>
-      <div class="modal-metric"><div class="mm-label">% from Low</div><div class="mm-val">+${pfl}%</div></div>
-      <div class="modal-metric"><div class="mm-label">Sentiment</div><div class="mm-val" style="color:${sc}">${h.sentiment}</div></div>
+      <div class="modal-metric"><div class="mm-label">P/E</div><div class="mm-val">${h.pe ? h.pe.toFixed(1) : '—'}</div></div>
+      <div class="modal-metric"><div class="mm-label">Curr. Ratio</div><div class="mm-val">${h.cr!=null ? h.cr.toFixed(2) : '—'}</div></div>
+    </div>
+    <div style="margin-bottom:18px;">
+      <div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:4px;">52-Week Range — +${pfl}% above 52-wk low</div>
+      ${rangeBar}
+    </div>
+    <div style="margin-bottom:18px;"><div style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px;">Sentiment</div>
+      ${sTag(h.sentiment)}
     </div>
     ${newsHtml}`;
   const ov = document.getElementById('modal-overlay');
-  ov.classList.add('open');
-  ov.scrollTop = 0;
+  ov.classList.add('open'); ov.scrollTop = 0;
 }
 function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
-document.getElementById('modal-overlay').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.getElementById('modal-overlay').addEventListener('click', e => { if(e.target===e.currentTarget) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 
 // ── STATS BAR ────────────────────────────────────────────────────────────────
 function buildStats(w) {
@@ -250,20 +295,29 @@ function buildStats(w) {
 function buildNews(w) {
   const gainers = w.news.filter(n=>n.side==='gainer');
   const losers  = w.news.filter(n=>n.side==='loser');
-  const rows = items => items.map(n=>`<tr>
-    <td><div class="company-name">${n.company}${n.penny?'<span class="penny-badge">Penny</span>':''}</div>${sTag(n.sentiment)}</td>
+  const neutral = w.news.filter(n=>n.side==='neutral');
+  const rows = (items, side) => items.map(n=>`<tr class="side-${side}">
+    <td class="news-company-cell">
+      <span class="news-ticker">${n.ticker}${n.penny?'<span class="penny-badge" style="font-size:7.5px;padding:1px 4px;margin-left:4px;">\u00a2</span>':''}</span>
+      <div class="company-name" style="font-size:11.5px">${n.company}</div>
+      ${sTag(n.sentiment)}
+    </td>
     <td><span class="topic-tag">${n.topic}</span></td>
     <td>${n.summary}</td>
     <td>${n.takeaway}</td>
     <td style="text-align:center"><span class="${n.valImpact?'impact-yes':'impact-no'}">${n.valImpact?'Yes':'No'}</span></td>
   </tr>`).join('');
-  const gBanner = `<tr><td colspan="5" style="background:#e8f5ee;padding:5px 12px;font-size:9px;font-weight:700;letter-spacing:.12em;color:var(--gain);text-transform:uppercase;border-bottom:1px solid var(--border);">\u25b2 Top Gainers</td></tr>`;
-  const lBanner = `<tr><td colspan="5" style="background:#fdf0f2;padding:5px 12px;font-size:9px;font-weight:700;letter-spacing:.12em;color:var(--loss);text-transform:uppercase;border-bottom:1px solid var(--border);">\u25bc Top Losers</td></tr>`;
+  const banner = (cls, icon, label) =>
+    `<tr><td colspan="5" class="news-section-hdr ${cls}">${icon} ${label}</td></tr>`;
+  let body = '';
+  if (gainers.length) body += banner('gain','▲','Gainers') + rows(gainers,'gainer');
+  if (losers.length)  body += banner('loss','▼','Losers')  + rows(losers,'loser');
+  if (neutral.length) body += banner('neut','◆','Other Developments') + rows(neutral,'neutral');
   return `<table class="news-table"><thead><tr>
     <th style="width:148px">Company</th><th style="width:130px">Topic</th>
     <th style="width:30%">Summary</th><th style="width:30%">JDCA Takeaway</th>
     <th style="width:88px">Med-Term<br>Val. Impact</th>
-  </tr></thead><tbody>${gBanner}${rows(gainers)}${lBanner}${rows(losers)}</tbody></table>`;
+  </tr></thead><tbody>${body}</tbody></table>`;
 }
 
 // ── SIDEBAR ──────────────────────────────────────────────────────────────────
@@ -309,8 +363,8 @@ function buildSidebar(w) {
 function buildGL(w, wIdx) {
   const sorted = [...w.holdings].sort((a,b)=>b.weekly-a.weekly);
   const top5 = sorted.slice(0,5), bot5 = sorted.slice(-5).reverse();
-  const thead = `<thead><tr><th>#</th><th>Ticker</th><th>Company</th><th style="text-align:right">1-Wk Return</th><th style="text-align:right">Vs. XLV (ppt)</th></tr></thead>`;
-  const rows = list => list.map((h,i)=>`<tr data-modal="1" onclick="openModal('${h.ticker.replace(/'/g,"\\'")}',${wIdx})" title="Click for details">
+  const thead = `<thead><tr><th>#</th><th>Ticker</th><th>Company</th><th style="text-align:right" data-ht="1-week price return">1-Wk Return</th><th style="text-align:right" data-ht="Return minus XLV ETF (healthcare benchmark) return, in percentage points">Vs. XLV (ppt)</th></tr></thead>`;
+  const rows = list => list.map((h,i)=>`<tr data-modal="1" onclick="openModal('${h.ticker.replace(/'/g,"\\'")}',${wIdx})" style="cursor:pointer" title="Click for details">
     <td><span class="rank-badge">${i+1}</span></td>
     <td class="ticker-cell">${h.ticker} ${pBadge(h)}</td>
     <td>${h.name}</td>
@@ -318,9 +372,9 @@ function buildGL(w, wIdx) {
     <td class="ret ${rCls(h.excessXlv)}" style="font-size:11px">${fmtX(h.excessXlv)}</td>
   </tr>`).join('');
   return `<div class="grid-2">
-    <div class="card"><div class="card-header"><div class="section-label">Top 5 Weekly Gainers <span style="font-size:9px;font-weight:400;color:var(--text-dim);margin-left:6px;">click row for details</span></div></div>
+    <div class="card"><div class="card-header"><div class="section-label">Top 5 Weekly Gainers <span class="interact-hint">click row for details</span></div></div>
       <table class="perf-table">${thead}<tbody>${rows(top5)}</tbody></table></div>
-    <div class="card"><div class="card-header"><div class="section-label">Top 5 Weekly Losers <span style="font-size:9px;font-weight:400;color:var(--text-dim);margin-left:6px;">click row for details</span></div></div>
+    <div class="card"><div class="card-header"><div class="section-label">Top 5 Weekly Losers <span class="interact-hint">click row for details</span></div></div>
       <table class="perf-table">${thead}<tbody>${rows(bot5)}</tbody></table></div>
   </div>`;
 }
@@ -334,7 +388,7 @@ function buildPortTable(w, wIdx) {
   let rows='', lastCap=null;
   sorted.forEach(h=>{
     if(h.cap!==lastCap){rows+=`<tr class="group-hdr"><td colspan="13">${h.cap}</td></tr>`;lastCap=h.cap;}
-    rows+=`<tr data-modal="1" onclick="openModal('${h.ticker.replace(/'/g,"\\'")}',${wIdx})" title="Click for full details">
+    rows+=`<tr class="${isP(h)?'penny-row':''}" onclick="openModal('${h.ticker.replace(/'/g,"\\'")}',${wIdx})" style="cursor:pointer" title="Click for full details">
       <td><span class="tk">${h.ticker}</span>${pBadge(h)}</td>
       <td>${h.name}</td>
       <td style="font-size:10px;color:var(--text-dim)">${h.cap}</td>
@@ -351,18 +405,31 @@ function buildPortTable(w, wIdx) {
     </tr>`;
   });
   return `<div style="margin-bottom:20px;"><div class="card">
-    <div class="card-header"><div class="section-label">Current Prices, Returns &amp; Key Metrics &mdash; All 21 Holdings <span style="font-size:9px;font-weight:400;color:var(--text-dim);margin-left:6px;">click any row for details</span></div></div>
+    <div class="card-header"><div class="section-label">Current Prices, Returns &amp; Key Metrics &mdash; All 21 Holdings <span class="interact-hint">click any row for details</span></div></div>
     <table class="port-table"><thead><tr>
-      <th>Ticker</th><th>Company</th><th>Cap Group</th><th>Mkt Cap</th>
-      <th>Price</th><th>52-Wk Low</th><th>52-Wk High</th>
-      <th>1-Wk Ret</th><th>YTD Ret</th><th>vs. XLV</th>
-      <th>P/E</th><th>Curr. Ratio</th><th>Sentiment</th>
+      <th>Ticker</th><th>Company</th><th>Cap Group</th>
+      <th data-ht="Total market capitalisation">Mkt Cap</th>
+      <th>Price</th>
+      <th data-ht="Lowest closing price over the past 52 weeks">52-Wk Low</th>
+      <th data-ht="Highest closing price over the past 52 weeks">52-Wk High</th>
+      <th data-ht="This week's price return">1-Wk Ret</th>
+      <th data-ht="Year-to-date price return">YTD Ret</th>
+      <th data-ht="Return vs. XLV (Health Care Select Sector ETF) this week, in percentage points. Positive = outperformed the benchmark.">vs. XLV</th>
+      <th data-ht="Price-to-Earnings ratio. — means negative or no earnings.">P/E</th>
+      <th data-ht="Current ratio = current assets ÷ current liabilities. A ratio above 1 means more short-term assets than liabilities.">Curr. Ratio</th>
+      <th data-ht="JDCA analyst sentiment: Positive / Neutral / Negative">Sentiment</th>
     </tr></thead><tbody>${rows}</tbody></table>
+    <div style="padding:8px 10px 10px;font-size:9.5px;color:var(--text-dim);border-top:1px solid var(--border);display:flex;gap:20px;flex-wrap:wrap;">
+      <span>¢ = penny stock (&lt;$5 share price) — rows highlighted</span>
+      <span>XLV = Health Care Select Sector ETF (benchmark)</span>
+      <span>P/E — = no or negative earnings</span>
+      <span>Curr. Ratio &gt;1 = more short-term assets than liabilities</span>
+    </div>
   </div></div>`;
 }
 
 // ── YTD CHART ────────────────────────────────────────────────────────────────
-function buildYTD(holdings, id) {
+function buildYTD(holdings, id, wIdx) {
   const el = document.getElementById(id); if(!el) return;
   const sorted = [...holdings].sort((a,b)=>b.ytd-a.ytd);
   const maxAbs = Math.max(...sorted.map(d=>Math.abs(d.ytd)));
@@ -383,6 +450,20 @@ function buildYTD(holdings, id) {
     row.innerHTML  = '<div class="ytd-lbl">'+d.ticker+badge+'</div>'
                    + '<div style="flex:1;display:flex;align-items:center;">'+leftCell+rightCell+'</div>'
                    + '<div class="ytd-val '+(isPos?'gain':'loss')+'">'+(isPos?'+':'')+d.ytd.toFixed(1)+'%</div>';
+    // hover tooltip
+    const sc = d.sentiment==='Positive'?'gain':d.sentiment==='Negative'?'loss':'neut';
+    const wk = (d.weekly>=0?'+':'')+d.weekly.toFixed(2)+'%';
+    row.addEventListener('mouseenter', e => {
+      showTip(`<div class="tt-ticker">${d.ticker}</div><div class="tt-name">${d.name}</div>`+
+        `<div class="tt-row"><span>YTD</span><strong class="${isPos?'gain':'loss'}">${isPos?'+':''}${d.ytd.toFixed(1)}%</strong></div>`+
+        `<div class="tt-row"><span>This week</span><strong class="${d.weekly>=0?'gain':'loss'}">${wk}</strong></div>`+
+        `<div class="tt-row"><span>Sentiment</span><strong class="${sc}">${d.sentiment}</strong></div>`+
+        `<div class="tt-hint">Click to open detail view</div>`,
+        e.clientX, e.clientY);
+    });
+    row.addEventListener('mousemove', e => moveTip(e.clientX, e.clientY));
+    row.addEventListener('mouseleave', () => hideTip());
+    row.addEventListener('click', () => openModal(d.ticker, wIdx));
     el.appendChild(row);
   });
 }
@@ -425,13 +506,13 @@ function buildScatter(holdings, id, wIdx) {
   ctx.fillStyle='#4a5a72';ctx.font='9px DM Mono,monospace';ctx.textAlign='center';
   ctx.fillText('Weekly Return',pad.left+pW/2,H-4);
   ctx.save();ctx.translate(11,pad.top+pH/2);ctx.rotate(-Math.PI/2);ctx.fillText('Relative Volume',0,0);ctx.restore();
-  // label hints
+  // label hints (permanently labelled tickers)
   const hints={'NVO':{dx:-7,dy:-8,a:'right'},'GNPX':{dx:7,dy:-8,a:'left'},'FLUI.ST':{dx:7,dy:-8,a:'left'},
     'NXTCL.ST':{dx:7,dy:12,a:'left'},'SABS':{dx:-7,dy:-8,a:'right'},'SANA':{dx:7,dy:-8,a:'left'},
     'SNY':{dx:7,dy:-8,a:'left'},'IPSC':{dx:7,dy:12,a:'left'},'CRSP':{dx:7,dy:-8,a:'left'},'EVO':{dx:-7,dy:12,a:'right'}};
-  // build hit-test data (CSS pixel coords)
+  // build dot positions for hit-testing (CSS px coords)
   const dots = holdings.map(d=>({x:px(d.weekly), y:py(Math.min(d.relVol,yMax)), data:d}));
-  // points
+  // draw points
   holdings.forEach(d=>{
     const xc=px(d.weekly),yc=py(Math.min(d.relVol,yMax)),color=d.weekly>=0?'#1a6e3c':'#9b1c2e';
     ctx.beginPath();ctx.arc(xc,yc,5,0,Math.PI*2);ctx.fillStyle=color+'30';ctx.fill();
@@ -448,43 +529,30 @@ function buildScatter(holdings, id, wIdx) {
     ctx.beginPath();ctx.moveTo(xc,pad.top+18);ctx.lineTo(xc,pad.top+4);ctx.stroke();
     ctx.beginPath();ctx.moveTo(xc-4,pad.top+10);ctx.lineTo(xc,pad.top+4);ctx.lineTo(xc+4,pad.top+10);ctx.stroke();
   });
-  // ── hover & click interaction ─────────────────────────────────────────────
-  // remove previous listeners by cloning canvas (safe since we redraw anyway)
-  canvas._scatterDots = dots;
-  canvas._scatterWIdx = wIdx;
+  // ── hover & click ─────────────────────────────────────────────────────────
+  canvas._scatterDots = dots; canvas._scatterWIdx = wIdx;
   if (!canvas._scatterBound) {
     canvas._scatterBound = true;
     canvas.addEventListener('mousemove', function(e) {
-      const rect = this.getBoundingClientRect();
-      const mx = e.clientX - rect.left, my = e.clientY - rect.top;
-      let hit = null;
-      for (const dot of this._scatterDots) {
-        const dx=mx-dot.x, dy=my-dot.y;
-        if (dx*dx+dy*dy < 100) { hit=dot.data; break; }
-      }
+      const rect=this.getBoundingClientRect(), mx=e.clientX-rect.left, my=e.clientY-rect.top;
+      let hit=null;
+      for (const dot of this._scatterDots) { const dx=mx-dot.x,dy=my-dot.y; if(dx*dx+dy*dy<100){hit=dot.data;break;} }
       if (hit) {
-        const wk = (hit.weekly>=0?'+':'')+hit.weekly.toFixed(2)+'%';
-        const wc = hit.weekly>=0 ? 'gain' : 'loss';
-        const sc = hit.sentiment==='Positive' ? 'gain' : hit.sentiment==='Negative' ? 'loss' : 'neut';
+        const wk=(hit.weekly>=0?'+':'')+hit.weekly.toFixed(2)+'%';
+        const wc=hit.weekly>=0?'gain':'loss';
+        const sc=hit.sentiment==='Positive'?'gain':hit.sentiment==='Negative'?'loss':'neut';
         showTip(`<div class="tt-ticker">${hit.ticker}</div><div class="tt-name">${hit.name}</div>`+
           `<div class="tt-row"><span>Weekly</span><strong class="${wc}">${wk}</strong></div>`+
           `<div class="tt-row"><span>Rel. Vol</span><strong>${hit.relVol}%</strong></div>`+
           `<div class="tt-row"><span>Sentiment</span><strong class="${sc}">${hit.sentiment}</strong></div>`+
-          `<div style="font-size:9.5px;color:#6a8ab0;margin-top:7px;">Click to open detail view</div>`,
-          e.clientX, e.clientY);
-        this.style.cursor = 'pointer';
-      } else {
-        hideTip(); this.style.cursor = 'default';
-      }
+          `<div class="tt-hint">Click to open detail view</div>`, e.clientX, e.clientY);
+        this.style.cursor='pointer';
+      } else { hideTip(); this.style.cursor='default'; }
     });
-    canvas.addEventListener('mouseleave', function() { hideTip(); this.style.cursor='default'; });
-    canvas.addEventListener('click', function(e) {
-      const rect = this.getBoundingClientRect();
-      const mx = e.clientX - rect.left, my = e.clientY - rect.top;
-      for (const dot of this._scatterDots) {
-        const dx=mx-dot.x, dy=my-dot.y;
-        if (dx*dx+dy*dy < 100) { openModal(dot.data.ticker, this._scatterWIdx); break; }
-      }
+    canvas.addEventListener('mouseleave', function(){ hideTip(); this.style.cursor='default'; });
+    canvas.addEventListener('click', function(e){
+      const rect=this.getBoundingClientRect(), mx=e.clientX-rect.left, my=e.clientY-rect.top;
+      for (const dot of this._scatterDots){ const dx=mx-dot.x,dy=my-dot.y; if(dx*dx+dy*dy<100){openModal(dot.data.ticker,this._scatterWIdx);break;} }
     });
   }
 }
@@ -505,8 +573,9 @@ function buildRange(holdings, id, wIdx) {
     const pct=(d.price-d.low52)/(d.high52-d.low52)*100;
     const pfl=(d.price-d.low52)/d.low52*100;
     const color=d.weekly>=0?'var(--gain)':'var(--loss)';
+    const colorRaw=d.weekly>=0?'#1a6e3c':'#9b1c2e';
     const row=document.createElement('div');
-    row.style.cssText='display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;border-radius:4px;padding:2px 0;transition:background .12s;';
+    row.style.cssText='display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;border-radius:4px;padding:2px 0;transition:background .1s;';
     row.innerHTML=`
       <div style="font-family:'DM Mono',monospace;font-size:10.5px;color:var(--navy);width:100px;flex-shrink:0;text-align:right;font-weight:600;">${d.ticker}${isP(d)?'<span class="penny-badge" style="font-size:7.5px;">\u00a2</span>':''}</div>
       <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);width:56px;flex-shrink:0;text-align:right;">${fmt(d.low52)}</div>
@@ -517,24 +586,23 @@ function buildRange(holdings, id, wIdx) {
       <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--text-dim);width:56px;flex-shrink:0;">${fmt(d.high52)}</div>
       <div style="font-family:'DM Mono',monospace;font-size:10.5px;color:var(--navy);width:80px;flex-shrink:0;text-align:right;font-weight:600;">${fmt(d.price)}</div>
       <div style="font-family:'DM Mono',monospace;font-size:10.5px;width:90px;flex-shrink:0;text-align:right;color:${color};font-weight:600;">+${pfl.toFixed(1)}% from low</div>`;
-    // ── hover tooltip ────────────────────────────────────────────────────────
-    const wk = (d.weekly>=0?'+':'')+d.weekly.toFixed(2)+'%';
-    const wc = d.weekly>=0 ? '#5dd88a' : '#f08090';
-    const sc = d.sentiment==='Positive'?'#5dd88a':d.sentiment==='Negative'?'#f08090':'#a8b8d0';
-    row.addEventListener('mouseenter', function(e) {
+    // hover & click
+    const wk=(d.weekly>=0?'+':'')+d.weekly.toFixed(2)+'%';
+    const wc=d.weekly>=0?'gain':'loss';
+    const sc=d.sentiment==='Positive'?'gain':d.sentiment==='Negative'?'loss':'neut';
+    row.addEventListener('mouseenter', function(e){
       this.style.background='var(--navy-light)';
       showTip(`<div class="tt-ticker">${d.ticker}</div><div class="tt-name">${d.name}</div>`+
         `<div class="tt-row"><span>Price</span><strong>${fmt(d.price)}</strong></div>`+
         `<div class="tt-row"><span>52-Wk Low</span><strong>${fmt(d.low52)}</strong></div>`+
         `<div class="tt-row"><span>52-Wk High</span><strong>${fmt(d.high52)}</strong></div>`+
-        `<div class="tt-row"><span>Weekly Chg</span><strong style="color:${wc}">${wk}</strong></div>`+
-        `<div class="tt-row"><span>Sentiment</span><strong style="color:${sc}">${d.sentiment}</strong></div>`+
-        `<div style="font-size:9.5px;color:#6a8ab0;margin-top:7px;">Click to open detail view</div>`,
-        e.clientX, e.clientY);
+        `<div class="tt-row"><span>Weekly</span><strong class="${wc}">${wk}</strong></div>`+
+        `<div class="tt-row"><span>Sentiment</span><strong class="${sc}">${d.sentiment}</strong></div>`+
+        `<div class="tt-hint">Click to open detail view</div>`, e.clientX, e.clientY);
     });
-    row.addEventListener('mousemove', e => moveTip(e.clientX, e.clientY));
-    row.addEventListener('mouseleave', function() { this.style.background=''; hideTip(); });
-    row.addEventListener('click', () => openModal(d.ticker, wIdx));
+    row.addEventListener('mousemove', e=>moveTip(e.clientX,e.clientY));
+    row.addEventListener('mouseleave', function(){ this.style.background=''; hideTip(); });
+    row.addEventListener('click', ()=>openModal(d.ticker, wIdx));
     el.appendChild(row);
   });
 }
@@ -574,17 +642,23 @@ function renderAll() {
         <div class="section-label" style="margin-bottom:14px">Portfolio Visualizations</div>
         <div class="grid-viz">
           <div class="card" style="grid-column:span 2;">
-            <div class="card-header"><div class="section-label">YTD Total Return &mdash; All Holdings</div></div>
+            <div class="card-header"><div class="section-label">YTD Total Return &mdash; All Holdings <span class="interact-hint">hover &amp; click bars</span></div></div>
             <div class="ytd-chart" id="${pid}-ytd"></div>
           </div>
           <div class="card">
-            <div class="card-header"><div class="section-label">Weekly Return vs. Relative Volume <span style="font-size:9px;font-weight:400;color:var(--text-dim);margin-left:6px;">hover &amp; click dots</span></div></div>
-            <div class="card-body" style="padding:14px;"><canvas id="${pid}-scatter" height="380"></canvas></div>
+            <div class="card-header"><div class="section-label">Weekly Return vs. Relative Volume <span class="interact-hint">hover &amp; click dots</span></div></div>
+            <div class="scatter-legend">
+              <span><span class="sl-circle"></span>Gainer</span>
+              <span><span class="sl-circle loss"></span>Loser</span>
+              <span><span class="sl-circle penny"></span>Penny stock (&lt;$5) — dashed border</span>
+              <span style="margin-left:auto;color:var(--text-dim);">Rel. vol = volume vs. 20-day avg</span>
+            </div>
+            <div class="card-body" style="padding:8px 14px 14px;"><canvas id="${pid}-scatter" height="380"></canvas></div>
           </div>
         </div>
       </div>
       <div style="margin-bottom:20px;">
-        <div class="section-label" style="margin-bottom:14px">52-Week Price Range &mdash; All Holdings <span style="font-size:9px;font-weight:400;color:var(--text-dim);margin-left:6px;">hover &amp; click rows</span></div>
+        <div class="section-label" style="margin-bottom:14px">52-Week Price Range &mdash; All Holdings <span class="interact-hint">hover &amp; click rows</span></div>
         <div class="card"><div class="card-body" id="${pid}-range" style="padding:18px 24px;"></div></div>
       </div>
       ${buildPortTable(w, i)}
@@ -595,7 +669,7 @@ function renderAll() {
       </div>`;
     panelsEl.appendChild(panel);
     requestAnimationFrame(()=>{
-      buildYTD(w.holdings,     `${pid}-ytd`);
+      buildYTD(w.holdings,     `${pid}-ytd`, i);
       buildRange(w.holdings,   `${pid}-range`, i);
       buildScatter(w.holdings, `${pid}-scatter`, i);
     });
