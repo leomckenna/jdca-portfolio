@@ -1,5 +1,84 @@
 const WEEKS = [
   {
+    label: "Week of 03/23/2026",
+    asOf: "03/23/2026",
+    stats: {
+      best:       { val: "+10.6%", sub: "ELDN · Eledon Pharma" },
+      worst:      { val: "−26.0%", sub: "HUMA · Humacyte" },
+      highestYtd: { val: "+124%",  sub: "IPSC · Century Therapeutics" },
+      positiveSentiment: { val: "2", sub: "vs. 2 Neg · 17 Neutral" }
+    },
+    holdings: [
+      { ticker:"LLY",      name:"Eli Lilly",           cap:"Large-cap",  mktCap:"$826.7B",  price:923.620,  low52:620.465, high52:1132.060, weekly:-6.622,  excessXlv:-2.894,  ytd:-13.913,  pe:40.26, cr:1.579,  relVol:100, sentiment:"Positive" },
+      { ticker:"NVO",      name:"Novo Nordisk",         cap:"Large-cap",  mktCap:"$162.8B",  price:36.515,   low52:35.850,  high52:80.533,   weekly:-5.353,  excessXlv:-1.624,  ytd:-28.233,  pe:10.34, cr:0.800,  relVol:84,  sentiment:"Negative" },
+      { ticker:"SNY",      name:"Sanofi",               cap:"Large-cap",  mktCap:"$109.2B",  price:44.830,   low52:43.320,  high52:55.156,   weekly:1.933,   excessXlv:5.661,   ytd:-7.491,   pe:19.41, cr:1.092,  relVol:119, sentiment:"Negative" },
+      { ticker:"VRTX",     name:"Vertex Pharma",        cap:"Large-cap",  mktCap:"$115.4B",  price:454.220,  low52:362.500, high52:513.980,  weekly:-2.549,  excessXlv:1.179,   ytd:0.190,    pe:29.69, cr:2.901,  relVol:92,  sentiment:"Positive" },
+      { ticker:"OTSKY",    name:"Otsuka Holdings",      cap:"Large-cap",  mktCap:"$34.8B",   price:32.850,   low52:21.435,  high52:36.060,   weekly:-4.144,  excessXlv:-0.415,  ytd:15.955,   pe:15.38, cr:2.165,  relVol:149, sentiment:"Neutral"  },
+      { ticker:"CRSP",     name:"CRISPR Therapeutics",  cap:"Mid-cap",    mktCap:"$4.5B",    price:47.270,   low52:30.040,  high52:78.480,   weekly:-2.375,  excessXlv:1.353,   ytd:-9.859,   pe:null,  cr:13.316, relVol:87,  sentiment:"Positive" },
+      { ticker:"SANA",     name:"Sana Biotech",         cap:"Small-cap",  mktCap:"$836.6M",  price:3.135,    low52:1.260,   high52:6.550,    weekly:-4.128,  excessXlv:-0.400,  ytd:-22.973,  pe:null,  cr:1.889,  relVol:96,  sentiment:"Negative" },
+      { ticker:"EVO",      name:"Evotec SE",            cap:"Small-cap",  mktCap:"$865.2M",  price:2.415,    low52:2.310,   high52:4.800,    weekly:-0.207,  excessXlv:3.522,   ytd:-21.591,  pe:null,  cr:2.118,  relVol:69,  sentiment:"Neutral"  },
+      { ticker:"LCTX",     name:"Lineage Cell",         cap:"Small-cap",  mktCap:"$364.9M",  price:1.465,    low52:0.370,   high52:2.090,    weekly:-8.437,  excessXlv:-4.709,  ytd:-12.275,  pe:null,  cr:5.204,  relVol:71,  sentiment:"Neutral"  },
+      { ticker:"IMCR",     name:"Immunocore",           cap:"Small-cap",  mktCap:"$1.6B",    price:30.825,   low52:23.150,  high52:40.715,   weekly:0.834,   excessXlv:4.562,   ytd:-11.193,  pe:null,  cr:4.040,  relVol:64,  sentiment:"Neutral"  },
+      { ticker:"HUMA",     name:"Humacyte",             cap:"Micro-cap",  mktCap:"$159.9M",  price:0.829,    low52:0.701,   high52:3.360,    weekly:-26.018, excessXlv:-22.290, ytd:-13.777,  pe:null,  cr:1.616,  relVol:343, sentiment:"Neutral"  },
+      { ticker:"IPSC",     name:"Century Therapeutics", cap:"Small-cap",  mktCap:"$400.8M",  price:2.230,    low52:0.342,   high52:3.040,    weekly:-8.230,  excessXlv:-4.502,  ytd:124.121,  pe:null,  cr:5.971,  relVol:127, sentiment:"Neutral"  },
+      { ticker:"ELDN",     name:"Eledon Pharma",        cap:"Micro-cap",  mktCap:"$241.5M",  price:3.030,    low52:1.350,   high52:4.600,    weekly:10.584,  excessXlv:14.312,  ytd:100.662,  pe:null,  cr:7.397,  relVol:139, sentiment:"Neutral"  },
+      { ticker:"SABS",     name:"SAB Biotherapeutics",  cap:"Micro-cap",  mktCap:"$197.7M",  price:3.880,    low52:1.000,   high52:6.600,    weekly:-1.523,  excessXlv:2.205,   ytd:3.743,    pe:null,  cr:9.461,  relVol:278, sentiment:"Neutral"  },
+      { ticker:"ADOC.PA",  name:"Adocia",               cap:"Micro-cap",  mktCap:"$121.3M",  price:6.191,    low52:3.316,   high52:14.375,   weekly:-8.247,  excessXlv:-4.519,  ytd:-20.299,  pe:null,  cr:1.136,  relVol:85,  sentiment:"Neutral"  },
+      { ticker:"SEOVF",    name:"Sernova",              cap:"Micro-cap",  mktCap:"$43.3M",   price:0.110,    low52:0.090,   high52:0.170,    weekly:-8.333,  excessXlv:-4.605,  ytd:22.222,   pe:null,  cr:0.030,  relVol:53,  sentiment:"Neutral"  },
+      { ticker:"NXTCL.ST", name:"NextCell Pharma",      cap:"Micro-cap",  mktCap:"$15.2M",   price:0.136,    low52:0.068,   high52:0.347,    weekly:4.262,   excessXlv:7.991,   ytd:74.008,   pe:null,  cr:5.157,  relVol:52,  sentiment:"Neutral"  },
+      { ticker:"NCEL",     name:"NewcelX",              cap:"Micro-cap",  mktCap:"$11.0M",   price:2.410,    low52:1.890,   high52:30.800,   weekly:-9.738,  excessXlv:-6.010,  ytd:26.842,   pe:null,  cr:0.023,  relVol:6,   sentiment:"Neutral"  },
+      { ticker:"CELZ",     name:"Creative Medical",     cap:"Micro-cap",  mktCap:"$6.5M",    price:1.865,    low52:1.504,   high52:6.250,    weekly:-1.842,  excessXlv:1.886,   ytd:-4.847,   pe:null,  cr:20.706, relVol:25,  sentiment:"Neutral"  },
+      { ticker:"GNPX",     name:"Genprex",              cap:"Micro-cap",  mktCap:"$4.4M",    price:1.920,    low52:1.710,   high52:55.000,   weekly:-7.246,  excessXlv:-3.518,  ytd:9.714,    pe:null,  cr:0.672,  relVol:43,  sentiment:"Neutral"  },
+      { ticker:"FLUI.ST",  name:"Fluicell",             cap:"Micro-cap",  mktCap:"$1.8M",    price:1.276,    low52:0.799,   high52:3.216,    weekly:10.185,  excessXlv:13.913,  ytd:19.000,   pe:null,  cr:1.003,  relVol:55,  sentiment:"Neutral"  }
+    ],
+    news: [
+      {
+        side: "gainer",
+        company: "Eledon Pharmaceuticals",
+        ticker: "ELDN",
+        penny: true,
+        sentiment: "Neutral",
+        topic: "FY2025 Earnings / Clinical Data",
+        summary: "ELDN jumped ~11% on a strong week of news: FY2025 results on March 19 highlighted over 100 patients treated with tegoprubart across transplant programs. Separately, updated islet transplant data from UChicago showed 10 out of 10 patients achieved insulin independence, with mean HbA1c of ~5.35% and no rejection events.",
+        takeaway: "The islet data is directly relevant to JDCA — tegoprubart is emerging as a leading immunosuppression-free option for islet transplantation. Strong Buy consensus with an average analyst target around $9. Phase 3 regulatory engagement is the next milestone to watch.",
+        valImpact: true
+      },
+      {
+        side: "loser",
+        company: "Humacyte",
+        ticker: "HUMA",
+        penny: true,
+        sentiment: "Neutral",
+        topic: "Dilutive Equity Offering",
+        summary: "HUMA fell 26% after announcing a $20M registered direct offering at $0.80/share on March 19 — a 25% discount to the prior close. The company simultaneously terminated its $60M ATM program. Cash at year-end was ~$51M, with only $2M in 2025 revenue from 61 Symvess units sold.",
+        takeaway: "The offering was necessary but the steep discount signals limited pricing power. Revenue ramp is extremely slow given the commercial infrastructure needed. Analysts are broadly bullish long-term but the near-term is a cash management story.",
+        valImpact: true
+      },
+      {
+        side: "loser",
+        company: "Lineage Cell Therapeutics",
+        ticker: "LCTX",
+        penny: true,
+        sentiment: "Neutral",
+        topic: "Continued Weakness / No New Catalyst",
+        summary: "LCTX fell another 8% this week with no new company-specific news, extending its slide from the prior two weeks. The stock is now down ~12% YTD despite the strong Q4 earnings beat two weeks ago and the CEO's share purchase.",
+        takeaway: "The drop looks like broader biotech sector selling rather than anything LCTX-specific. Fundamentally nothing has changed — the OpRegen retinal program is still the key catalyst, and the balance sheet is solid. The continued weakness without a catalyst is frustrating but not alarming.",
+        valImpact: false
+      },
+      {
+        side: "loser",
+        company: "NewcelX",
+        ticker: "NCEL",
+        penny: true,
+        sentiment: "Neutral",
+        topic: "Pullback / No Catalyst",
+        summary: "NCEL fell ~10% with no new news this week, giving back some of its recent gains. The stock is still up ~27% YTD. The recent collaboration with Eledon on pairing NCEL-101 with tegoprubart remains the most recent meaningful catalyst.",
+        takeaway: "Normal volatility for a micro-cap with very thin volume — a handful of trades can move it significantly in either direction. No fundamental change; the NCEL-101 T1D program and the Eledon partnership are still the story.",
+        valImpact: false
+      }
+    ]
+  },
+  {
     label: "Week of 03/16/2026",
     asOf: "03/16/2026",
     stats: {
