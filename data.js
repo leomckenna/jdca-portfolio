@@ -61,8 +61,8 @@ const WEEKS = [
         penny: true,
         sentiment: "Neutral",
         topic: "Continued Weakness / No New Catalyst",
-        summary: "LCTX fell another 8% this week with no new company-specific news, extending its slide from the prior two weeks. The stock is now down ~12% YTD despite the strong Q4 earnings beat two weeks ago and the CEO's share purchase.",
-        takeaway: "The drop looks like broader biotech sector selling rather than anything LCTX-specific. Fundamentally nothing has changed — the OpRegen retinal program is still the key catalyst, and the balance sheet is solid. The continued weakness without a catalyst is frustrating but not alarming.",
+        summary: "LCTX fell another 8% with no new company-specific news, extending its slide from the prior two weeks despite the strong Q4 earnings beat and CEO share purchase.",
+        takeaway: "Looks like sector-level selling, not LCTX-specific. OpRegen remains the key catalyst to watch.",
         valImpact: false
       },
       {
@@ -72,9 +72,31 @@ const WEEKS = [
         penny: true,
         sentiment: "Neutral",
         topic: "Pullback / No Catalyst",
-        summary: "NCEL fell ~10% with no new news this week, giving back some of its recent gains. The stock is still up ~27% YTD. The recent collaboration with Eledon on pairing NCEL-101 with tegoprubart remains the most recent meaningful catalyst.",
-        takeaway: "Normal volatility for a micro-cap with very thin volume — a handful of trades can move it significantly in either direction. No fundamental change; the NCEL-101 T1D program and the Eledon partnership are still the story.",
+        summary: "NCEL fell ~10% with no new news, giving back some recent gains. Still up ~27% YTD.",
+        takeaway: "Normal micro-cap volatility on thin volume. No fundamental change — the NCEL-101/Eledon partnership remains the story.",
         valImpact: false
+      },
+      {
+        side: "neutral",
+        company: "Sanofi",
+        ticker: "SNY",
+        penny: false,
+        sentiment: "Negative",
+        topic: "Venglustat Earns FDA Breakthrough Therapy Designation / JAK-ROCK Licensing Deal",
+        summary: "Two meaningful developments for SNY this week. On March 18, the FDA granted Breakthrough Therapy designation to venglustat for type 3 Gaucher disease (GD3), a rare neurological disorder with no currently approved treatments. The designation was based on Phase 3 LEAP2MONO data showing venglustat outperformed standard enzyme replacement therapy on neurological endpoints. Sanofi plans to pursue global regulatory filings for venglustat in GD3 during 2026. Separately, Sanofi agreed to pay up to $1.53 billion for global rights to a first-in-class JAK/ROCK inhibitor (rovadicitinib) from China's Sino Biopharmaceutical — a dual-mechanism compound with both anti-inflammatory and anti-fibrotic effects already approved in China for myelofibrosis.",
+        takeaway: "The BTD for venglustat adds a concrete rare disease catalyst and accelerates the regulatory timeline — a meaningful pipeline win at a time when Sanofi's stock is down ~7% YTD. The Sino deal expands the immunology/inflammation pipeline with an asset that's already been de-risked through Chinese approval, though $1.53B in potential payments is a large commitment. Neither news moved the stock significantly this week, as the market remains focused on longer-term Dupixent replacement concerns, but both are incremental positives for the pipeline story.",
+        valImpact: true
+      },
+      {
+        side: "gainer",
+        company: "Immunocore",
+        ticker: "IMCR",
+        penny: false,
+        sentiment: "Neutral",
+        topic: "KIMMTRAK 5-Year OS Data to Be Presented at AACR",
+        summary: "On March 17, Immunocore announced it will present 5-year overall survival data from the KIMMTRAK Phase 3 trial at the AACR Annual Meeting in April — the longest OS follow-up in any randomized trial for metastatic uveal melanoma. The data will be released at the time of the oral presentation.",
+        takeaway: "Five-year OS data in uveal melanoma is a milestone readout — it will either reinforce KIMMTRAK's survival advantage or raise questions about durability. IMCR has $864M in cash, multiple Phase 3 trials underway, and a pipeline extending into autoimmune disease (including an early-stage T1D program). The AACR presentation is the near-term catalyst to watch.",
+        valImpact: true
       }
     ]
   },
