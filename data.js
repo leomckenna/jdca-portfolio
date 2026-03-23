@@ -50,8 +50,8 @@ const WEEKS = [
         penny: true,
         sentiment: "Neutral",
         topic: "Dilutive Equity Offering",
-        summary: "HUMA fell 26% after announcing a $20M registered direct offering at $0.80/share on March 19 — a 25% discount to the prior close. The company simultaneously terminated its $60M ATM program. Cash at year-end was ~$51M, with only $2M in 2025 revenue from 61 Symvess units sold.",
-        takeaway: "The offering was necessary but the steep discount signals limited pricing power. Revenue ramp is extremely slow given the commercial infrastructure needed. Analysts are broadly bullish long-term but the near-term is a cash management story.",
+        summary: "HUMA fell 26% after announcing it was raising $20M by selling new shares at a price well below where the stock had been trading — a sign the company had limited options and needed cash quickly. For context, Humacyte makes Symvess, a bioengineered blood vessel used in trauma surgery, but sold only 61 units in all of 2025, generating less than $2M in revenue.",
+        takeaway: "The fundraising was necessary but the terms were painful for existing shareholders. The product works — it just hasn't found its commercial footing yet. Upcoming earnings on March 27 and results from a Phase 3 dialysis trial are the next things to watch. Also worth noting: Sanofi (SNY) holds a strategic investment in Humacyte, so HUMA weakness is a small indirect drag on SNY as well.",
         valImpact: true
       },
       {
