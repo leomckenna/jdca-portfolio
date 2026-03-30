@@ -1,5 +1,106 @@
 const WEEKS = [
   {
+    label: "Week of 03/30/2026",
+    asOf: "03/30/2026",
+    stats: {
+      best:       { val: "+9.1%",  sub: "SEOVF · Sernova" },
+      worst:      { val: "−23.7%", sub: "HUMA · Humacyte" },
+      highestYtd: { val: "+102%",  sub: "IPSC · Century Therapeutics" },
+      positiveSentiment: { val: "2", sub: "vs. 2 Neg · 17 Neutral" }
+    },
+    holdings: [
+      { ticker:"LLY",      name:"Eli Lilly",           cap:"Large-cap",  mktCap:"$799.5B",  price:892.960,  low52:620.465, high52:1132.060, weekly:-1.932,  excessXlv:-1.697,  ytd:-16.771,  pe:38.97, cr:1.579,  relVol:59,  sentiment:"Positive" },
+      { ticker:"NVO",      name:"Novo Nordisk",         cap:"Large-cap",  mktCap:"$158.3B",  price:35.390,   low52:35.140,  high52:80.533,   weekly:-3.884,  excessXlv:-3.649,  ytd:-30.444,  pe:9.94,  cr:0.800,  relVol:62,  sentiment:"Negative" },
+      { ticker:"SNY",      name:"Sanofi",               cap:"Large-cap",  mktCap:"$114.1B",  price:46.845,   low52:43.320,  high52:53.624,   weekly:4.635,   excessXlv:4.870,   ytd:-3.333,   pe:20.11, cr:1.092,  relVol:59,  sentiment:"Negative" },
+      { ticker:"VRTX",     name:"Vertex Pharma",        cap:"Large-cap",  mktCap:"$111.1B",  price:437.240,  low52:362.500, high52:510.770,  weekly:-3.103,  excessXlv:-2.868,  ytd:-3.556,   pe:28.52, cr:2.901,  relVol:77,  sentiment:"Positive" },
+      { ticker:"OTSKY",    name:"Otsuka Holdings",      cap:"Large-cap",  mktCap:"$37.1B",   price:34.930,   low52:21.435,  high52:36.060,   weekly:6.332,   excessXlv:6.567,   ytd:23.297,   pe:16.25, cr:2.165,  relVol:124, sentiment:"Neutral"  },
+      { ticker:"CRSP",     name:"CRISPR Therapeutics",  cap:"Mid-cap",    mktCap:"$4.4B",    price:45.600,   low52:30.040,  high52:78.480,   weekly:-2.730,  excessXlv:-2.496,  ytd:-13.043,  pe:null,  cr:13.316, relVol:52,  sentiment:"Positive" },
+      { ticker:"SANA",     name:"Sana Biotech",         cap:"Small-cap",  mktCap:"$731.2M",  price:2.740,    low52:1.260,   high52:6.550,    weekly:-12.179, excessXlv:-11.945, ytd:-32.678,  pe:null,  cr:1.889,  relVol:74,  sentiment:"Negative" },
+      { ticker:"EVO",      name:"Evotec SE",            cap:"Small-cap",  mktCap:"$856.2M",  price:2.390,    low52:2.310,   high52:4.800,    weekly:0.420,   excessXlv:0.655,   ytd:-22.403,  pe:null,  cr:2.118,  relVol:42,  sentiment:"Neutral"  },
+      { ticker:"LCTX",     name:"Lineage Cell",         cap:"Small-cap",  mktCap:"$369.9M",  price:1.485,    low52:0.370,   high52:2.090,    weekly:1.020,   excessXlv:1.255,   ytd:-11.078,  pe:null,  cr:5.204,  relVol:63,  sentiment:"Neutral"  },
+      { ticker:"IMCR",     name:"Immunocore",           cap:"Small-cap",  mktCap:"$1.5B",    price:29.160,   low52:23.150,  high52:40.715,   weekly:-3.921,  excessXlv:-3.686,  ytd:-15.990,  pe:null,  cr:4.040,  relVol:92,  sentiment:"Neutral"  },
+      { ticker:"HUMA",     name:"Humacyte",             cap:"Micro-cap",  mktCap:"$141.3M",  price:0.648,    low52:0.645,   high52:2.930,    weekly:-23.718, excessXlv:-23.483, ytd:-32.529,  pe:null,  cr:3.690,  relVol:127, sentiment:"Neutral"  },
+      { ticker:"IPSC",     name:"Century Therapeutics", cap:"Small-cap",  mktCap:"$360.3M",  price:2.005,    low52:0.342,   high52:3.040,    weekly:-15.401, excessXlv:-15.166, ytd:101.508,  pe:null,  cr:5.971,  relVol:69,  sentiment:"Neutral"  },
+      { ticker:"ELDN",     name:"Eledon Pharma",        cap:"Micro-cap",  mktCap:"$218.6M",  price:2.755,    low52:1.350,   high52:4.600,    weekly:-11.129, excessXlv:-10.894, ytd:82.450,   pe:null,  cr:7.397,  relVol:54,  sentiment:"Neutral"  },
+      { ticker:"SABS",     name:"SAB Biotherapeutics",  cap:"Micro-cap",  mktCap:"$268.7M",  price:3.824,    low52:1.000,   high52:6.600,    weekly:-2.697,  excessXlv:-2.462,  ytd:2.245,    pe:null,  cr:9.461,  relVol:130, sentiment:"Neutral"  },
+      { ticker:"ADOC.PA",  name:"Adocia",               cap:"Micro-cap",  mktCap:"$104.6M",  price:5.337,    low52:3.282,   high52:14.232,   weekly:-12.098, excessXlv:-11.863, ytd:-30.597,  pe:null,  cr:1.136,  relVol:87,  sentiment:"Neutral"  },
+      { ticker:"SEOVF",    name:"Sernova",              cap:"Micro-cap",  mktCap:"$43.4M",   price:0.120,    low52:0.090,   high52:0.170,    weekly:9.091,   excessXlv:9.326,   ytd:33.333,   pe:null,  cr:0.030,  relVol:74,  sentiment:"Neutral"  },
+      { ticker:"NXTCL.ST", name:"NextCell Pharma",      cap:"Micro-cap",  mktCap:"$14.2M",   price:0.128,    low52:0.066,   high52:0.340,    weekly:-4.403,  excessXlv:-4.168,  ytd:66.347,   pe:null,  cr:5.157,  relVol:77,  sentiment:"Neutral"  },
+      { ticker:"NCEL",     name:"NewcelX",              cap:"Micro-cap",  mktCap:"$9.8M",    price:2.150,    low52:1.890,   high52:30.800,   weekly:-12.245, excessXlv:-12.010, ytd:13.158,   pe:null,  cr:0.023,  relVol:9,   sentiment:"Neutral"  },
+      { ticker:"FLUI.ST",  name:"Fluicell",             cap:"Micro-cap",  mktCap:"$1.6M",    price:1.134,    low52:0.782,   high52:3.151,    weekly:-9.244,  excessXlv:-9.009,  ytd:8.000,    pe:null,  cr:1.003,  relVol:40,  sentiment:"Neutral"  },
+      { ticker:"CELZ",     name:"Creative Medical",     cap:"Micro-cap",  mktCap:"$7.4M",    price:1.990,    low52:1.504,   high52:6.250,    weekly:6.989,   excessXlv:7.224,   ytd:1.531,    pe:null,  cr:25.972, relVol:33,  sentiment:"Neutral"  },
+      { ticker:"GNPX",     name:"Genprex",              cap:"Micro-cap",  mktCap:"$3.0M",    price:1.858,    low52:1.710,   high52:55.000,   weekly:-2.723,  excessXlv:-2.488,  ytd:6.171,    pe:null,  cr:0.672,  relVol:19,  sentiment:"Neutral"  }
+    ],
+    news: [
+      {
+        side: "gainer",
+        company: "Sanofi",
+        ticker: "SNY",
+        penny: false,
+        sentiment: "Negative",
+        topic: "Pipeline Wins / Dupixent Japan",
+        summary: "SNY rose ~5% on a cluster of positive news: Dupixent was approved in Japan for bullous pemphigoid (a rare blistering skin disease), and the FDA granted breakthrough therapy designation for venglustat in type 3 Gaucher disease, which can fast-track its path to approval.",
+        takeaway: "Two regulatory wins in one week is a meaningful shift for a stock in a long downtrend. The sell-side is warming back up after Berenberg and Bernstein both initiated with bullish ratings last week. The big catalyst still ahead is the amlitelimab Phase 3 data readout.",
+        valImpact: true
+      },
+      {
+        side: "gainer",
+        company: "Otsuka Holdings",
+        ticker: "OTSKY",
+        penny: false,
+        sentiment: "Neutral",
+        topic: "Continued Momentum",
+        summary: "OTSKY gained another ~6% with no new specific catalyst, extending last week's earnings-driven rally. The stock is now up over 23% YTD and approaching its 52-week high. The ¥50B share buyback announced two weeks ago continues to support the stock.",
+        takeaway: "Back-to-back strong weeks on the heels of solid earnings and a buyback. Confirmatory kidney function data for Voyxact, expected sometime in 2026, remains the next meaningful catalyst.",
+        valImpact: false
+      },
+      {
+        side: "gainer",
+        company: "Sernova Biotherapeutics",
+        ticker: "SEOVF",
+        penny: true,
+        sentiment: "Neutral",
+        topic: "AGM Approaching / Debt Vote",
+        summary: "SEOVF rose ~9% in thin trading ahead of its April 8 shareholder meeting, where investors will vote to approve the $4M insider-backed financing announced last month. If approved, proceeds will pay off a loan maturing April 16 and remove the near-term debt pressure.",
+        takeaway: "The vote is the key event. If it passes, the April debt maturity is off the table and Sernova has more breathing room to advance its T1D Cell Pouch program. Very thinly traded — the move can reverse just as quickly.",
+        valImpact: true
+      },
+      {
+        side: "loser",
+        company: "Humacyte",
+        ticker: "HUMA",
+        penny: true,
+        sentiment: "Neutral",
+        topic: "Q4 Earnings Miss",
+        summary: "HUMA fell another ~24% after Q4 earnings on March 27 badly missed expectations — revenue of just $500K against estimates of $1.35M, with only 61 Symvess units sold in its entire first commercial year. The stock hit a new all-time low.",
+        takeaway: "The product works — the problem is getting hospitals to adopt it, which takes time and salesforce investment Humacyte doesn't currently have. The company is guiding for $10M in 2026 revenue, but after Q4, that target looks like a stretch. A partnership deal or bigger hospital rollout would be the fastest path to changing the narrative.",
+        valImpact: true
+      },
+      {
+        side: "loser",
+        company: "Century Therapeutics",
+        ticker: "IPSC",
+        penny: true,
+        sentiment: "Neutral",
+        topic: "Momentum Unwind",
+        summary: "IPSC fell another ~15% with no new news, continuing the pullback from its mid-March peak near $3. The stock is still up over 100% YTD but has given back roughly a third of its gains in three weeks.",
+        takeaway: "No fundamental change — this is momentum unwinding in a thinly traded stock after a huge run. Balance sheet is solid after the January raise, and the CNTY-813 T1D program is the thesis. Watch for IND submission news as the next potential catalyst.",
+        valImpact: false
+      },
+      {
+        side: "loser",
+        company: "Sana Biotechnology",
+        ticker: "SANA",
+        penny: true,
+        sentiment: "Negative",
+        topic: "Cash Runway Pressure",
+        summary: "SANA fell ~12% this week with no new news, now down ~33% YTD. Cash runway only extends into late 2026, and the market is pricing in the likelihood of another fundraise before SC451 generates any clinical data.",
+        takeaway: "The 14-month T1D data is the best in class and the science is compelling. But the funding clock is the main story right now — any capital raise announcement or partnership deal would be a meaningful stabilizer.",
+        valImpact: true
+      }
+    ]
+  },
+  {
     label: "Week of 03/23/2026",
     asOf: "03/23/2026",
     stats: {
