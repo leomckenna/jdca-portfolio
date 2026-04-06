@@ -34,6 +34,17 @@ const WEEKS = [
     news: [
       {
         side: "gainer",
+        company: "Eli Lilly",
+        ticker: "LLY",
+        penny: false,
+        sentiment: "Positive",
+        topic: "Foundayo (Orforglipron) FDA Approval",
+        summary: "The FDA approved Lilly's oral obesity pill orforglipron — branded Foundayo — on April 1, kicking off what's expected to be a major new chapter for the company. It's a once-daily pill with no food or water restrictions, priced at $25/month with insurance or $149/month out of pocket. Shipping began April 6. NVO also gained ~7% this week as the market sees the oral GLP-1 category expanding rather than just taking share from injectable Wegovy.",
+        takeaway: "This is one of the most anticipated drug approvals of the year and the long-term thesis driver we've been watching. Foundayo goes head-to-head with Novo's oral Wegovy (approved December 2025), with a key advantage — no food or timing restrictions for dosing. Analysts are projecting blockbuster potential. Lilly is already shipping and has $1.5B of inventory pre-built.",
+        valImpact: true
+      },
+      {
+        side: "gainer",
         company: "Sana Biotechnology",
         ticker: "SANA",
         penny: true,
