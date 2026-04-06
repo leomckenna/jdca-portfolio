@@ -1,5 +1,84 @@
 const WEEKS = [
   {
+    label: "Week of 04/06/2026",
+    asOf: "04/06/2026",
+    stats: {
+      best:       { val: "+22.2%", sub: "FLUI.ST · Fluicell" },
+      worst:      { val: "−15.4%", sub: "GNPX · Genprex" },
+      highestYtd: { val: "+119%",  sub: "IPSC · Century Therapeutics" },
+      positiveSentiment: { val: "2", sub: "vs. 2 Neg · 17 Neutral" }
+    },
+    holdings: [
+      { ticker:"LLY",      name:"Eli Lilly",           cap:"Large-cap",  mktCap:"$831.4B",  price:928.929,  low52:620.465, high52:1132.060, weekly:5.772,   excessXlv:3.719,   ytd:-13.418,  pe:40.53, cr:1.579,  relVol:96,  sentiment:"Positive" },
+      { ticker:"NVO",      name:"Novo Nordisk",         cap:"Large-cap",  mktCap:"$165.3B",  price:37.245,   low52:34.582,  high52:77.683,   weekly:7.134,   excessXlv:5.081,   ytd:-24.114,  pe:10.46, cr:0.800,  relVol:70,  sentiment:"Negative" },
+      { ticker:"SNY",      name:"Sanofi",               cap:"Large-cap",  mktCap:"$116.5B",  price:47.850,   low52:43.320,  high52:53.404,   weekly:2.287,   excessXlv:0.235,   ytd:-1.259,   pe:20.54, cr:1.092,  relVol:56,  sentiment:"Negative" },
+      { ticker:"VRTX",     name:"Vertex Pharma",        cap:"Large-cap",  mktCap:"$111.0B",  price:437.100,  low52:362.500, high52:510.770,  weekly:0.931,   excessXlv:-1.122,  ytd:-3.587,   pe:28.55, cr:2.901,  relVol:84,  sentiment:"Positive" },
+      { ticker:"OTSKY",    name:"Otsuka Holdings",      cap:"Large-cap",  mktCap:"$38.6B",   price:35.800,   low52:21.435,  high52:36.550,   weekly:3.498,   excessXlv:1.446,   ytd:26.368,   pe:16.57, cr:2.165,  relVol:87,  sentiment:"Neutral"  },
+      { ticker:"CRSP",     name:"CRISPR Therapeutics",  cap:"Mid-cap",    mktCap:"$4.8B",    price:50.000,   low52:30.040,  high52:78.480,   weekly:9.290,   excessXlv:7.237,   ytd:-4.653,   pe:null,  cr:13.316, relVol:71,  sentiment:"Positive" },
+      { ticker:"SANA",     name:"Sana Biotech",         cap:"Small-cap",  mktCap:"$859.9M",  price:3.222,    low52:1.260,   high52:6.550,    weekly:16.329,  excessXlv:14.276,  ytd:-20.828,  pe:null,  cr:1.889,  relVol:80,  sentiment:"Negative" },
+      { ticker:"EVO",      name:"Evotec SE",            cap:"Small-cap",  mktCap:"$945.8M",  price:2.640,    low52:2.310,   high52:4.800,    weekly:9.091,   excessXlv:7.039,   ytd:-14.286,  pe:null,  cr:2.118,  relVol:48,  sentiment:"Neutral"  },
+      { ticker:"LCTX",     name:"Lineage Cell",         cap:"Small-cap",  mktCap:"$392.3M",  price:1.575,    low52:0.370,   high52:2.090,    weekly:5.705,   excessXlv:3.652,   ytd:-5.689,   pe:null,  cr:5.204,  relVol:50,  sentiment:"Neutral"  },
+      { ticker:"IMCR",     name:"Immunocore",           cap:"Small-cap",  mktCap:"$1.6B",    price:31.600,   low52:23.150,  high52:40.715,   weekly:7.337,   excessXlv:5.285,   ytd:-8.960,   pe:null,  cr:4.040,  relVol:113, sentiment:"Neutral"  },
+      { ticker:"HUMA",     name:"Humacyte",             cap:"Micro-cap",  mktCap:"$146.5M",  price:0.660,    low52:0.547,   high52:2.930,    weekly:-2.367,  excessXlv:-4.419,  ytd:-31.322,  pe:null,  cr:3.690,  relVol:111, sentiment:"Neutral"  },
+      { ticker:"IPSC",     name:"Century Therapeutics", cap:"Small-cap",  mktCap:"$391.8M",  price:2.180,    low52:0.342,   high52:3.040,    weekly:7.921,   excessXlv:5.869,   ytd:119.095,  pe:null,  cr:5.971,  relVol:64,  sentiment:"Neutral"  },
+      { ticker:"ELDN",     name:"Eledon Pharma",        cap:"Micro-cap",  mktCap:"$259.6M",  price:3.260,    low52:1.350,   high52:4.600,    weekly:15.194,  excessXlv:13.142,  ytd:115.894,  pe:null,  cr:7.397,  relVol:84,  sentiment:"Neutral"  },
+      { ticker:"SABS",     name:"SAB Biotherapeutics",  cap:"Micro-cap",  mktCap:"$268.0M",  price:3.814,    low52:1.000,   high52:6.600,    weekly:-0.935,  excessXlv:-2.987,  ytd:1.978,    pe:null,  cr:9.461,  relVol:107, sentiment:"Neutral"  },
+      { ticker:"ADOC.PA",  name:"Adocia",               cap:"Micro-cap",  mktCap:"$105.1M",  price:5.364,    low52:3.815,   high52:14.335,   weekly:-0.322,  excessXlv:-2.374,  ytd:-30.746,  pe:null,  cr:1.136,  relVol:68,  sentiment:"Neutral"  },
+      { ticker:"SEOVF",    name:"Sernova",              cap:"Micro-cap",  mktCap:"$40.0M",   price:0.110,    low52:0.090,   high52:0.170,    weekly:0.000,   excessXlv:-2.052,  ytd:22.222,   pe:null,  cr:0.030,  relVol:14,  sentiment:"Neutral"  },
+      { ticker:"NXTCL.ST", name:"NextCell Pharma",      cap:"Micro-cap",  mktCap:"$14.4M",   price:0.129,    low52:0.067,   high52:0.340,    weekly:-6.327,  excessXlv:-8.379,  ytd:66.074,   pe:null,  cr:5.157,  relVol:69,  sentiment:"Neutral"  },
+      { ticker:"NCEL",     name:"NewcelX",              cap:"Micro-cap",  mktCap:"$10.0M",   price:2.200,    low52:1.830,   high52:30.800,   weekly:-0.901,  excessXlv:-2.953,  ytd:15.789,   pe:null,  cr:0.023,  relVol:36,  sentiment:"Neutral"  },
+      { ticker:"FLUI.ST",  name:"Fluicell",             cap:"Micro-cap",  mktCap:"$2.1M",    price:1.521,    low52:0.792,   high52:3.191,    weekly:22.222,  excessXlv:20.170,  ytd:43.000,   pe:null,  cr:1.003,  relVol:63,  sentiment:"Neutral"  },
+      { ticker:"CELZ",     name:"Creative Medical",     cap:"Micro-cap",  mktCap:"$7.7M",    price:2.080,    low52:1.504,   high52:6.250,    weekly:5.584,   excessXlv:3.532,   ytd:6.122,    pe:null,  cr:25.972, relVol:38,  sentiment:"Neutral"  },
+      { ticker:"GNPX",     name:"Genprex",              cap:"Micro-cap",  mktCap:"$3.6M",    price:1.540,    low52:1.430,   high52:55.000,   weekly:-15.385, excessXlv:-17.437, ytd:-12.000,  pe:null,  cr:3.843,  relVol:40,  sentiment:"Neutral"  }
+    ],
+    news: [
+      {
+        side: "gainer",
+        company: "Sana Biotechnology",
+        ticker: "SANA",
+        penny: true,
+        sentiment: "Negative",
+        topic: "Pharma Tariff Relief / Biotech Rally",
+        summary: "SANA rebounded ~16% this week, snapping a three-week losing streak. The primary driver appears to be sector-wide relief following Trump's April 2 pharmaceutical tariff announcement, which included broad exemptions for generics, biosimilars, and companies with MFN pricing deals — effectively excluding most of the JDCA portfolio, including cell therapy and gene therapy names like SANA.",
+        takeaway: "No company-specific catalyst — the move is macro-driven. The tariff news removed a big overhang that had been weighing on biotech broadly. The underlying SANA story hasn't changed: strong 14-month T1D data, SC451 IND expected this year, and a cash runway that needs extending into 2027. A fundraise announcement remains the key near-term risk.",
+        valImpact: false
+      },
+      {
+        side: "gainer",
+        company: "Eledon Pharmaceuticals",
+        ticker: "ELDN",
+        penny: true,
+        sentiment: "Neutral",
+        topic: "Continued Momentum / Tariff Tailwind",
+        summary: "ELDN gained ~15%, likely benefiting from the same broad biotech relief rally following the pharma tariff announcement. Eledon's tegoprubart is an antibody therapy in clinical development — not an imported patented drug — so it is not directly affected by the tariffs. No new company-specific news this week.",
+        takeaway: "The strong YTD run (+116%) reflects accumulating clinical momentum from the tegoprubart data across kidney and islet transplantation, and the stock appears to be benefiting from general sector rotation into biotech this week. The upcoming FDA guidance meeting on Phase 3 kidney trial design remains the next key catalyst.",
+        valImpact: false
+      },
+      {
+        side: "gainer",
+        company: "CRISPR Therapeutics",
+        ticker: "CRSP",
+        penny: false,
+        sentiment: "Positive",
+        topic: "Biotech Rally / Tariff Exemptions",
+        summary: "CRSP gained ~9%, recovering some of the ground lost from the March convertible note offering selloff. Biosimilars and gene therapy products are explicitly exempt from the new pharma tariffs, which is directly relevant to CASGEVY and the broader pipeline. No new company-specific catalyst this week.",
+        takeaway: "The tariff exemption for gene therapies and biosimilars is a meaningful positive for CRSP specifically. The convertible note overhang from March appears to be fading — CASGEVY commercial momentum and the upcoming CTX310/CTX611 data in H2 2026 remain the fundamental thesis.",
+        valImpact: false
+      },
+      {
+        side: "loser",
+        company: "Genprex",
+        ticker: "GNPX",
+        penny: true,
+        sentiment: "Neutral",
+        topic: "No Catalyst / Thin Volume Drift",
+        summary: "GNPX fell ~15% with no company-specific news, in very thin trading — only 299K shares changed hands vs. a 100-day average of 742K. The stock is still up ~6% YTD despite the move.",
+        takeaway: "Nothing to read into — this is a micro-cap penny stock with extremely thin volume where a small amount of selling can cause outsized price moves. The last meaningful update was attendance at BIO Europe Spring in late March.",
+        valImpact: false
+      }
+    ]
+  },
+  {
     label: "Week of 03/30/2026",
     asOf: "03/30/2026",
     stats: {
