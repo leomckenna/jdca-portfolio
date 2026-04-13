@@ -83,7 +83,7 @@ def load_xlsx(path: str) -> pd.DataFrame:
 
 # ── Build holdings array ──────────────────────────────────────────────────────
 
-def build_holdings(df: pd.DataFrame, sentiments: dict[str, str]) -> str:
+def build_holdings(df: pd.DataFrame, sentiments: dict[str, str], xlv_history: list = None) -> str:
     lines = []
     for _, r in df.iterrows():
         ticker  = str(r["Ticker"]).strip()
@@ -130,16 +130,31 @@ def build_holdings(df: pd.DataFrame, sentiments: dict[str, str]) -> str:
         m_pad  = f'"{mkt}"'.ljust(11)
         sent_pad = f'"{sentiment}"'
 
+        # Embed weekly history for this ticker
+        raw_hist = r.get("Weekly History (USD)", [])
+        if isinstance(raw_hist, str):
+            try:
+                import json as _json2
+                raw_hist = _json2.loads(raw_hist)
+            except Exception:
+                raw_hist = []
+        hist_js = json.dumps(raw_hist if raw_hist else [], separators=(',', ':'))
+
         line = (
             f'      {{ ticker:{t_pad}, name:{n_pad}, cap:{c_pad}, mktCap:{m_pad}, '
             f'price:{str(price).rjust(10)}, low52:{str(low52).rjust(9)}, high52:{str(high52).rjust(10)}, '
             f'weekly:{str(weekly).rjust(8)}, excessXlv:{str(exXlv).rjust(8)}, '
             f'ytd:{str(ytd).rjust(9)}, pe:{pe.rjust(6)}, cr:{str(cr).rjust(6)}, '
-            f'relVol:{rel_vol.rjust(4)}, sentiment:{sent_pad}  }}'
+            f'relVol:{rel_vol.rjust(4)}, sentiment:{sent_pad}, history:{hist_js}  }}'
         )
         lines.append(line)
 
-    return "    holdings: [\n" + ",\n".join(lines) + "\n    ],"
+    holdings_js = "    holdings: [\n" + ",\n".join(lines) + "\n    ],"
+    # Emit XLV history as a top-level week key
+    if xlv_history:
+        xlv_js = json.dumps(xlv_history, separators=(',', ':'))
+        holdings_js += f"\n    xlvHistory: {xlv_js},"
+    return holdings_js
 
 
 # ── Build stats block ─────────────────────────────────────────────────────────
@@ -426,7 +441,19 @@ def main():
     news_js, sentiments = build_news(df, client, n=args.top_n)
 
     # Now build holdings (uses sentiments from news pass)
-    holdings_js = build_holdings(df, sentiments)
+    # Load XLV history sidecar (written by notebook alongside the xlsx)
+    import re as _re
+    _date_match = _re.search(r'(\d{4}-\d{2}-\d{2})', args.xlsx)
+    xlv_history = []
+    if _date_match:
+        xlv_json_path = Path(args.xlsx).parent / f"jdca_xlv_history_asof_{_date_match.group(1)}.json"
+        if xlv_json_path.exists():
+            with open(xlv_json_path) as _f:
+                xlv_history = json.load(_f)
+            print(f"Loaded XLV history: {len(xlv_history)} weekly points from {xlv_json_path.name}")
+        else:
+            print(f"[WARN] XLV history file not found: {xlv_json_path.name} — chart will have no XLV line")
+    holdings_js = build_holdings(df, sentiments, xlv_history)
 
     # Stats overrides — offer the user a chance to override after seeing the auto values
     print("─" * 60)

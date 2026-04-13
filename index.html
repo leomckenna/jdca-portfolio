@@ -688,43 +688,19 @@ function renderAll() {
       buildYTD(w.holdings,     `${pid}-ytd`, i);
       buildRange(w.holdings,   `${pid}-range`, i);
       buildScatter(w.holdings, `${pid}-scatter`, i);
-      buildPerfChart(w.holdings, w.asOf, pid);
+      buildPerfChart(w.holdings, w.xlvHistory || [], pid);
     });
   });
 }
-// ── 52-WEEK PERFORMANCE CHART ─────────────────────────────────────────────────
-const _perfCache = {};
-
-async function fetchWeeklyPrices(ticker, asOfDate) {
-  const cacheKey = ticker + '|' + asOfDate;
-  if (_perfCache[cacheKey]) return _perfCache[cacheKey];
-  // Parse as-of date (MM/DD/YYYY) → Unix timestamp
-  const [mo, dy, yr] = asOfDate.split('/').map(Number);
-  const asOf = new Date(yr, mo - 1, dy);
-  const startTs = Math.floor(new Date(asOf.getTime() - 365 * 86400 * 1000).getTime() / 1000);
-  const endTs   = Math.floor(asOf.getTime() / 1000) + 86400;
-  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker)}?range=1y&interval=1wk&period1=${startTs}&period2=${endTs}`;
-  const proxy = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
-  const resp = await fetch(proxy);
-  if (!resp.ok) throw new Error('HTTP ' + resp.status);
-  const json = await resp.json();
-  const result = json?.chart?.result?.[0];
-  if (!result) throw new Error('No data');
-  const timestamps = result.timestamp || [];
-  const closes    = result.indicators?.quote?.[0]?.close || [];
-  const pairs = timestamps.map((t, i) => ({ t: t * 1000, p: closes[i] }))
-    .filter(x => x.p != null && x.t <= asOf.getTime());
-  _perfCache[cacheKey] = pairs;
-  return pairs;
-}
-
+// ── 52-WEEK PERFORMANCE CHART (static data from data.js) ─────────────────────
 function indexTo100(pairs) {
-  if (!pairs.length) return [];
-  const base = pairs[0].p;
-  return pairs.map(x => ({ t: x.t, v: (x.p / base) * 100 }));
+  if (!pairs || !pairs.length) return [];
+  const base = pairs[0][1];
+  if (!base) return [];
+  return pairs.map(x => ({ t: x[0], v: (x[1] / base) * 100 }));
 }
 
-function drawPerfChart(canvasId, holdingPairs, xlvPairs, ticker) {
+function drawPerfChart(canvasId, pid, hIndexed, xIndexed, ticker, name) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
@@ -736,91 +712,111 @@ function drawPerfChart(canvasId, holdingPairs, xlvPairs, ticker) {
   canvas.style.width  = W + 'px';
   canvas.style.height = '260px';
   ctx.scale(DPR, DPR);
+
   const H = 260;
-  const pad = { top: 18, right: 20, bottom: 34, left: 46 };
+  const pad = { top: 18, right: 72, bottom: 32, left: 48 };
   const pW = W - pad.left - pad.right;
   const pH = H - pad.top  - pad.bottom;
 
-  const hIdx = indexTo100(holdingPairs);
-  const xIdx = indexTo100(xlvPairs);
-  if (!hIdx.length || !xIdx.length) return;
+  if (!hIndexed.length && !xIndexed.length) {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#8a97ab';
+    ctx.font = '12px DM Sans,sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('No history data — rerun notebook to populate', W / 2, H / 2);
+    return;
+  }
 
-  const allVals = [...hIdx.map(d=>d.v), ...xIdx.map(d=>d.v)];
+  const allVals = [...hIndexed.map(d=>d.v), ...xIndexed.map(d=>d.v)];
   const vMin = Math.min(...allVals);
   const vMax = Math.max(...allVals);
-  const vPad = (vMax - vMin) * 0.08 || 5;
+  const vPad = Math.max((vMax - vMin) * 0.1, 3);
   const yLo = vMin - vPad, yHi = vMax + vPad;
 
-  const allTs = [...hIdx.map(d=>d.t), ...xIdx.map(d=>d.t)];
+  const allTs = [...hIndexed.map(d=>d.t), ...xIndexed.map(d=>d.t)];
   const tMin = Math.min(...allTs), tMax = Math.max(...allTs);
+  const tRange = tMax - tMin || 1;
 
-  const px = t  => pad.left + (t - tMin) / (tMax - tMin) * pW;
-  const py = v  => pad.top  + (1 - (v - yLo) / (yHi - yLo)) * pH;
+  const px = t => pad.left + (t - tMin) / tRange * pW;
+  const py = v => pad.top  + (1 - (v - yLo) / (yHi - yLo)) * pH;
 
   ctx.clearRect(0, 0, W, H);
 
-  // Grid lines & y-axis labels
-  const steps = 5;
-  const stepSize = (yHi - yLo) / steps;
+  // Y grid + labels
+  const ySteps = 5;
+  const yStep  = (yHi - yLo) / ySteps;
   ctx.strokeStyle = '#e8edf5'; ctx.lineWidth = 1;
   ctx.fillStyle = '#8a97ab'; ctx.font = '9px DM Mono,monospace'; ctx.textAlign = 'right';
-  for (let i = 0; i <= steps; i++) {
-    const v = yLo + stepSize * i;
+  for (let i = 0; i <= ySteps; i++) {
+    const v = yLo + yStep * i;
     const y = py(v);
     ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + pW, y); ctx.stroke();
     ctx.fillText(v.toFixed(0), pad.left - 5, y + 3);
   }
 
   // Baseline 100
-  ctx.strokeStyle = '#b0bcc8'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
-  const y100 = py(100);
-  ctx.beginPath(); ctx.moveTo(pad.left, y100); ctx.lineTo(pad.left + pW, y100); ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.fillStyle = '#8a97ab'; ctx.font = '8px DM Mono,monospace'; ctx.textAlign = 'left';
-  ctx.fillText('100', pad.left + 4, y100 - 3);
-
-  // X-axis date labels (every ~2 months)
-  const dateRange = tMax - tMin;
-  const labelInterval = dateRange / 6;
-  ctx.fillStyle = '#8a97ab'; ctx.font = '9px DM Mono,monospace'; ctx.textAlign = 'center';
-  for (let i = 0; i <= 6; i++) {
-    const t = tMin + labelInterval * i;
-    const d = new Date(t);
-    const label = (d.getMonth() + 1) + '/' + d.getFullYear().toString().slice(2);
-    ctx.fillText(label, px(t), H - 8);
+  if (yLo < 100 && yHi > 100) {
+    ctx.strokeStyle = '#b0bcc8'; ctx.lineWidth = 1; ctx.setLineDash([3, 3]);
+    ctx.beginPath(); ctx.moveTo(pad.left, py(100)); ctx.lineTo(pad.left + pW, py(100)); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#8a97ab'; ctx.font = '8px DM Mono,monospace'; ctx.textAlign = 'left';
+    ctx.fillText('100', pad.left + 4, py(100) - 3);
   }
 
-  // Draw XLV line (accent, lighter)
-  ctx.strokeStyle = 'rgba(155,28,46,0.55)'; ctx.lineWidth = 1.8; ctx.lineJoin = 'round';
-  ctx.beginPath();
-  xIdx.forEach((d, i) => i === 0 ? ctx.moveTo(px(d.t), py(d.v)) : ctx.lineTo(px(d.t), py(d.v)));
-  ctx.stroke();
+  // X axis — evenly spaced labels, clamped to plot area so last date never clips
+  const labelCount = 6;
+  ctx.fillStyle = '#8a97ab'; ctx.font = '9px DM Mono,monospace';
+  for (let i = 0; i <= labelCount; i++) {
+    const t = tMin + (tRange / labelCount) * i;
+    const x = Math.max(pad.left + 18, Math.min(px(t), pad.left + pW - 18));
+    const d = new Date(t);
+    const label = (d.getMonth() + 1) + '/' + d.getFullYear().toString().slice(2);
+    ctx.textAlign = i === 0 ? 'left' : i === labelCount ? 'right' : 'center';
+    ctx.fillText(label, x, H - 6);
+  }
 
-  // Draw holding line (navy, bold)
-  ctx.strokeStyle = '#1a2c4e'; ctx.lineWidth = 2.2; ctx.lineJoin = 'round';
-  ctx.beginPath();
-  hIdx.forEach((d, i) => i === 0 ? ctx.moveTo(px(d.t), py(d.v)) : ctx.lineTo(px(d.t), py(d.v)));
-  ctx.stroke();
+  // XLV line (accent red, lighter)
+  if (xIndexed.length > 1) {
+    ctx.strokeStyle = 'rgba(155,28,46,0.5)'; ctx.lineWidth = 1.8; ctx.lineJoin = 'round';
+    ctx.beginPath();
+    xIndexed.forEach((d, i) => i === 0 ? ctx.moveTo(px(d.t), py(d.v)) : ctx.lineTo(px(d.t), py(d.v)));
+    ctx.stroke();
+  }
 
-  // End-point labels
-  const last = hIdx[hIdx.length - 1];
-  const lastX = xIdx[xIdx.length - 1];
-  const fmtVal = v => (v >= 100 ? '+' : '') + (v - 100).toFixed(1) + '%';
-  ctx.font = 'bold 10px DM Sans,sans-serif'; ctx.textAlign = 'left';
-  ctx.fillStyle = '#1a2c4e';
-  ctx.fillText(`${ticker}: ${fmtVal(last.v)}`, pad.left + pW + 3, py(last.v) + 4);
-  ctx.fillStyle = 'rgba(155,28,46,0.75)';
-  ctx.font = '9px DM Sans,sans-serif';
-  ctx.fillText(`XLV: ${fmtVal(lastX.v)}`, pad.left + pW + 3, py(lastX.v) + 4);
+  // Holding line (navy, bold)
+  if (hIndexed.length > 1) {
+    ctx.strokeStyle = '#1a2c4e'; ctx.lineWidth = 2.2; ctx.lineJoin = 'round';
+    ctx.beginPath();
+    hIndexed.forEach((d, i) => i === 0 ? ctx.moveTo(px(d.t), py(d.v)) : ctx.lineTo(px(d.t), py(d.v)));
+    ctx.stroke();
+  }
+
+  // Right-margin end-point labels
+  const fmtRel = v => (v >= 100 ? '+' : '') + (v - 100).toFixed(1) + '%';
+  ctx.textAlign = 'left';
+  if (hIndexed.length) {
+    const last = hIndexed[hIndexed.length - 1];
+    ctx.fillStyle = '#1a2c4e'; ctx.font = 'bold 9px DM Sans,sans-serif';
+    ctx.fillText(ticker + ': ' + fmtRel(last.v), pad.left + pW + 5, py(last.v) + 4);
+  }
+  if (xIndexed.length) {
+    const lastX = xIndexed[xIndexed.length - 1];
+    ctx.fillStyle = 'rgba(155,28,46,0.8)'; ctx.font = '9px DM Sans,sans-serif';
+    ctx.fillText('XLV: ' + fmtRel(lastX.v), pad.left + pW + 5, py(lastX.v) + 4);
+  }
+
+  // Cache for hover
+  canvas._perfData = { hIndexed, xIndexed, px, py, pad, pW, pH, ticker, name };
 }
 
-async function buildPerfChart(holdings, asOfDate, pid) {
+function buildPerfChart(holdings, xlvHistory, pid) {
   const selectEl = document.getElementById(pid + '-perf-ticker');
   const statusEl = document.getElementById(pid + '-perf-status');
   const canvasId = pid + '-perf';
   if (!selectEl || !statusEl) return;
 
-  // Populate dropdown
+  const xlvIndexed = indexTo100(xlvHistory || []);
+
   selectEl.innerHTML = '';
   holdings.forEach(h => {
     const opt = document.createElement('option');
@@ -829,24 +825,84 @@ async function buildPerfChart(holdings, asOfDate, pid) {
     selectEl.appendChild(opt);
   });
 
-  async function load(ticker) {
-    statusEl.style.display = 'block';
-    statusEl.textContent = 'Loading ' + ticker + ' vs XLV…';
-    try {
-      const [hPairs, xPairs] = await Promise.all([
-        fetchWeeklyPrices(ticker, asOfDate),
-        fetchWeeklyPrices('XLV', asOfDate)
-      ]);
-      statusEl.style.display = 'none';
-      drawPerfChart(canvasId, hPairs, xPairs, ticker);
-    } catch(e) {
-      statusEl.textContent = 'Could not load live data — ' + e.message + '. Check network or try another ticker.';
-    }
+  function load(ticker) {
+    const h = holdings.find(x => x.ticker === ticker);
+    if (!h) return;
+    const hasData = h.history && h.history.length > 0;
+    statusEl.style.display = hasData ? 'none' : 'block';
+    if (!hasData) statusEl.textContent = 'No history for ' + ticker + ' — rerun notebook to populate.';
+    const hIndexed = indexTo100(h.history || []);
+    drawPerfChart(canvasId, pid, hIndexed, xlvIndexed, ticker, h.name);
+    attachPerfHover(canvasId, pid);
   }
 
   selectEl.addEventListener('change', () => load(selectEl.value));
-  // Auto-load first ticker
   if (holdings.length) load(holdings[0].ticker);
+}
+
+function attachPerfHover(canvasId, pid) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas || canvas._perfHoverBound) return;
+  canvas._perfHoverBound = true;
+
+  canvas.addEventListener('mousemove', function(e) {
+    const data = this._perfData;
+    if (!data) return;
+    const rect = this.getBoundingClientRect();
+    const scaleX = this.width / rect.width;
+    const DPR = window.devicePixelRatio || 1;
+    const mx = (e.clientX - rect.left) * scaleX / DPR;
+    const { hIndexed, xIndexed, px, py, pad, pW, pH, ticker, name } = data;
+    if (!hIndexed.length && !xIndexed.length) { hideTip(); return; }
+
+    // Nearest holding point by x
+    let best = null, bestDx = Infinity;
+    hIndexed.forEach(d => { const dx = Math.abs(px(d.t) - mx); if (dx < bestDx) { bestDx = dx; best = d; }});
+    if (!best || bestDx > 40) { hideTip(); this.style.cursor = 'default'; return; }
+
+    // Nearest XLV point at same timestamp
+    let xlvBest = null, xlvDx = Infinity;
+    xIndexed.forEach(d => { const dx = Math.abs(px(d.t) - mx); if (dx < xlvDx) { xlvDx = dx; xlvBest = d; }});
+
+    const fmtDate = ts => { const d = new Date(ts); return (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear().toString().slice(2); };
+    const fmtRel  = v => (v >= 100 ? '+' : '') + (v - 100).toFixed(2) + '%';
+    const hColor  = best.v >= 100 ? '#5dd88a' : '#f08090';
+
+    let html = '<div class="tt-ticker">' + ticker + '</div><div class="tt-name">' + name + '</div>'
+      + '<div class="tt-row"><span>Date</span><strong>' + fmtDate(best.t) + '</strong></div>'
+      + '<div class="tt-row"><span>' + ticker + ' vs start</span><strong style="color:' + hColor + '">' + fmtRel(best.v) + '</strong></div>';
+    if (xlvBest) {
+      const xColor = xlvBest.v >= 100 ? '#5dd88a' : '#f08090';
+      html += '<div class="tt-row"><span>XLV vs start</span><strong style="color:' + xColor + '">' + fmtRel(xlvBest.v) + '</strong></div>';
+      const spread = best.v - xlvBest.v;
+      const sc = spread >= 0 ? '#5dd88a' : '#f08090';
+      html += '<div class="tt-row"><span>Spread vs XLV</span><strong style="color:' + sc + '">' + (spread >= 0 ? '+' : '') + spread.toFixed(2) + ' ppt</strong></div>';
+    }
+    showTip(html, e.clientX, e.clientY);
+    this.style.cursor = 'crosshair';
+
+    // Crosshair overlay
+    const ctx = this.getContext('2d');
+    const DPR2 = window.devicePixelRatio || 1;
+    drawPerfChart(canvasId, pid, hIndexed, xIndexed, ticker, name);
+    ctx.scale(DPR2, DPR2);
+    const cx = px(best.t), cy = py(best.v);
+    ctx.strokeStyle = 'rgba(26,44,78,0.2)'; ctx.lineWidth = 1; ctx.setLineDash([3,3]);
+    ctx.beginPath(); ctx.moveTo(cx, pad.top); ctx.lineTo(cx, pad.top + pH); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI*2);
+    ctx.fillStyle = '#1a2c4e'; ctx.fill();
+    if (xlvBest) {
+      ctx.beginPath(); ctx.arc(cx, py(xlvBest.v), 3, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(155,28,46,0.8)'; ctx.fill();
+    }
+  });
+
+  canvas.addEventListener('mouseleave', function() {
+    hideTip(); this.style.cursor = 'default';
+    const d = this._perfData;
+    if (d) drawPerfChart(canvasId, pid, d.hIndexed, d.xIndexed, d.ticker, d.name);
+  });
 }
 
 renderAll();
