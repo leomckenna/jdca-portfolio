@@ -7,15 +7,15 @@ const WEEKS = [
       best:       { val: "+27.3%", sub: "SEOVF · Sernova" },
       worst:      { val: "−13.1%", sub: "GNPX · Genprex" },
       highestYtd: { val: "+128%",  sub: "IPSC · Century Therapeutics" },
-      positiveSentiment: { val: "4", sub: "vs. 2 Neg · 15 Neutral" }
+      positiveSentiment: { val: "4", sub: "vs. 1 Neg · 16 Neutral" }
     },
     holdings: [
       { ticker:"LLY"       , name:"Eli Lilly"               , cap:"Large-cap"  , mktCap:"$831.7B"  , price:    929.25, low52:  620.465, high52:   1132.06, weekly:   0.236, excessXlv:  -0.461, ytd:  -13.388, pe: 40.54, cr: 1.579, relVol:  63, sentiment:"Positive"  },
-      { ticker:"NVO"       , name:"Novo Nordisk"            , cap:"Large-cap"  , mktCap:"$169.0B"  , price:     37.88, low52:   34.582, high52:    77.683, weekly:     3.3, excessXlv:   2.602, ytd:   -22.82, pe: 10.55, cr:   0.8, relVol:  55, sentiment:"Negative"  },
+      { ticker:"NVO"       , name:"Novo Nordisk"            , cap:"Large-cap"  , mktCap:"$169.0B"  , price:     37.88, low52:   34.582, high52:    77.683, weekly:     3.3, excessXlv:   2.602, ytd:   -22.82, pe: 10.55, cr:   0.8, relVol:  55, sentiment:"Neutral"  },
       { ticker:"SNY"       , name:"Sanofi"                  , cap:"Large-cap"  , mktCap:"$113.8B"  , price:     46.73, low52:    43.32, high52:    53.365, weekly:  -1.828, excessXlv:  -2.525, ytd:    -3.57, pe: 19.88, cr: 1.092, relVol:  82, sentiment:"Neutral"  },
-      { ticker:"VRTX"      , name:"Vertex Pharma"           , cap:"Large-cap"  , mktCap:"$111.8B"  , price:   439.415, low52:    362.5, high52:    510.77, weekly:   1.178, excessXlv:    0.48, ytd:   -3.076, pe:  28.7, cr: 2.901, relVol:  68, sentiment:"Positive"  },
+      { ticker:"VRTX"      , name:"Vertex Pharma"           , cap:"Large-cap"  , mktCap:"$111.8B"  , price:   439.415, low52:    362.5, high52:    510.77, weekly:   1.178, excessXlv:    0.48, ytd:   -3.076, pe:  28.7, cr: 2.901, relVol:  68, sentiment:"Neutral"  },
       { ticker:"OTSKY"     , name:"Otsuka Holdings"         , cap:"Large-cap"  , mktCap:"$35.7B"   , price:     33.88, low52:   21.435, high52:     36.55, weekly:  -5.363, excessXlv:   -6.06, ytd:   19.591, pe: 15.69, cr: 2.165, relVol:  99, sentiment:"Neutral"  },
-      { ticker:"CRSP"      , name:"CRISPR Therapeutics"     , cap:"Mid-cap"    , mktCap:"$5.3B"    , price:    54.851, low52:   32.901, high52:     78.48, weekly:  11.599, excessXlv:  10.902, ytd:    4.598, pe:  null, cr:13.316, relVol:  66, sentiment:"Positive"  },
+      { ticker:"CRSP"      , name:"CRISPR Therapeutics"     , cap:"Mid-cap"    , mktCap:"$5.3B"    , price:    54.851, low52:   32.901, high52:     78.48, weekly:  11.599, excessXlv:  10.902, ytd:    4.598, pe:  null, cr:13.316, relVol:  66, sentiment:"Neutral"  },
       { ticker:"SANA"      , name:"Sana Biotech"            , cap:"Small-cap"  , mktCap:"$860.6M"  , price:     3.225, low52:    1.415, high52:      6.55, weekly:   0.155, excessXlv:  -0.542, ytd:  -20.762, pe:  null, cr: 1.889, relVol:  50, sentiment:"Neutral"  },
       { ticker:"EVO"       , name:"Evotec SE"               , cap:"Small-cap"  , mktCap:"$989.7M"  , price:     2.765, low52:     2.31, high52:       4.8, weekly:   5.534, excessXlv:   4.837, ytd:  -10.227, pe:  null, cr: 2.073, relVol:  76, sentiment:"Neutral"  },
       { ticker:"LCTX"      , name:"Lineage Cell"            , cap:"Small-cap"  , mktCap:"$373.6M"  , price:       1.5, low52:     0.38, high52:      2.09, weekly:  -2.597, excessXlv:  -3.295, ytd:   -10.18, pe:  null, cr: 5.204, relVol:  79, sentiment:"Neutral"  },
@@ -23,8 +23,8 @@ const WEEKS = [
       { ticker:"GNPX"      , name:"Genprex"                 , cap:"Micro-cap"  , mktCap:"$11.4M"   , price:      1.26, low52:     1.15, high52:      55.0, weekly: -13.103, excessXlv: -13.801, ytd:    -28.0, pe:  null, cr: 3.843, relVol:  62, sentiment:"Neutral"  },
       { ticker:"IPSC"      , name:"Century Therapeutics"    , cap:"Small-cap"  , mktCap:"$407.6M"  , price:     2.268, low52:    0.396, high52:      3.04, weekly:   3.566, excessXlv:   2.869, ytd:   127.95, pe:  null, cr: 5.971, relVol:  70, sentiment:"Neutral"  },
       { ticker:"SABS"      , name:"SAB Biotherapeutics"     , cap:"Micro-cap"  , mktCap:"$273.7M"  , price:     3.895, low52:     1.14, high52:       6.6, weekly:   1.169, excessXlv:   0.472, ytd:    4.144, pe:  null, cr: 9.461, relVol:  45, sentiment:"Neutral"  },
-      { ticker:"SEOVF"     , name:"Sernova"                 , cap:"Micro-cap"  , mktCap:"$50.7M"   , price:      0.14, low52:     0.09, high52:      0.17, weekly:  27.273, excessXlv:  26.575, ytd:   55.556, pe:  null, cr:  0.03, relVol:  37, sentiment:"Neutral"  },
-      { ticker:"NCEL"      , name:"NewcelX"                 , cap:"Micro-cap"  , mktCap:"$11.8M"   , price:      2.58, low52:     1.83, high52:      30.8, weekly:  20.561, excessXlv:  19.863, ytd:   35.789, pe:  null, cr: 0.023, relVol:  33, sentiment:"Neutral"  },
+      { ticker:"SEOVF"     , name:"Sernova"                 , cap:"Micro-cap"  , mktCap:"$50.7M"   , price:      0.14, low52:     0.09, high52:      0.17, weekly:  27.273, excessXlv:  26.575, ytd:   55.556, pe:  null, cr:  0.03, relVol:  37, sentiment:"Positive"  },
+      { ticker:"NCEL"      , name:"NewcelX"                 , cap:"Micro-cap"  , mktCap:"$11.8M"   , price:      2.58, low52:     1.83, high52:      30.8, weekly:  20.561, excessXlv:  19.863, ytd:   35.789, pe:  null, cr: 0.023, relVol:  33, sentiment:"Positive"  },
       { ticker:"FLUI.ST"   , name:"Fluicell"                , cap:"Micro-cap"  , mktCap:"$2.0M"    , price:     1.476, low52:    0.811, high52:     3.268, weekly:  -5.245, excessXlv:  -5.942, ytd:     35.5, pe:  null, cr: 1.003, relVol: 114, sentiment:"Neutral"  },
       { ticker:"NXTCL.ST"  , name:"NextCell Pharma"         , cap:"Micro-cap"  , mktCap:"$15.9M"   , price:     0.143, low52:    0.069, high52:     0.349, weekly:   7.908, excessXlv:    7.21, ytd:   79.207, pe:  null, cr: 5.157, relVol:  50, sentiment:"Neutral"  },
       { ticker:"IMCR"      , name:"Immunocore"              , cap:"Small-cap"  , mktCap:"$1.6B"    , price:     31.24, low52:    24.61, high52:    40.715, weekly:  -2.192, excessXlv:  -2.889, ytd:   -9.997, pe:  null, cr:  4.04, relVol: 113, sentiment:"Positive"  },
@@ -40,8 +40,8 @@ const WEEKS = [
         penny: false,
         sentiment: "Positive",
         topic: "Jaypirca Phase 3 Win / Foundayo Distribution Expands",
-        summary: "Lilly posted positive topline results from the Phase 3 BRUIN CLL-322 trial of Jaypirca in relapsed/refractory CLL — its fourth straight positive Phase 3, setting up a label expansion filing later this year. Amazon Pharmacy also launched same-day delivery of Foundayo, the oral GLP-1 approved April 1. The stock barely moved on the week, still down ~13% YTD.",
-        takeaway: "The pipeline keeps delivering. Jaypirca is quietly building a multi-indication oncology franchise, and Foundayo's distribution footprint is expanding fast. The valuation is the overhang, not the fundamentals.",
+        summary: "Lilly announced positive topline results from the Phase 3 BRUIN CLL-322 trial of Jaypirca (pirtobrutinib) in relapsed/refractory chronic lymphocytic leukemia — its fourth consecutive positive Phase 3 study, setting up a label expansion filing later this year. Separately, Amazon Pharmacy began offering same-day delivery of Foundayo (orforglipron), the oral GLP-1 obesity pill approved April 1, and LifeMD announced it is prescribing Foundayo through its weight management platform. Lilly gained only about 0.2% this week, still trading down ~13% YTD.",
+        takeaway: "The BRUIN CLL-322 result expands Jaypirca's story beyond lung cancer and builds the case for a multi-indication oncology franchise. Meanwhile, Foundayo's distribution is already widening fast — Amazon same-day delivery is a meaningful access unlock that could accelerate adoption. The stock is still digesting a high valuation relative to near-term earnings, but the fundamental pipeline keeps delivering.",
         valImpact: true
       },
       {
@@ -49,10 +49,10 @@ const WEEKS = [
         company: "Sernova Biotherapeutics",
         ticker: "SEOVF",
         penny: true,
-        sentiment: "Neutral",
+        sentiment: "Positive",
         topic: "AGM Vote Passes — Debt Overhang Cleared",
-        summary: "Shareholders approved all resolutions at the April 8 AGM: a $4M insider placement to retire the April 16 loan, and 65.8 million units issued to Evotec to settle $12.5M of debt. SEOVF surged ~27% as the long-standing overhang was formally resolved.",
-        takeaway: "The debt is cleared and the balance sheet is cleaner — that was the key risk flagged last week. The ELDN collaboration remains the next clinical catalyst. Dilution is real but beats a default.",
+        summary: "Shareholders approved all resolutions at the April 8 AGM, including a $4M insider equity placement to retire the April 16 loan maturity, and the issuance of 65.8 million units to Evotec to settle $12.5M of inherited debt. SEOVF surged ~27% on the week as the long-standing debt overhang was formally resolved. CEO Jonathan Rigby called it a \"period of renewed financial health.\"",
+        takeaway: "This is the key derisking event we flagged last week. The debt is gone and Sernova now has a cleaner balance sheet to advance its T1D Cell Pouch program. The ELDN collaboration (tegoprubart immune protection for cell therapy) remains the key clinical catalyst. Dilution from the share issuances is real, but the alternative was a debt default, so the market is reading this as a clear positive.",
         valImpact: true
       },
       {
@@ -60,10 +60,10 @@ const WEEKS = [
         company: "NewcelX",
         ticker: "NCEL",
         penny: true,
-        sentiment: "Neutral",
-        topic: "Premium-Priced Private Placement",
-        summary: "NewcelX priced a $1.35M placement at $2.75/share — a 30% premium to the March 31 close — closing around April 15. Proceeds plus a $25M equity line will fund NCEL-101, its stem cell T1D program with Eledon. The stock gained ~20.6%.",
-        takeaway: "Financing at a 30% premium signals real investor conviction. Thin float amplifies the move. NCEL and SEOVF are converging on the same T1D problem — islet delivery plus immune protection — from different angles.",
+        sentiment: "Positive",
+        topic: "Premium-Priced Private Placement Closes",
+        summary: "NewcelX priced a $1.35M private placement at $2.75/share — a 30% premium to the March 31 close — with closing expected around April 15. The deal includes warrants for an additional ~$2.1M if exercised in full. Proceeds plus a $25M equity line will fund NCEL-101, its stem cell-based T1D therapy developed in partnership with Eledon Pharmaceuticals. The stock gained ~20.6% on the week.",
+        takeaway: "A financing at a 30% premium in this biotech environment is a genuine vote of confidence from existing investors. NCEL is a micro-cap with a very thin float, so the move reflects both the news and low liquidity. The NCEL-101 / ELDN collaboration is one of the more interesting T1D platform plays in the portfolio alongside SEOVF — both converging on the same clinical problem of islet delivery plus immune protection from different angles.",
         valImpact: true
       },
       {
@@ -71,10 +71,10 @@ const WEEKS = [
         company: "CRISPR Therapeutics",
         ticker: "CRSP",
         penny: false,
-        sentiment: "Positive",
+        sentiment: "Neutral",
         topic: "Needham Conference / Analyst Bullishness on CASGEVY Ramp",
-        summary: "CRSP gained ~11.6%. Management presented at Needham on April 13, and a Seeking Alpha analyst reiterated Buy at $64.58, citing CASGEVY's commercial ramp and CTX310 cardiovascular data due in H2. The March convertible note overhang continues to fade.",
-        takeaway: "No new catalyst, but the setup is improving. CASGEVY initiations are accelerating, the gene editing tariff exemption holds, and the Lilly partnership validates the pipeline. CTX310 data in H2 is the next real event.",
+        summary: "CRSP gained ~11.6% this week. Senior management presented at the Needham Virtual Healthcare Conference on April 13. A Seeking Alpha analyst reiterated a Buy with a $64.58 price target, citing CASGEVY's commercial ramp and the upcoming CTX310 cardiovascular data in H2 2026. No new company-specific catalyst — the move is a continuation of last week's sector recovery with the March convertible note overhang continuing to fade.",
+        takeaway: "Still no company-specific catalyst, but the setup is improving. CASGEVY patient initiations are accelerating, CTX310 data is expected in H2, and the stock is recovering from the March selloff. The thesis remains intact: gene editing is explicitly exempt from pharma tariffs, and the Lilly partnership validates the broader pipeline.",
         valImpact: false
       },
       {
@@ -84,8 +84,8 @@ const WEEKS = [
         penny: false,
         sentiment: "Positive",
         topic: "5-Year KIMMTRAK OS Data at AACR / Major UBS Upgrade",
-        summary: "Immunocore presents 5-year overall survival data for KIMMTRAK in metastatic uveal melanoma at AACR starting April 17 — the longest OS follow-up in any randomized mUM trial. UBS upgraded from Sell to Buy ($24 to $55), and Morgan Stanley raised to $40. The stock dipped slightly on the week despite the newsflow.",
-        takeaway: "The AACR readout next week is the key catalyst. Five-year OS data that holds would meaningfully strengthen the commercial story and open the door to earlier-line therapy. The UBS reversal is striking — watch closely.",
+        summary: "Immunocore presented at the Needham Healthcare Conference April 13 and will present five-year overall survival data for KIMMTRAK in metastatic uveal melanoma at AACR starting April 17 — the longest OS follow-up ever in a randomized mUM trial. UBS upgraded the stock from Sell to Buy with a price target of $55 (from $24), and Morgan Stanley raised its target to $40. The stock dipped slightly on the week (-2.2%) despite the newsflow, pulled down by broader market weakness.",
+        takeaway: "The 5-year OS data at AACR next week is the most important near-term catalyst for IMCR. If the survival advantage holds at 5 years, it meaningfully strengthens the commercial story and supports expansion into earlier lines of therapy. The UBS upgrade — from Sell to Buy, more than doubling the target — is a striking reversal. Watch closely.",
         valImpact: true
       },
       {
@@ -95,8 +95,8 @@ const WEEKS = [
         penny: true,
         sentiment: "Neutral",
         topic: "Thin-Volume Drift Ahead of AACR Posters",
-        summary: "GNPX fell ~13% with no news — thin micro-cap drift. Three Reqorsa posters are scheduled at AACR April 17-22, including new biomarker data on TROP2 and PTEN as resistance markers in NSCLC.",
-        takeaway: "Nothing to read into the price move. The AACR posters are the actual event — biomarker clarity on patient selection would be a real scientific step even if it doesn't move the stock.",
+        summary: "GNPX fell ~13% with no company-specific catalyst — just thin micro-cap drift. Three posters on Reqorsa gene therapy are scheduled for the AACR meeting April 17-22 in San Diego, including new biomarker data identifying TROP2 and PTEN as resistance markers, and preclinical combination results in ALK-positive NSCLC.",
+        takeaway: "Nothing to read into the price move. The AACR posters next week are the actual event to watch — if the biomarker data helps clarify patient selection for Reqorsa, that would be a meaningful scientific step forward even if it doesn't immediately move the stock. Volume remains extremely thin.",
         valImpact: false
       },
       {
@@ -105,9 +105,9 @@ const WEEKS = [
         ticker: "HUMA",
         penny: true,
         sentiment: "Negative",
-        topic: "Analyst Target Cuts Continue / V012 Data Due in June",
-        summary: "Two more target cuts this week: Barclays to $1.50 (from $3.50) and TD Cowen to $1.00 (from $3.50), both following last month's Q4 miss. Q1 results expected May 11. V012 Phase 3 hemodialysis interim data due by early June.",
-        takeaway: "Sell-side expectations keep resetting lower. The June V012 read is the make-or-break event — a positive interim would be the first sign Symvess can work in a high-volume chronic indication. Until then, the narrative stays negative.",
+        topic: "Analyst Target Cuts / Watching for V012 Phase 3 Data",
+        summary: "HUMA gained about 5% this week after a prolonged decline, but two analyst target cuts landed: Barclays cut to $1.50 from $3.50 and TD Cowen lowered to $1.00 from $3.50, both following last month's Q4 miss. Q1 results are expected May 11. The key near-term catalyst is the interim read from the V012 Phase 3 hemodialysis trial, expected by early June.",
+        takeaway: "The sell-side continues to reset expectations downward. The V012 hemodialysis data in early June is the key make-or-break event — a positive interim would be the first signal that Symvess can succeed in a high-volume chronic indication beyond trauma. A Saudi Arabia purchase commitment and a new SVP of Business Development are mild positives that don't change the near-term story.",
         valImpact: false
       },
       {
@@ -117,8 +117,8 @@ const WEEKS = [
         penny: true,
         sentiment: "Neutral",
         topic: "No Catalyst / Continued YTD Weakness",
-        summary: "ADOC.PA fell ~7.2% with no news, extending its YTD decline to -35.7%. Volume was roughly in line with average.",
-        takeaway: "No near-term catalysts visible. Without a partner or data readout, the downtrend is hard to break.",
+        summary: "ADOC.PA fell ~7.2% this week with no company-specific news, extending its YTD decline to -35.7%. Volume was roughly in line with its average. No pipeline updates or regulatory news this week.",
+        takeaway: "The stock has been in a prolonged downtrend all year with no near-term catalysts visible. Adocia's pipeline in insulin formulation and GLP-1 combinations is real but early-stage, and without a partner or data readout on the horizon, it's hard to see what changes the pattern.",
         valImpact: false
       }
     ]
