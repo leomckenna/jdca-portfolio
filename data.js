@@ -80,7 +80,7 @@ const WEEKS = [
         valImpact: false
       },
       {
-        side: "gainer",
+        side: "loser",
         company: "Genprex",
         ticker: "GNPX",
         penny: true,
@@ -102,7 +102,7 @@ const WEEKS = [
         valImpact: true
       },
       {
-        side: "loser",
+        side: "gainer",
         company: "Novo Nordisk",
         ticker: "NVO",
         penny: false,
