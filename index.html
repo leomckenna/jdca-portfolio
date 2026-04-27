@@ -431,26 +431,61 @@ function buildPortTable(w, wIdx) {
 // ── YTD CHART ────────────────────────────────────────────────────────────────
 function buildYTD(holdings, id, wIdx) {
   const el = document.getElementById(id); if(!el) return;
+  const w = WEEKS[wIdx];
+
+  // Compute XLV YTD from xlvHistory
+  let xlvYtd = null;
+  if (w.xlvHistory && w.xlvHistory.length >= 2) {
+    const hist = w.xlvHistory;
+    // Find last close of prior year (2025) and first close of current year
+    const asOfYear = parseInt((w.asOf || '').split('/')[2]) || new Date().getFullYear();
+    const priorYear = hist.filter(p => new Date(p[0]).getFullYear() === asOfYear - 1);
+    const currYear  = hist.filter(p => new Date(p[0]).getFullYear() === asOfYear);
+    if (priorYear.length && currYear.length) {
+      const base   = priorYear[priorYear.length - 1][1];
+      const latest = currYear[currYear.length - 1][1];
+      xlvYtd = (latest / base - 1) * 100;
+    }
+  }
+
   const sorted = [...holdings].sort((a,b)=>b.ytd-a.ytd);
-  const maxAbs = Math.max(...sorted.map(d=>Math.abs(d.ytd)));
-  sorted.forEach(d=>{
-    const pct = Math.abs(d.ytd)/maxAbs*50;
-    const isPos = d.ytd >= 0;
-    const color = isPos ? 'var(--gain)' : 'var(--loss)';
-    const badge = isP(d) ? '<span class="penny-badge" style="font-size:7px;padding:1px 3px;">\u00a2</span>' : '';
-    const barStyle = 'width:'+pct+'%;background:'+color+';opacity:.75;height:9px;border-radius:2px;';
+  const allVals = sorted.map(d=>Math.abs(d.ytd));
+  if (xlvYtd !== null) allVals.push(Math.abs(xlvYtd));
+  const maxAbs = Math.max(...allVals);
+
+  // Helper to build a bar row
+  function makeRow(ticker, name, ytd, isXlv) {
+    const pct = Math.abs(ytd) / maxAbs * 50;
+    const isPos = ytd >= 0;
+    const color = isXlv ? 'var(--text-mid)' : (isPos ? 'var(--gain)' : 'var(--loss)');
+    const opacity = isXlv ? '0.5' : '0.75';
+    const barStyle = 'width:'+pct+'%;background:'+color+';opacity:'+opacity+';height:9px;border-radius:2px;';
     const leftCell  = '<div style="width:50%;display:flex;align-items:center;border-right:1px solid #c0c8d8;">'
                     + (isPos ? '' : '<div style="'+barStyle+'margin-left:auto;"></div>')
                     + '</div>';
     const rightCell = '<div style="width:50%;display:flex;align-items:center;">'
                     + (isPos ? '<div style="'+barStyle+'"></div>' : '')
                     + '</div>';
+    const lblStyle = isXlv ? 'font-style:italic;color:var(--text-dim);' : '';
+    const valClass = isXlv ? '' : (isPos ? 'gain' : 'loss');
+    const valStyle = isXlv ? 'color:var(--text-dim);font-style:italic;' : '';
     const row = document.createElement('div');
     row.className = 'ytd-row';
-    row.innerHTML  = '<div class="ytd-lbl">'+d.ticker+badge+'</div>'
-                   + '<div style="flex:1;display:flex;align-items:center;">'+leftCell+rightCell+'</div>'
-                   + '<div class="ytd-val '+(isPos?'gain':'loss')+'">'+(isPos?'+':'')+d.ytd.toFixed(1)+'%</div>';
-    // hover tooltip
+    if (isXlv) row.style.cssText = 'cursor:default;border-top:1px solid var(--border);margin-top:4px;padding-top:4px;';
+    row.innerHTML = '<div class="ytd-lbl" style="'+lblStyle+'">'+ticker+'</div>'
+                  + '<div style="flex:1;display:flex;align-items:center;">'+leftCell+rightCell+'</div>'
+                  + '<div class="ytd-val '+valClass+'" style="'+valStyle+'">'+(isPos?'+':'')+ytd.toFixed(1)+'%</div>';
+    return row;
+  }
+
+  // Holdings rows
+  sorted.forEach(d => {
+    const isPos = d.ytd >= 0;
+    const badge = isP(d) ? '<span class="penny-badge" style="font-size:7px;padding:1px 3px;">\u00a2</span>' : '';
+    const row = makeRow(d.ticker + (isP(d) ? '' : ''), d.name, d.ytd, false);
+    // Re-inject badge into label
+    const lbl = row.querySelector('.ytd-lbl');
+    if (isP(d)) lbl.innerHTML = d.ticker + badge;
     const sc = d.sentiment==='Positive'?'gain':d.sentiment==='Negative'?'loss':'neut';
     const wk = (d.weekly>=0?'+':'')+d.weekly.toFixed(2)+'%';
     row.addEventListener('mouseenter', e => {
@@ -466,6 +501,20 @@ function buildYTD(holdings, id, wIdx) {
     row.addEventListener('click', () => openModal(d.ticker, wIdx));
     el.appendChild(row);
   });
+
+  // XLV benchmark row at the bottom
+  if (xlvYtd !== null) {
+    const xlvRow = makeRow('XLV', 'Health Care Select Sector ETF', xlvYtd, true);
+    xlvRow.addEventListener('mouseenter', e => {
+      showTip(`<div class="tt-ticker">XLV</div><div class="tt-name">Health Care Select Sector ETF</div>`+
+        `<div class="tt-row"><span>YTD</span><strong style="color:var(--text-mid)">${xlvYtd>=0?'+':''}${xlvYtd.toFixed(1)}%</strong></div>`+
+        `<div class="tt-hint">Benchmark reference</div>`,
+        e.clientX, e.clientY);
+    });
+    xlvRow.addEventListener('mousemove', e => moveTip(e.clientX, e.clientY));
+    xlvRow.addEventListener('mouseleave', () => hideTip());
+    el.appendChild(xlvRow);
+  }
 }
 
 function buildScatter(holdings, id, wIdx) {
