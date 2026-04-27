@@ -33,7 +33,6 @@ jobs:
           if [ -n "${{ github.event.inputs.as_of }}" ]; then
             AS_OF="${{ github.event.inputs.as_of }}"
           else
-            # Most recent Monday (today when run on schedule)
             AS_OF=$(python -c "
           from datetime import date, timedelta
           today = date.today()
@@ -57,10 +56,28 @@ jobs:
             --data-js data.js \
             --auto
 
-      - name: Commit and push
+      - name: Push data.js to research hub
+        env:
+          GH_TOKEN: ${{ secrets.RESEARCH_HUB_TOKEN }}
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.js
-          git diff --cached --quiet || git commit -m "chore: weekly portfolio update ${{ steps.date.outputs.as_of }}"
-          git push
+          # Base64-encode the updated data.js
+          CONTENT=$(base64 -w 0 data.js)
+
+          # Get the current SHA of the file in the research hub (needed for updates)
+          SHA=$(gh api repos/leomckenna/jdca-research-hub/contents/public/portfolio/data.js \
+            --jq '.sha' 2>/dev/null || echo "")
+
+          # Build the JSON payload
+          if [ -n "$SHA" ]; then
+            PAYLOAD=$(printf '{"message":"chore: weekly portfolio data %s","content":"%s","sha":"%s"}' \
+              "${{ steps.date.outputs.as_of }}" "$CONTENT" "$SHA")
+          else
+            PAYLOAD=$(printf '{"message":"chore: weekly portfolio data %s","content":"%s"}' \
+              "${{ steps.date.outputs.as_of }}" "$CONTENT")
+          fi
+
+          gh api repos/leomckenna/jdca-research-hub/contents/public/portfolio/data.js \
+            --method PUT \
+            --input - <<< "$PAYLOAD"
+
+          echo "✓ data.js pushed to leomckenna/jdca-research-hub"
