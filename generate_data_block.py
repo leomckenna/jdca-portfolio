@@ -250,7 +250,7 @@ Return a JSON object with exactly these fields:
     return json.loads(text)
 
 
-def build_news(df: pd.DataFrame, client: anthropic.Anthropic, n: int = TOP_N_MOVERS) -> tuple[str, dict[str, str]]:
+def build_news(df: pd.DataFrame, client: anthropic.Anthropic, n: int = TOP_N_MOVERS, auto: bool = False) -> tuple[str, dict[str, str]]:
     df2 = df.copy()
     df2["_weekly"] = df2["1-Week Return (Past 5 Trading Days)"].astype(float) * 100
     df2["_ytd"]    = df2["Total Return (YTD)"].astype(float) * 100
@@ -265,8 +265,9 @@ def build_news(df: pd.DataFrame, client: anthropic.Anthropic, n: int = TOP_N_MOV
     print(f"\n{'─'*60}")
     print(f"NEWS DRAFTING — {len(movers)} tickers ({n} gainers + {n} losers)")
     print(f"{'─'*60}")
-    print("For each ticker: paste news context if you have it, or press Enter to let AI draft from numbers alone.")
-    print("After each draft you can accept, edit, or regenerate.\n")
+    if not auto:
+        print("For each ticker: paste news context if you have it, or press Enter to let AI draft from numbers alone.")
+        print("After each draft you can accept, edit, or regenerate.\n")
 
     for _, row in movers:
         ticker   = str(row["Ticker"]).strip()
@@ -278,7 +279,7 @@ def build_news(df: pd.DataFrame, client: anthropic.Anthropic, n: int = TOP_N_MOV
         side     = "gainer" if weekly >= 0 else "loser"
 
         print(f"{'▲' if side == 'gainer' else '▼'}  {ticker} ({company[:30]})  {weekly:+.1f}% this week  |  {ytd:+.1f}% YTD")
-        context = input("   Paste news context (or Enter to skip): ").strip()
+        context = "" if auto else input("   Paste news context (or Enter to skip): ").strip()
 
         while True:
             print("   Drafting...", end=" ", flush=True)
@@ -299,6 +300,10 @@ def build_news(df: pd.DataFrame, client: anthropic.Anthropic, n: int = TOP_N_MOV
             print(f"   Summary:  {entry['summary']}")
             print(f"   Takeaway: {entry['takeaway']}")
             print(f"   Sentiment: {entry['sentiment']}  |  valImpact: {entry['valImpact']}")
+
+            if auto:
+                print("   [auto] accepted")
+                break
 
             action = input("   [a]ccept / [e]dit / [r]egenerate: ").strip().lower()
             if action == "r":
@@ -408,6 +413,7 @@ def main():
     parser.add_argument("--data-js", required=True, help="Path to data.js")
     parser.add_argument("--as-of",   help="Override as-of date (MM/DD/YYYY). Defaults to reading from filename.")
     parser.add_argument("--top-n",   type=int, default=TOP_N_MOVERS, help="Number of top gainers/losers for news (default 3)")
+    parser.add_argument("--auto",    action="store_true", help="Non-interactive mode: auto-accept all AI drafts and write to data.js without prompts")
     args = parser.parse_args()
 
     # Resolve as-of date
@@ -438,7 +444,7 @@ def main():
     client = anthropic.Anthropic(api_key=api_key)
 
     # News drafting (also collects sentiments per ticker)
-    news_js, sentiments = build_news(df, client, n=args.top_n)
+    news_js, sentiments = build_news(df, client, n=args.top_n, auto=args.auto)
 
     # Now build holdings (uses sentiments from news pass)
     # Load XLV history sidecar (written by notebook alongside the xlsx)
@@ -464,14 +470,14 @@ def main():
     print(f"  Highest YTD:{stats_dict['highestYtd']['val']} — {stats_dict['highestYtd']['sub']}")
     print(f"  Sentiment:  {stats_dict['positiveSentiment']['val']} pos, {stats_dict['positiveSentiment']['sub']}")
 
-    override_ytd = input("\nOverride highestYtd ticker? (Enter ticker or press Enter to keep): ").strip().upper()
-    override_pos = input("Override positive count? (Enter number or press Enter to keep): ").strip()
-    override_neg = input("Override negative count? (Enter number or press Enter to keep): ").strip()
-
     overrides = {}
-    if override_ytd: overrides["highestYtd"] = override_ytd
-    if override_pos: overrides["pos"] = int(override_pos)
-    if override_neg: overrides["neg"] = int(override_neg)
+    if not args.auto:
+        override_ytd = input("\nOverride highestYtd ticker? (Enter ticker or press Enter to keep): ").strip().upper()
+        override_pos = input("Override positive count? (Enter number or press Enter to keep): ").strip()
+        override_neg = input("Override negative count? (Enter number or press Enter to keep): ").strip()
+        if override_ytd: overrides["highestYtd"] = override_ytd
+        if override_pos: overrides["pos"] = int(override_pos)
+        if override_neg: overrides["neg"] = int(override_neg)
 
     if overrides:
         stats_js, stats_dict = build_stats(df, sentiments, overrides)
@@ -485,10 +491,13 @@ def main():
     preview = week_block[:500]
     print(preview + "...\n")
 
-    confirm = input("Write to data.js? [y/N]: ").strip().lower()
+    if args.auto:
+        confirm = "y"
+    else:
+        confirm = input("Write to data.js? [y/N]: ").strip().lower()
+
     if confirm != "y":
         print("Aborted. Nothing was written.")
-        # Save to a temp file so work isn't lost
         out_path = Path(args.data_js).parent / f"new_week_block_{as_of.replace('/', '-')}.js"
         out_path.write_text(week_block, encoding="utf-8")
         print(f"Block saved to {out_path} for manual use.")

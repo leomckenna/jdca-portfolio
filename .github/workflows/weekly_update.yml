@@ -1,0 +1,66 @@
+name: Weekly Portfolio Update
+
+on:
+  schedule:
+    # Every Monday at 14:00 UTC (9 AM ET / 10 AM ET daylight)
+    - cron: "0 14 * * 1"
+  workflow_dispatch:
+    inputs:
+      as_of:
+        description: "As-of date (YYYY-MM-DD). Leave empty to use today's Monday."
+        required: false
+        default: ""
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Determine as-of date
+        id: date
+        run: |
+          if [ -n "${{ github.event.inputs.as_of }}" ]; then
+            AS_OF="${{ github.event.inputs.as_of }}"
+          else
+            # Most recent Monday (today when run on schedule)
+            AS_OF=$(python -c "
+          from datetime import date, timedelta
+          today = date.today()
+          monday = today - timedelta(days=today.weekday())
+          print(monday.isoformat())
+          ")
+          fi
+          echo "as_of=$AS_OF" >> "$GITHUB_OUTPUT"
+          echo "As-of date: $AS_OF"
+
+      - name: Fetch metrics
+        run: python metrics.py --as-of ${{ steps.date.outputs.as_of }}
+
+      - name: Generate data.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          XLSX="jdca_weekly_metrics_asof_${{ steps.date.outputs.as_of }}.xlsx"
+          python generate_data_block.py \
+            --xlsx "$XLSX" \
+            --data-js data.js \
+            --auto
+
+      - name: Commit and push
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.js
+          git diff --cached --quiet || git commit -m "chore: weekly portfolio update ${{ steps.date.outputs.as_of }}"
+          git push
