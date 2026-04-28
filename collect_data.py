@@ -114,10 +114,12 @@ OUTPUT_FILE = (
 def remove_timezone(index):
     """
     Yahoo Finance returns dates with timezone info attached.
-    Excel can't handle that, so this strips the timezone off.
+    Excel can't handle that, so this strips the timezone off and zeroes the time component.
     """
     if isinstance(index, pd.DatetimeIndex):
-        return index.tz_convert(None) if index.tz is not None else index
+        if index.tz is not None:
+            index = index.tz_convert(None)
+        return index.normalize()
     return index
 
 
@@ -263,6 +265,7 @@ def get_daily_data(tickers, start_str, end_str):
             raw.index      = remove_timezone(raw.index)
             raw.index.name = "Date"
             raw            = raw.reset_index()
+            raw["Date"]    = raw["Date"].dt.date   # date-only, no time component in Excel
             raw.insert(0, "Ticker", ticker)
 
             raw.rename(columns={
@@ -368,6 +371,7 @@ def get_quarterly_financials(tickers):
                 df_transposed.index      = remove_timezone(df_transposed.index)
                 df_transposed.index.name = "Quarter_End"
                 df_transposed            = df_transposed.reset_index()
+                df_transposed["Quarter_End"] = df_transposed["Quarter_End"].dt.date
                 df_transposed.insert(0, "Ticker", ticker)
 
                 # Convert all financial values to numbers
