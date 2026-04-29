@@ -255,15 +255,16 @@ def build_news(df: pd.DataFrame, client: anthropic.Anthropic, n: int = TOP_N_MOV
     df2["_weekly"] = df2["1-Week Return (Past 5 Trading Days)"].astype(float) * 100
     df2["_ytd"]    = df2["Total Return (YTD)"].astype(float) * 100
 
-    gainers = df2.nlargest(n, "_weekly")
-    losers  = df2.nsmallest(n, "_weekly")
+    # All companies: gainers (≥0) sorted best-first, then losers sorted worst-first
+    gainers = df2[df2["_weekly"] >= 0].sort_values("_weekly", ascending=False)
+    losers  = df2[df2["_weekly"] <  0].sort_values("_weekly", ascending=True)
     movers  = list(gainers.iterrows()) + list(losers.iterrows())
 
     news_entries = []
     sentiments   = {}
 
     print(f"\n{'─'*60}")
-    print(f"NEWS DRAFTING — {len(movers)} tickers ({n} gainers + {n} losers)")
+    print(f"NEWS DRAFTING — all {len(movers)} companies ({len(gainers)} gainers · {len(losers)} losers)")
     print(f"{'─'*60}")
     if not auto:
         print("For each ticker: paste news context if you have it, or press Enter to let AI draft from numbers alone.")
@@ -412,7 +413,6 @@ def main():
     parser.add_argument("--xlsx",    required=True, help="Path to the weekly metrics xlsx")
     parser.add_argument("--data-js", required=True, help="Path to data.js")
     parser.add_argument("--as-of",   help="Override as-of date (MM/DD/YYYY). Defaults to reading from filename.")
-    parser.add_argument("--top-n",   type=int, default=TOP_N_MOVERS, help="Number of top gainers/losers for news (default 3)")
     parser.add_argument("--auto",    action="store_true", help="Non-interactive mode: auto-accept all AI drafts and write to data.js without prompts")
     args = parser.parse_args()
 
@@ -444,7 +444,7 @@ def main():
     client = anthropic.Anthropic(api_key=api_key)
 
     # News drafting (also collects sentiments per ticker)
-    news_js, sentiments = build_news(df, client, n=args.top_n, auto=args.auto)
+    news_js, sentiments = build_news(df, client, auto=args.auto)
 
     # Now build holdings (uses sentiments from news pass)
     # Load XLV history sidecar (written by notebook alongside the xlsx)
