@@ -19,7 +19,8 @@ import os
 import re
 import shutil
 import sys
-from datetime import datetime
+import time
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import pandas as pd
@@ -27,6 +28,12 @@ from dotenv import load_dotenv
 import anthropic
 
 load_dotenv()
+
+try:
+    import requests as _requests
+    _REQUESTS_AVAILABLE = True
+except ImportError:
+    _REQUESTS_AVAILABLE = False
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
@@ -206,6 +213,36 @@ def build_stats(df: pd.DataFrame, sentiments: dict[str, str], overrides: dict = 
 
 # ── AI news drafting ──────────────────────────────────────────────────────────
 
+def fetch_news_context(company: str, api_key: str, days: int = 8) -> str:
+    """Fetch recent article headlines from NewsAPI to ground Claude's summary in real events."""
+    if not _REQUESTS_AVAILABLE or not api_key:
+        return ""
+    from_date = (datetime.now() - timedelta(days=days)).strftime("%Y-%m-%d")
+    try:
+        resp = _requests.get("https://newsapi.org/v2/everything", params={
+            "q":        f'"{company}"',
+            "from":     from_date,
+            "sortBy":   "publishedAt",
+            "language": "en",
+            "pageSize": 5,
+            "apiKey":   api_key,
+        }, timeout=15)
+        if resp.status_code != 200:
+            return ""
+        articles = resp.json().get("articles", [])
+    except Exception:
+        return ""
+    lines = []
+    for a in articles[:5]:
+        title = (a.get("title") or "").strip()
+        desc  = (a.get("description") or "").strip()
+        pub   = (a.get("publishedAt") or "")[:10]
+        if title and title != "[Removed]":
+            lines.append(f"[{pub}] {title}" + (f" — {desc[:120]}" if desc else ""))
+        time.sleep(0.1)
+    return "\n".join(lines)
+
+
 SYSTEM_PROMPT = """You write weekly news entries for a healthcare investment portfolio dashboard (JDCA).
 The audience is non-technical — typically a healthcare investor who reads the dashboard on Monday morning.
 Style rules:
@@ -250,7 +287,7 @@ Return a JSON object with exactly these fields:
     return json.loads(text)
 
 
-def build_news(df: pd.DataFrame, client: anthropic.Anthropic, n: int = TOP_N_MOVERS, auto: bool = False) -> tuple[str, dict[str, str]]:
+def build_news(df: pd.DataFrame, client: anthropic.Anthropic, n: int = TOP_N_MOVERS, auto: bool = False, news_api_key: str = "") -> tuple[str, dict[str, str]]:
     df2 = df.copy()
     df2["_weekly"] = df2["1-Week Return (Past 5 Trading Days)"].astype(float) * 100
     df2["_ytd"]    = df2["Total Return (YTD)"].astype(float) * 100
@@ -280,7 +317,14 @@ def build_news(df: pd.DataFrame, client: anthropic.Anthropic, n: int = TOP_N_MOV
         side     = "gainer" if weekly >= 0 else "loser"
 
         print(f"{'▲' if side == 'gainer' else '▼'}  {ticker} ({company[:30]})  {weekly:+.1f}% this week  |  {ytd:+.1f}% YTD")
-        context = "" if auto else input("   Paste news context (or Enter to skip): ").strip()
+        if auto:
+            context = fetch_news_context(company, news_api_key)
+            if context:
+                print(f"   [auto] fetched {len(context.splitlines())} recent articles as context")
+            else:
+                print("   [auto] no news context found — drafting from numbers only")
+        else:
+            context = input("   Paste news context (or Enter to skip): ").strip()
 
         while True:
             print("   Drafting...", end=" ", flush=True)
@@ -444,7 +488,8 @@ def main():
     client = anthropic.Anthropic(api_key=api_key)
 
     # News drafting (also collects sentiments per ticker)
-    news_js, sentiments = build_news(df, client, auto=args.auto)
+    news_api_key = os.getenv("NEWS_API_KEY", "")
+    news_js, sentiments = build_news(df, client, auto=args.auto, news_api_key=news_api_key)
 
     # Now build holdings (uses sentiments from news pass)
     # Load XLV history sidecar (written by notebook alongside the xlsx)
