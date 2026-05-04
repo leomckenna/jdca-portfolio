@@ -125,8 +125,50 @@ const WEEKS = [
         valImpact: false
       }
     ]
+  },,
+  {
+    label: "Week of 04/27/2026",
+    asOf: "04/27/2026",
+    stats: {
+      best:       { val: "+59.0%", sub: "NCEL · NewcelX" },
+      worst:      { val: "−13.5%",  sub: "ELDN · Eledon Pharma" },
+      highestYtd: { val: "+137%",  sub: "ELDN · Eledon Pharma" },
+      positiveSentiment: { val: "4", sub: "vs. 2 Neg · 15 Neutral" }
+    },
+    holdings: [
+      { ticker:"LLY"      , name:"Eli Lilly"              , cap:"Large-cap"  , mktCap:"$843.2B", price:   866.46, low52:  750.798, high52:  1006.739, weekly:  -4.352, excessXlv:  -6.484, ytd:    -9.628, pe: 34.62, cr:  1.525, relVol:  73, sentiment:"Positive", history:[]  },
+      { ticker:"NVO"      , name:"Novo Nordisk"           , cap:"Large-cap"  , mktCap:"$148.1B", price:    41.21, low52:   37.244, high52:    94.181, weekly:   2.147, excessXlv:   0.015, ytd:   -15.833, pe:  13.7, cr:  0.827, relVol:  92, sentiment:"Negative", history:[]  },
+      { ticker:"SNY"      , name:"Sanofi"                 , cap:"Large-cap"  , mktCap:"$117.6B", price:    45.86, low52:   43.291, high52:    59.099, weekly:  -0.108, excessXlv:  -2.240, ytd:    -6.617, pe: 19.22, cr:  1.163, relVol:  79, sentiment:"Neutral" , history:[]  },
+      { ticker:"VRTX"     , name:"Vertex Pharma"          , cap:"Large-cap"  , mktCap:"$108.2B", price:   426.02, low52:  390.427, high52:   516.847, weekly:  -0.241, excessXlv:  -2.373, ytd:    -6.017, pe: 32.08, cr:  2.875, relVol:  71, sentiment:"Positive", history:[]  },
+      { ticker:"OTSKY"    , name:"Otsuka Holdings"        , cap:"Large-cap"  , mktCap:"$14.5B" , price:    33.16, low52:   24.857, high52:    36.888, weekly:  -5.984, excessXlv:  -8.116, ytd:    -0.180, pe:  null, cr:   null, relVol:  94, sentiment:"Neutral" , history:[]  },
+      { ticker:"CRSP"     , name:"CRISPR Therapeutics"    , cap:"Mid-cap"    , mktCap:"$3.8B"  , price:    48.93, low52:   34.027, high52:    64.405, weekly:  -8.540, excessXlv: -10.672, ytd:    -7.267, pe:  null, cr: 11.527, relVol: 150, sentiment:"Positive", history:[]  },
+      { ticker:"SANA"     , name:"Sana Biotech"           , cap:"Small-cap"  , mktCap:"$394.6M", price:     3.26, low52:    1.941, high52:     4.571, weekly:  -2.099, excessXlv:  -4.231, ytd:   -20.768, pe:  null, cr:  5.057, relVol: 102, sentiment:"Neutral" , history:[]  },
+      { ticker:"EVO"      , name:"Evotec SE"              , cap:"Small-cap"  , mktCap:"$814.7M", price:     3.14, low52:    1.576, high52:     5.318, weekly:   0.000, excessXlv:  -2.132, ytd:     1.613, pe:  null, cr:  2.148, relVol:  78, sentiment:"Neutral" , history:[]  },
+      { ticker:"LCTX"     , name:"Lineage Cell"           , cap:"Small-cap"  , mktCap:"$323.0M", price:     1.55, low52:    1.309, high52:     2.248, weekly:  -1.274, excessXlv:  -3.406, ytd:    -7.186, pe:  null, cr:  5.872, relVol:  68, sentiment:"Neutral" , history:[]  },
+      { ticker:"HUMA"     , name:"Humacyte"               , cap:"Micro-cap"  , mktCap:"$128.5M", price:     0.81, low52:    0.531, high52:     2.113, weekly:  13.986, excessXlv:  11.854, ytd:   -14.726, pe:  null, cr:  4.356, relVol: 312, sentiment:"Negative", history:[]  },
+      { ticker:"GNPX"     , name:"Genprex"                , cap:"Micro-cap"  , mktCap:"$13.5M" , price:     0.93, low52:    0.733, high52:     2.626, weekly: -13.426, excessXlv: -15.558, ytd:   -46.857, pe:  null, cr:  4.621, relVol: 153, sentiment:"Neutral" , history:[]  },
+      { ticker:"IPSC"     , name:"Century Therapeutics"   , cap:"Small-cap"  , mktCap:"$325.6M", price:     2.25, low52:    0.812, high52:     2.619, weekly:   3.211, excessXlv:   1.079, ytd:   131.959, pe:  null, cr: 10.249, relVol: 119, sentiment:"Neutral" , history:[]  },
+      { ticker:"SABS"     , name:"SAB Biotherapeutics"    , cap:"Micro-cap"  , mktCap:"$55.3M" , price:     3.47, low52:    2.402, high52:     6.259, weekly:  -9.402, excessXlv: -11.534, ytd:    -8.201, pe:  null, cr:  8.636, relVol:  68, sentiment:"Neutral" , history:[]  },
+      { ticker:"SEOVF"    , name:"Sernova"                , cap:"Micro-cap"  , mktCap:"$11.3M" , price:     0.13, low52:    0.056, high52:     0.171, weekly:   0.000, excessXlv:  -2.132, ytd:    44.444, pe:  null, cr:   null, relVol:null, sentiment:"Neutral" , history:[]  },
+      { ticker:"NCEL"     , name:"NewcelX"                , cap:"Micro-cap"  , mktCap:"$55.5M" , price:     3.87, low52:    0.770, high52:     4.500, weekly:  59.012, excessXlv:  56.880, ytd:   103.158, pe:  null, cr:   null, relVol: 876, sentiment:"Neutral" , history:[]  },
+      { ticker:"FLUI.ST"  , name:"Fluicell"               , cap:"Micro-cap"  , mktCap:"$5.8M"  , price:     1.45, low52:    0.882, high52:     1.762, weekly:  -4.933, excessXlv:  -7.065, ytd:    30.500, pe:  null, cr:   null, relVol:null, sentiment:"Neutral" , history:[]  },
+      { ticker:"NXTCL.ST" , name:"NextCell Pharma"        , cap:"Micro-cap"  , mktCap:"$3.1M"  , price:     0.12, low52:    0.062, high52:     0.163, weekly:  -7.299, excessXlv:  -9.431, ytd:    53.846, pe:  null, cr:   null, relVol:null, sentiment:"Neutral" , history:[]  },
+      { ticker:"IMCR"     , name:"Immunocore"             , cap:"Small-cap"  , mktCap:"$596.7M", price:    28.56, low52:   17.760, high52:    52.320, weekly:  -2.146, excessXlv:  -4.278, ytd:   -17.553, pe:  null, cr:  5.885, relVol:  88, sentiment:"Positive", history:[]  },
+      { ticker:"CELZ"     , name:"Creative Medical"       , cap:"Micro-cap"  , mktCap:"$14.5M" , price:     2.28, low52:    1.470, high52:     3.120, weekly:   0.885, excessXlv:  -1.247, ytd:    17.010, pe:  null, cr:  2.684, relVol:  88, sentiment:"Neutral" , history:[]  },
+      { ticker:"ELDN"     , name:"Eledon Pharma"          , cap:"Micro-cap"  , mktCap:"$47.4M" , price:     3.85, low52:    0.920, high52:     4.990, weekly: -13.483, excessXlv: -15.615, ytd:   137.654, pe:  null, cr:  5.541, relVol: 178, sentiment:"Neutral" , history:[]  },
+      { ticker:"ADOC.PA"  , name:"Adocia"                 , cap:"Small-cap"  , mktCap:"$327.3M", price:     5.36, low52:    4.762, high52:     9.400, weekly:  -2.906, excessXlv:  -5.038, ytd:   -29.388, pe:  null, cr:   null, relVol:null, sentiment:"Neutral" , history:[]  }
+    ],
+    xlvHistory:[],
+    news: [
+      { side:"gainer", company:"NewcelX", ticker:"NCEL", penny:true, sentiment:"Neutral", topic:"Stock Surges +59% / No New Catalyst", summary:"NCEL jumped ~59% with no new company-specific announcement — continuation of momentum from the April 15 placement at $2.75/share and the April 20 Swiss Biotech Conference. Closed at $4.50, its highest since going public.", takeaway:"Thin float means a small amount of buying pressure moves the stock dramatically. The NCEL-101 T1D program is the underlying story, but this week\'s move is mostly technical.", valImpact:false },
+      { side:"gainer", company:"Humacyte", ticker:"HUMA", penny:true, sentiment:"Negative", topic:"Israel MAA Accepted, Ex-U.S. Rights Regained from Fresenius, New CCO", summary:"HUMA gained ~14% on a news-heavy week. Israel\'s Ministry of Health accepted the MAA for Symvess (a bioengineered blood vessel product) with a 180-day review. Humacyte regained sole global commercial rights from Fresenius, appointed a new CCO, and held a KOL event on hemodialysis. V012 Phase 3 data expected in early June.", takeaway:"The Fresenius rights reversion is the most substantive development. The June V012 hemodialysis read remains the make-or-break event.", valImpact:true },
+      { side:"gainer", company:"Novo Nordisk", ticker:"NVO", penny:false, sentiment:"Negative", topic:"Oral Wegovy Outpacing Foundayo / Medicare Bridge Resolved", summary:"NVO gained ~2.1%. Oral Wegovy had 18,410 prescriptions in week two vs. Foundayo\'s 3,707. CMS confirmed the Medicare GLP-1 Bridge (July 2026, $50/month copay).", takeaway:"The early prescription lead matters for formulary positioning. The Medicare bridge represents real demand starting in July.", valImpact:false },
+      { side:"loser", company:"Eli Lilly", ticker:"LLY", penny:false, sentiment:"Positive", topic:"Foundayo Off to a Slow Start / Medicare GLP-1 Coverage Resolved", summary:"LLY fell ~4.4%. IQVIA data showed Foundayo generated only 3,707 prescriptions in week two vs. oral Wegovy\'s 18,410. CMS confirmed the Medicare GLP-1 Bridge starting July 1 at $50/month with Foundayo included.", takeaway:"Near-term Foundayo script trajectory is the key metric. Insurance coverage lag and physician familiarity should improve. The Medicare bridge removes a key reimbursement uncertainty.", valImpact:true },
+      { side:"loser", company:"Eledon Pharma", ticker:"ELDN", penny:true, sentiment:"Neutral", topic:"Pullback After Three-Week Run", summary:"ELDN fell ~13.5% after gaining ~28.6% the prior week. No negative catalyst — profit-taking. Still up ~137% YTD.", takeaway:"Nothing to read into. The tegoprubart/NCEL-101 collaboration remains the fundamental story.", valImpact:false },
+      { side:"loser", company:"Genprex", ticker:"GNPX", penny:true, sentiment:"Neutral", topic:"Continued Decline / No Catalyst", summary:"GNPX fell ~13.4% with no news, extending its YTD decline to ~-46.9%. Volume remains extremely thin.", takeaway:"Sustained downtrend all year with no near-term catalysts after the AACR posters.", valImpact:false }
+    ]
   },
-{
+  {
     label: "Week of 04/20/2026",
     asOf: "04/20/2026",
     stats: {
