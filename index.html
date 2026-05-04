@@ -250,7 +250,7 @@ function openModal(ticker, wIdx) {
       <div class="modal-metric"><div class="mm-label">Price</div><div class="mm-val">${fmt$(h.price)}</div></div>
       <div class="modal-metric"><div class="mm-label">1-Wk Return</div><div class="mm-val" style="${gc(h.weekly)}">${fmtP2(h.weekly)}</div></div>
       <div class="modal-metric"><div class="mm-label">YTD Return</div><div class="mm-val" style="${gc(h.ytd)}">${fmtP2(h.ytd)}</div></div>
-      <div class="modal-metric"><div class="mm-label">vs. XLV</div><div class="mm-val" style="${gc(h.excessXlv)}">${h.excessXlv>=0?'+':''}${h.excessXlv.toFixed(1)} ppt</div></div>
+      <div class="modal-metric"><div class="mm-label">vs. IBB</div><div class="mm-val" style="${gc(h.excessIbb)}">${h.excessIbb>=0?'+':''}${h.excessIbb.toFixed(1)} ppt</div></div>
       <div class="modal-metric"><div class="mm-label">Mkt Cap</div><div class="mm-val" style="font-size:13px">${h.mktCap}</div></div>
       <div class="modal-metric"><div class="mm-label">Rel. Volume</div><div class="mm-val">${h.relVol}%</div></div>
       <div class="modal-metric"><div class="mm-label">P/E</div><div class="mm-val">${h.pe ? h.pe.toFixed(1) : '—'}</div></div>
@@ -276,7 +276,7 @@ function buildStats(w) {
   const h = w.holdings;
   const avg    = h.reduce((a,b)=>a+b.weekly,0)/h.length;
   const pctPos = Math.round(h.filter(d=>d.weekly>0).length/h.length*100);
-  const avgXlv = h.reduce((a,b)=>a+b.excessXlv,0)/h.length;
+  const avgIbb = h.reduce((a,b)=>a+b.excessIbb,0)/h.length;
   const pennies= h.filter(isP);
   const s = w.stats;
   return `<div class="stats-bar">
@@ -284,7 +284,7 @@ function buildStats(w) {
     <div class="stat-item"><div class="stat-label">Best Weekly</div><div class="stat-value gain-color">${s.best.val}</div><div class="stat-sub">${s.best.sub}</div></div>
     <div class="stat-item"><div class="stat-label">Worst Weekly</div><div class="stat-value loss-color">${s.worst.val}</div><div class="stat-sub">${s.worst.sub}</div></div>
     <div class="stat-item"><div class="stat-label">Avg Weekly Return</div><div class="stat-value ${avg>=0?'gain-color':'loss-color'}">${fmtP(avg)}</div><div class="stat-sub">${pctPos}% positive this week</div></div>
-    <div class="stat-item"><div class="stat-label">Portfolio vs. XLV</div><div class="stat-value ${avgXlv>=0?'gain-color':'loss-color'}">${fmtX(avgXlv)}</div><div class="stat-sub">Avg excess return (ppt)</div></div>
+    <div class="stat-item"><div class="stat-label">Portfolio vs. IBB</div><div class="stat-value ${avgIbb>=0?'gain-color':'loss-color'}">${fmtX(avgIbb)}</div><div class="stat-sub">Avg excess return (ppt)</div></div>
     <div class="stat-item accent"><div class="stat-label">Highest YTD Return</div><div class="stat-value gain-color">${s.highestYtd.val}</div><div class="stat-sub">${s.highestYtd.sub}</div></div>
     <div class="stat-item accent"><div class="stat-label">Penny Stocks (&lt;$5)</div><div class="stat-value">${pennies.length}</div><div class="stat-sub">${Math.round(pennies.length/h.length*100)}% of portfolio</div></div>
     <div class="stat-item"><div class="stat-label">Positive Sentiment</div><div class="stat-value">${s.positiveSentiment.val}</div><div class="stat-sub">${s.positiveSentiment.sub}</div></div>
@@ -363,13 +363,13 @@ function buildSidebar(w) {
 function buildGL(w, wIdx) {
   const sorted = [...w.holdings].sort((a,b)=>b.weekly-a.weekly);
   const top5 = sorted.slice(0,5), bot5 = sorted.slice(-5).reverse();
-  const thead = `<thead><tr><th>#</th><th>Ticker</th><th>Company</th><th style="text-align:right" data-ht="1-week price return">1-Wk Return</th><th style="text-align:right" data-ht="Return minus XLV ETF (healthcare benchmark) return, in percentage points">Vs. XLV (ppt)</th></tr></thead>`;
+  const thead = `<thead><tr><th>#</th><th>Ticker</th><th>Company</th><th style="text-align:right" data-ht="1-week price return">1-Wk Return</th><th style="text-align:right" data-ht="Return minus IBB ETF (biotech benchmark) return, in percentage points">Vs. IBB (ppt)</th></tr></thead>`;
   const rows = list => list.map((h,i)=>`<tr data-modal="1" onclick="openModal('${h.ticker.replace(/'/g,"\\'")}',${wIdx})" style="cursor:pointer" title="Click for details">
     <td><span class="rank-badge">${i+1}</span></td>
     <td class="ticker-cell">${h.ticker} ${pBadge(h)}</td>
     <td>${h.name}</td>
     <td class="ret ${rCls(h.weekly)}">${fmtP(h.weekly)}</td>
-    <td class="ret ${rCls(h.excessXlv)}" style="font-size:11px">${fmtX(h.excessXlv)}</td>
+    <td class="ret ${rCls(h.excessIbb)}" style="font-size:11px">${fmtX(h.excessIbb)}</td>
   </tr>`).join('');
   return `<div class="grid-2">
     <div class="card"><div class="card-header"><div class="section-label">Top 5 Weekly Gainers <span class="interact-hint">click row for details</span></div></div>
@@ -398,7 +398,7 @@ function buildPortTable(w, wIdx) {
       <td class="num" style="color:var(--text-dim)">${fmtPx(h.high52)}</td>
       <td class="num ${cCls(h.weekly)}">${fmtP(h.weekly)}</td>
       <td class="num ${cCls(h.ytd)}">${fmtP(h.ytd)}</td>
-      <td class="num ${cCls(h.excessXlv)}" style="font-size:10.5px">${fmtX(h.excessXlv)}</td>
+      <td class="num ${cCls(h.excessIbb)}" style="font-size:10.5px">${fmtX(h.excessIbb)}</td>
       <td class="num" style="color:var(--text-dim)">${h.pe?h.pe.toFixed(1):'&mdash;'}</td>
       <td class="num" style="color:var(--text-dim)">${h.cr!=null?h.cr.toFixed(2):'&mdash;'}</td>
       <td>${sTag(h.sentiment)}</td>
@@ -414,14 +414,14 @@ function buildPortTable(w, wIdx) {
       <th data-ht="Highest closing price over the past 52 weeks">52-Wk High</th>
       <th data-ht="This week's price return">1-Wk Ret</th>
       <th data-ht="Year-to-date price return">YTD Ret</th>
-      <th data-ht="Return vs. XLV (Health Care Select Sector ETF) this week, in percentage points. Positive = outperformed the benchmark.">vs. XLV</th>
+      <th data-ht="Return vs. IBB (iShares Biotechnology ETF) this week, in percentage points. Positive = outperformed the benchmark.">vs. IBB</th>
       <th data-ht="Price-to-Earnings ratio. — means negative or no earnings.">P/E</th>
       <th data-ht="Current ratio = current assets ÷ current liabilities. A ratio above 1 means more short-term assets than liabilities.">Curr. Ratio</th>
       <th data-ht="JDCA analyst sentiment: Positive / Neutral / Negative">Sentiment</th>
     </tr></thead><tbody>${rows}</tbody></table>
     <div style="padding:8px 10px 10px;font-size:9.5px;color:var(--text-dim);border-top:1px solid var(--border);display:flex;gap:20px;flex-wrap:wrap;">
       <span>¢ = penny stock (&lt;$5 share price) — rows highlighted</span>
-      <span>XLV = Health Care Select Sector ETF (benchmark)</span>
+      <span>IBB = iShares Biotechnology ETF (benchmark)</span>
       <span>P/E — = no or negative earnings</span>
       <span>Curr. Ratio &gt;1 = more short-term assets than liabilities</span>
     </div>
@@ -433,10 +433,10 @@ function buildYTD(holdings, id, wIdx) {
   const el = document.getElementById(id); if(!el) return;
   const w = WEEKS[wIdx];
 
-  // Compute XLV YTD from xlvHistory
-  let xlvYtd = null;
-  if (w.xlvHistory && w.xlvHistory.length >= 2) {
-    const hist = w.xlvHistory;
+  // Compute IBB YTD from ibbHistory
+  let ibbYtd = null;
+  if (w.ibbHistory && w.ibbHistory.length >= 2) {
+    const hist = w.ibbHistory;
     // Find last close of prior year (2025) and first close of current year
     const asOfYear = parseInt((w.asOf || '').split('/')[2]) || new Date().getFullYear();
     const priorYear = hist.filter(p => new Date(p[0]).getFullYear() === asOfYear - 1);
@@ -444,13 +444,13 @@ function buildYTD(holdings, id, wIdx) {
     if (priorYear.length && currYear.length) {
       const base   = priorYear[priorYear.length - 1][1];
       const latest = currYear[currYear.length - 1][1];
-      xlvYtd = (latest / base - 1) * 100;
+      ibbYtd = (latest / base - 1) * 100;
     }
   }
 
   const sorted = [...holdings].sort((a,b)=>b.ytd-a.ytd);
   const allVals = sorted.map(d=>Math.abs(d.ytd));
-  if (xlvYtd !== null) allVals.push(Math.abs(xlvYtd));
+  if (ibbYtd !== null) allVals.push(Math.abs(ibbYtd));
   const maxAbs = Math.max(...allVals);
 
   // Helper to build a bar row
@@ -502,18 +502,51 @@ function buildYTD(holdings, id, wIdx) {
     el.appendChild(row);
   });
 
-  // XLV benchmark row at the bottom
-  if (xlvYtd !== null) {
-    const xlvRow = makeRow('XLV', 'Health Care Select Sector ETF', xlvYtd, true);
-    xlvRow.addEventListener('mouseenter', e => {
-      showTip(`<div class="tt-ticker">XLV</div><div class="tt-name">Health Care Select Sector ETF</div>`+
-        `<div class="tt-row"><span>YTD</span><strong style="color:var(--text-mid)">${xlvYtd>=0?'+':''}${xlvYtd.toFixed(1)}%</strong></div>`+
+  // Compute equal-weighted portfolio YTD average
+  const validHoldings = holdings.filter(h => h.ytd != null && !isNaN(h.ytd));
+  const portYtd = validHoldings.length ? validHoldings.reduce((a,b) => a + b.ytd, 0) / validHoldings.length : null;
+  if (portYtd !== null) allVals.push(Math.abs(portYtd));
+
+  // IBB benchmark row at the bottom
+  if (ibbYtd !== null) {
+    const ibbRow = makeRow('IBB', 'iShares Biotechnology ETF', ibbYtd, true);
+    ibbRow.addEventListener('mouseenter', e => {
+      showTip(`<div class="tt-ticker">IBB</div><div class="tt-name">iShares Biotechnology ETF</div>`+
+        `<div class="tt-row"><span>YTD</span><strong style="color:var(--text-mid)">${ibbYtd>=0?'+':''}${ibbYtd.toFixed(1)}%</strong></div>`+
         `<div class="tt-hint">Benchmark reference</div>`,
         e.clientX, e.clientY);
     });
-    xlvRow.addEventListener('mousemove', e => moveTip(e.clientX, e.clientY));
-    xlvRow.addEventListener('mouseleave', () => hideTip());
-    el.appendChild(xlvRow);
+    ibbRow.addEventListener('mousemove', e => moveTip(e.clientX, e.clientY));
+    ibbRow.addEventListener('mouseleave', () => hideTip());
+    el.appendChild(ibbRow);
+  }
+
+  // Equal-weighted portfolio average row
+  if (portYtd !== null) {
+    const maxAbs = Math.max(...allVals) || 1;
+    const pct = Math.abs(portYtd) / maxAbs * 50;
+    const isPos = portYtd >= 0;
+    const barStyle = 'width:'+pct+'%;background:var(--navy);opacity:0.55;height:9px;border-radius:2px;';
+    const leftCell  = '<div style="width:50%;display:flex;align-items:center;border-right:1px solid #c0c8d8;">'
+                    + (isPos ? '' : '<div style="'+barStyle+'margin-left:auto;"></div>') + '</div>';
+    const rightCell = '<div style="width:50%;display:flex;align-items:center;">'
+                    + (isPos ? '<div style="'+barStyle+'"></div>' : '') + '</div>';
+    const portRow = document.createElement('div');
+    portRow.className = 'ytd-row';
+    portRow.style.cssText = 'cursor:default;border-top:1px solid var(--border);margin-top:4px;padding-top:4px;';
+    portRow.innerHTML = '<div class="ytd-lbl" style="font-style:italic;color:var(--navy);font-weight:600;">PORT</div>'
+                      + '<div style="flex:1;display:flex;align-items:center;">'+leftCell+rightCell+'</div>'
+                      + '<div class="ytd-val" style="color:var(--navy);font-style:italic;">'+(isPos?'+':'')+portYtd.toFixed(1)+'%</div>';
+    portRow.addEventListener('mouseenter', e => {
+      showTip(`<div class="tt-ticker">PORT</div><div class="tt-name">Portfolio (equal-weighted avg)</div>`+
+        `<div class="tt-row"><span>YTD</span><strong style="color:var(--navy)">${isPos?'+':''}${portYtd.toFixed(1)}%</strong></div>`+
+        (ibbYtd !== null ? `<div class="tt-row"><span>vs. IBB</span><strong class="${portYtd-ibbYtd>=0?'gain':'loss'}">${portYtd-ibbYtd>=0?'+':''}${(portYtd-ibbYtd).toFixed(1)} ppt</strong></div>` : '') +
+        `<div class="tt-hint">Portfolio reference</div>`,
+        e.clientX, e.clientY);
+    });
+    portRow.addEventListener('mousemove', e => moveTip(e.clientX, e.clientY));
+    portRow.addEventListener('mouseleave', () => hideTip());
+    el.appendChild(portRow);
   }
 }
 
@@ -709,12 +742,13 @@ function renderAll() {
       <div style="margin-bottom:20px;">
         <div class="card">
           <div class="card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
-            <div class="section-label" style="margin-bottom:0">52-Week Performance vs. XLV <span class="interact-hint">indexed to 100 at start</span></div>
+            <div class="section-label" style="margin-bottom:0">52-Week Performance vs. IBB <span class="interact-hint">indexed to 100 at start</span></div>
             <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
               <select id="${pid}-perf-ticker" style="font-family:'DM Mono',monospace;font-size:11px;padding:4px 8px;border:1px solid var(--border);border-radius:3px;background:var(--surface);color:var(--navy);cursor:pointer;"></select>
               <div style="display:flex;gap:12px;font-size:10px;">
                 <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:18px;height:2.5px;background:var(--navy);border-radius:2px;"></span>Holding</span>
-                <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:18px;height:2.5px;background:var(--accent);border-radius:2px;opacity:.7;"></span>XLV</span>
+                <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:18px;height:2.5px;background:var(--accent);border-radius:2px;opacity:.7;"></span>IBB</span>
+                <span style="display:flex;align-items:center;gap:5px;"><span style="display:inline-block;width:18px;height:2.5px;background:var(--navy);border-radius:2px;opacity:.35;border-top:1px dashed var(--navy);"></span>Portfolio avg</span>
               </div>
             </div>
           </div>
@@ -729,7 +763,7 @@ function renderAll() {
       ${buildPortTable(w, i)}
       <div class="footer">
         <span style="font-weight:700;letter-spacing:.18em;color:var(--navy);text-transform:uppercase;">JDCA</span>
-        <span>Internal Use Only &nbsp;&middot;&nbsp; Data as of ${w.asOf} &nbsp;&middot;&nbsp; Prices in USD unless noted &nbsp;&middot;&nbsp; Excess returns vs. XLV</span>
+        <span>Internal Use Only &nbsp;&middot;&nbsp; Data as of ${w.asOf} &nbsp;&middot;&nbsp; Prices in USD unless noted &nbsp;&middot;&nbsp; Excess returns vs. IBB</span>
         <span class="footer-note">Upload new data.js each week &mdash; index.html stays the same</span>
       </div>`;
     panelsEl.appendChild(panel);
@@ -737,7 +771,7 @@ function renderAll() {
       buildYTD(w.holdings,     `${pid}-ytd`, i);
       buildRange(w.holdings,   `${pid}-range`, i);
       buildScatter(w.holdings, `${pid}-scatter`, i);
-      buildPerfChart(w.holdings, w.xlvHistory || [], pid);
+      buildPerfChart(w.holdings, w.ibbHistory || [], pid);
     });
   });
 }
@@ -749,7 +783,7 @@ function indexTo100(pairs) {
   return pairs.map(x => ({ t: x[0], v: (x[1] / base) * 100 }));
 }
 
-function drawPerfChart(canvasId, pid, hIndexed, xIndexed, ticker, name) {
+function drawPerfChart(canvasId, pid, hIndexed, xIndexed, ticker, name, portIndexed) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
@@ -776,13 +810,14 @@ function drawPerfChart(canvasId, pid, hIndexed, xIndexed, ticker, name) {
     return;
   }
 
-  const allVals = [...hIndexed.map(d=>d.v), ...xIndexed.map(d=>d.v)];
+  const pI = portIndexed || [];
+  const allVals = [...hIndexed.map(d=>d.v), ...xIndexed.map(d=>d.v), ...pI.map(d=>d.v)];
   const vMin = Math.min(...allVals);
   const vMax = Math.max(...allVals);
   const vPad = Math.max((vMax - vMin) * 0.1, 3);
   const yLo = vMin - vPad, yHi = vMax + vPad;
 
-  const allTs = [...hIndexed.map(d=>d.t), ...xIndexed.map(d=>d.t)];
+  const allTs = [...hIndexed.map(d=>d.t), ...xIndexed.map(d=>d.t), ...pI.map(d=>d.t)];
   const tMin = Math.min(...allTs), tMax = Math.max(...allTs);
   const tRange = tMax - tMin || 1;
 
@@ -824,7 +859,17 @@ function drawPerfChart(canvasId, pid, hIndexed, xIndexed, ticker, name) {
     ctx.fillText(label, x, H - 6);
   }
 
-  // XLV line (accent red, lighter)
+  // Portfolio equal-weighted line (navy, dashed)
+  if (pI.length > 1) {
+    ctx.strokeStyle = 'rgba(26,44,78,0.35)'; ctx.lineWidth = 1.5; ctx.lineJoin = 'round';
+    ctx.setLineDash([4, 3]);
+    ctx.beginPath();
+    pI.forEach((d, i) => i === 0 ? ctx.moveTo(px(d.t), py(d.v)) : ctx.lineTo(px(d.t), py(d.v)));
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // IBB line (accent red, lighter)
   if (xIndexed.length > 1) {
     ctx.strokeStyle = 'rgba(155,28,46,0.5)'; ctx.lineWidth = 1.8; ctx.lineJoin = 'round';
     ctx.beginPath();
@@ -851,20 +896,46 @@ function drawPerfChart(canvasId, pid, hIndexed, xIndexed, ticker, name) {
   if (xIndexed.length) {
     const lastX = xIndexed[xIndexed.length - 1];
     ctx.fillStyle = 'rgba(155,28,46,0.8)'; ctx.font = '9px DM Sans,sans-serif';
-    ctx.fillText('XLV: ' + fmtRel(lastX.v), pad.left + pW + 5, py(lastX.v) + 4);
+    ctx.fillText('IBB: ' + fmtRel(lastX.v), pad.left + pW + 5, py(lastX.v) + 4);
+  }
+  if (pI.length) {
+    const lastP = pI[pI.length - 1];
+    ctx.fillStyle = 'rgba(26,44,78,0.5)'; ctx.font = '9px DM Sans,sans-serif';
+    ctx.fillText('PORT: ' + fmtRel(lastP.v), pad.left + pW + 5, py(lastP.v) + 4);
   }
 
   // Cache for hover
-  canvas._perfData = { hIndexed, xIndexed, px, py, pad, pW, pH, ticker, name };
+  canvas._perfData = { hIndexed, xIndexed, portIndexed: pI, px, py, pad, pW, pH, ticker, name };
 }
 
-function buildPerfChart(holdings, xlvHistory, pid) {
+function buildPerfChart(holdings, ibbHistory, pid) {
   const selectEl = document.getElementById(pid + '-perf-ticker');
   const statusEl = document.getElementById(pid + '-perf-status');
   const canvasId = pid + '-perf';
   if (!selectEl || !statusEl) return;
 
-  const xlvIndexed = indexTo100(xlvHistory || []);
+  const ibbIndexed = indexTo100(ibbHistory || []);
+
+  // Build equal-weighted portfolio average indexed series
+  function buildPortfolioIndexed(holdings) {
+    // Collect all timestamps across holdings that have history
+    const withHist = holdings.filter(h => h.history && h.history.length > 1);
+    if (!withHist.length) return [];
+    // Get all unique timestamps from first holding as reference timeline
+    const refHist = withHist[0].history;
+    return refHist.map((_, ti) => {
+      const t = refHist[ti][0];
+      // For each holding, get its indexed value at this timestamp position
+      const vals = withHist.map(h => {
+        const base = h.history[0][1];
+        if (!base || !h.history[ti]) return null;
+        return (h.history[ti][1] / base) * 100;
+      }).filter(v => v !== null);
+      return vals.length ? { t, v: vals.reduce((a,b) => a+b, 0) / vals.length } : null;
+    }).filter(Boolean);
+  }
+
+  const portIndexed = buildPortfolioIndexed(holdings);
 
   selectEl.innerHTML = '';
   holdings.forEach(h => {
@@ -881,7 +952,7 @@ function buildPerfChart(holdings, xlvHistory, pid) {
     statusEl.style.display = hasData ? 'none' : 'block';
     if (!hasData) statusEl.textContent = 'No history for ' + ticker + ' — rerun notebook to populate.';
     const hIndexed = indexTo100(h.history || []);
-    drawPerfChart(canvasId, pid, hIndexed, xlvIndexed, ticker, h.name);
+    drawPerfChart(canvasId, pid, hIndexed, ibbIndexed, ticker, h.name, portIndexed);
     attachPerfHover(canvasId, pid);
   }
 
@@ -901,7 +972,7 @@ function attachPerfHover(canvasId, pid) {
     const scaleX = this.width / rect.width;
     const DPR = window.devicePixelRatio || 1;
     const mx = (e.clientX - rect.left) * scaleX / DPR;
-    const { hIndexed, xIndexed, px, py, pad, pW, pH, ticker, name } = data;
+    const { hIndexed, xIndexed, portIndexed: pI, px, py, pad, pW, pH, ticker, name } = data;
     if (!hIndexed.length && !xIndexed.length) { hideTip(); return; }
 
     // Nearest holding point by x
@@ -909,9 +980,13 @@ function attachPerfHover(canvasId, pid) {
     hIndexed.forEach(d => { const dx = Math.abs(px(d.t) - mx); if (dx < bestDx) { bestDx = dx; best = d; }});
     if (!best || bestDx > 40) { hideTip(); this.style.cursor = 'default'; return; }
 
-    // Nearest XLV point at same timestamp
-    let xlvBest = null, xlvDx = Infinity;
-    xIndexed.forEach(d => { const dx = Math.abs(px(d.t) - mx); if (dx < xlvDx) { xlvDx = dx; xlvBest = d; }});
+    // Nearest IBB point at same timestamp
+    let ibbBest = null, ibbDx = Infinity;
+    xIndexed.forEach(d => { const dx = Math.abs(px(d.t) - mx); if (dx < ibbDx) { ibbDx = dx; ibbBest = d; }});
+
+    // Nearest portfolio point
+    let portBest = null, portDx = Infinity;
+    (pI || []).forEach(d => { const dx = Math.abs(px(d.t) - mx); if (dx < portDx) { portDx = dx; portBest = d; }});
 
     const fmtDate = ts => { const d = new Date(ts); return (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear().toString().slice(2); };
     const fmtRel  = v => (v >= 100 ? '+' : '') + (v - 100).toFixed(2) + '%';
@@ -920,12 +995,16 @@ function attachPerfHover(canvasId, pid) {
     let html = '<div class="tt-ticker">' + ticker + '</div><div class="tt-name">' + name + '</div>'
       + '<div class="tt-row"><span>Date</span><strong>' + fmtDate(best.t) + '</strong></div>'
       + '<div class="tt-row"><span>' + ticker + ' vs start</span><strong style="color:' + hColor + '">' + fmtRel(best.v) + '</strong></div>';
-    if (xlvBest) {
-      const xColor = xlvBest.v >= 100 ? '#5dd88a' : '#f08090';
-      html += '<div class="tt-row"><span>XLV vs start</span><strong style="color:' + xColor + '">' + fmtRel(xlvBest.v) + '</strong></div>';
-      const spread = best.v - xlvBest.v;
+    if (ibbBest) {
+      const xColor = ibbBest.v >= 100 ? '#5dd88a' : '#f08090';
+      html += '<div class="tt-row"><span>IBB vs start</span><strong style="color:' + xColor + '">' + fmtRel(ibbBest.v) + '</strong></div>';
+      const spread = best.v - ibbBest.v;
       const sc = spread >= 0 ? '#5dd88a' : '#f08090';
-      html += '<div class="tt-row"><span>Spread vs XLV</span><strong style="color:' + sc + '">' + (spread >= 0 ? '+' : '') + spread.toFixed(2) + ' ppt</strong></div>';
+      html += '<div class="tt-row"><span>Spread vs IBB</span><strong style="color:' + sc + '">' + (spread >= 0 ? '+' : '') + spread.toFixed(2) + ' ppt</strong></div>';
+    }
+    if (portBest) {
+      const pc = portBest.v >= 100 ? '#5dd88a' : '#f08090';
+      html += '<div class="tt-row"><span>Portfolio avg</span><strong style="color:' + pc + '">' + fmtRel(portBest.v) + '</strong></div>';
     }
     showTip(html, e.clientX, e.clientY);
     this.style.cursor = 'crosshair';
@@ -933,7 +1012,7 @@ function attachPerfHover(canvasId, pid) {
     // Crosshair overlay
     const ctx = this.getContext('2d');
     const DPR2 = window.devicePixelRatio || 1;
-    drawPerfChart(canvasId, pid, hIndexed, xIndexed, ticker, name);
+    drawPerfChart(canvasId, pid, hIndexed, xIndexed, ticker, name, pI);
     ctx.scale(DPR2, DPR2);
     const cx = px(best.t), cy = py(best.v);
     ctx.strokeStyle = 'rgba(26,44,78,0.2)'; ctx.lineWidth = 1; ctx.setLineDash([3,3]);
@@ -941,16 +1020,20 @@ function attachPerfHover(canvasId, pid) {
     ctx.setLineDash([]);
     ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI*2);
     ctx.fillStyle = '#1a2c4e'; ctx.fill();
-    if (xlvBest) {
-      ctx.beginPath(); ctx.arc(cx, py(xlvBest.v), 3, 0, Math.PI*2);
+    if (ibbBest) {
+      ctx.beginPath(); ctx.arc(cx, py(ibbBest.v), 3, 0, Math.PI*2);
       ctx.fillStyle = 'rgba(155,28,46,0.8)'; ctx.fill();
+    }
+    if (portBest) {
+      ctx.beginPath(); ctx.arc(cx, py(portBest.v), 3, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(26,44,78,0.4)'; ctx.fill();
     }
   });
 
   canvas.addEventListener('mouseleave', function() {
     hideTip(); this.style.cursor = 'default';
     const d = this._perfData;
-    if (d) drawPerfChart(canvasId, pid, d.hIndexed, d.xIndexed, d.ticker, d.name);
+    if (d) drawPerfChart(canvasId, pid, d.hIndexed, d.xIndexed, d.ticker, d.name, d.portIndexed);
   });
 }
 
