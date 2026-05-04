@@ -127,7 +127,7 @@ const WEEKS = [
       }
     ]
   },
-{
+  {
     label: "Week of 04/27/2026",
     asOf: "04/27/2026",
     stats: {
