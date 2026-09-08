@@ -50,8 +50,8 @@ const WEEKS = [
         penny: true,
         sentiment:"Neutral",
         topic:"Stock Gains +2.9% / Broader Biotech Rally, No Fresh News",
-        summary:"IPSC rose along with a broader biotech rally this week, with no new company-specific announcements. The FDA pre-IND meeting for its lead T1D candidate, CNTY-813, completed on August 12, and an IND submission is still expected later this year.",
-        takeaway:"No impact. CNTY-813's T1D program and 2026 IND timeline are unchanged. This week's gain looks like sector-wide strength rather than new data."
+        summary:"IPSC rose alongside other biotech names this week, with no new company-specific announcements. The FDA pre-IND meeting for its lead T1D candidate, CNTY-813, completed on August 12, and an IND submission is still expected later this year.",
+        takeaway:"No impact. CNTY-813's T1D program and 2026 IND timeline are unchanged. This week's gain looks a rebound from last week, rather than new data."
       },
       {
         side:"gainer",
